@@ -36,5 +36,29 @@ class CreateOrderResponse {
 		$this->MundiPaggSeggestion = null;
 		$this->ErrorReport = null;
 	}
+	
+	function __tostring() {
+		echo "BuyerKey: " . $this->BuyerKey . NEWLINE;
+		echo "MerchantKey: " . $this->MerchantKey . NEWLINE;
+		echo "MundiPaggTimeInMilliseconds: " . $this->MundiPaggTimeInMilliseconds . NEWLINE;
+		echo "OrderKey: " . $this->OrderKey . NEWLINE;
+		echo "OrderReference: " . $this->OrderReference . NEWLINE;
+		echo "OrderStatusEnum: " . $this->OrderStatusEnum . NEWLINE;
+		echo "RequestKey: " . $this->RequestKey . NEWLINE;
+		echo "Success: " . $this->Success . NEWLINE;
+		echo "Version: " . $this->Version . NEWLINE;
+		if (is_array($this->CreditCardTransactionResultCollection) {
+			foreach($this->CreditCardTransactionResultCollection as $ccTrans) {
+				echo "CreditCardTransaction: " . $ccTrans . NEWLINE;
+			}
+		}
+		if (is_array($this->BoletoTransactionResultCollection) {
+			foreach($this->BoletoTransactionResultCollection as $boletoTrans) {
+				echo "BoletoTransaction: " . $boletoTrans . NEWLINE;
+			}
+		}
+		echo "MundiPaggSuggestion: " . $this->MundiPaggSeggestion . NEWLINE;
+		echo "ErrorReport: " . $this->ErrorReport . NEWLINE;
+	}
 }
 ?>

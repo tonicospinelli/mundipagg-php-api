@@ -1,4 +1,6 @@
 <?php
+	const NEWLINE = "<br>";
+	
 	class CurrencyIsoEnum {
 		const __default = BRL;
 		
@@ -15,7 +17,7 @@
 	}
 	
 	class EmailUpdateToBuyerEnum {
-		const __default = No;
+		const __default = EmailUpdateToBuyerEnum::No;
 
 		const Yes = 'Yes'; //1;
 		const No = 'No'; //0;
@@ -24,7 +26,7 @@
 	}
 	
 	class CreditCardBrandEnum {
-		const __default = Visa;
+		const __default = CreditCardBrandEnum::Visa;
 
 		const Visa = 'Visa'; //1;
 		const Mastercard = 'Mastercard'; //2;
@@ -39,7 +41,7 @@
 	}
 	
 	class CreditCardOperationEnum {
-		const __default = AuthOnly;
+		const __default = CreditCardOperationEnum::AuthOnly;
 
 		const AuthOnly = 'AuthOnly'; //1;
 		const AuthAndCapture = 'AuthAndCapture'; //2;

@@ -17,5 +17,17 @@ class BoletoTransaction {
 		$this->NossoNumero = null;
 		$this->TransactionReference = null;
 	}
+	
+	function __tostring() {
+		$str = "";
+		$str .=  "AmountInCents: " . $this->AmountInCents . NEWLINE;
+		$str .=  "BankNumber: " . $this->BankNumber . NEWLINE;
+		$str .=  "DaysToAddInBoletoExpirationDate: " . $this->DaysToAddInBoletoExpirationDate . NEWLINE;
+		$str .=  "Instructions: " . $this->Instructions . NEWLINE;
+		$str .=  "NossoNumero: " . $this->NossoNumero . NEWLINE;
+		$str .=  "TransactionReference: " . $this->TransactionReference . NEWLINE;
+		
+		return $str;
+	}
 }
 ?>
