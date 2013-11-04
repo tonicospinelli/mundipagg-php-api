@@ -145,4 +145,12 @@
 		const Error = 'Error'; //1;
 		const Warning = 'Warning'; //2;
 	}
+	
+	class ManageOrderOperationEnum {
+		const __default = ManageOrderOperationEnum::Capture;
+		
+		const Capture = 'Capture'; //1,
+		const Void = 'Void'; //2,
+		const Authorize = 'Authorize'; //3,
+	}
 ?>

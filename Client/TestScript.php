@@ -9,7 +9,24 @@ $orderRequest = CreateOrder(); // Creates an order
 
 $client = new MundiPaggServiceClient();
 
-$client->CreateOrder($orderRequest);
+//$orderResponse = $client->CreateOrder($orderRequest);
+
+echo NEWLINE . NEWLINE;
+
+//TratarOrderResponse($orderResponse);
+
+echo NEWLINE . NEWLINE;
+
+//$manageRequest = CreateManageOrder($orderResponse);
+$manageRequest = CreateManageOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+
+$manageResponse = $client->ManageOrder($manageRequest);
+
+
+
+
+
+
 
 function CreateOrder() {
 	$orderRequest = new CreateOrderRequest();
@@ -72,7 +89,7 @@ function CreateOrder() {
 	$ccTransaction1->CreditCardBrandEnum = 'Visa';
 	$ccTransaction1->PaymentMethodCode = 1;
 	// Define o tipo da autorização
-	$ccTransaction1->CreditCardOperationEnum = "AuthAndCapture";
+	$ccTransaction1->CreditCardOperationEnum = "AuthOnly";
 	
 	/// BOLETO 1
 	// Criação de uma transação por boleto
@@ -85,7 +102,7 @@ function CreateOrder() {
 
 	// Adiciona as transações no OrderRequest
 	$orderRequest->CreditCardTransactionCollection = array ( $ccTransaction1 );
-	//$orderRequest->BoletoTransactionCollection = array ( $boletoTransaction1 );
+	$orderRequest->BoletoTransactionCollection = array ( $boletoTransaction1 );
 
 	$shopCart = new ShoppingCart();
 	$shopCart->FreighCostInCents = 1000;
@@ -103,5 +120,53 @@ function CreateOrder() {
 	return $orderRequest;
 }
 
+function TratarOrderResponse($orderResponse) {
+	echo "BuyerKey: " . $orderResponse->BuyerKey . NEWLINE;
+	echo "Sucesso: " . $orderResponse->Success . NEWLINE;
+	echo "OrderKey: " . $orderResponse->OrderKey . NEWLINE;
+	echo "OrderStatusEnum: " . $orderResponse->OrderStatusEnum . NEWLINE;
+	echo "RequestKey: " . $orderResponse->RequestKey . NEWLINE;
 
+	echo NEWLINE . "CC:" . NEWLINE;
+	foreach ($orderResponse->CreditCardTransactionResultCollection as $ccTransResult) {
+		echo "Sucess: " . $ccTransResult->Success . NEWLINE;
+		echo "TransactionKey: " . $ccTransResult->TransactionKey . NEWLINE;
+		echo "TransactionIdentifier: " . $ccTransResult->TransactionIdentifier . NEWLINE;
+		echo "UniqueSequentialNumber: " . $ccTransResult->UniqueSequentialNumber . NEWLINE;
+		echo "AmountInCents: " . $ccTransResult->AmountInCents . NEWLINE;
+		echo "AuthorizedAmountInCents: " . $ccTransResult->AuthorizedAmountInCents . NEWLINE;
+		echo "AcquirerMessage: " . $ccTransResult->AcquirerMessage . NEWLINE;
+		echo "CreditCardNumber: " . $ccTransResult->CreditCardNumber . NEWLINE;
+		echo "CreditCardOperationEnum: " . $ccTransResult->CreditCardOperationEnum . NEWLINE;
+		echo "CapturedAmountInCents: " . $ccTransResult->CapturedAmountInCents . NEWLINE;
+		echo "RefundedAmountInCents: " . $ccTransResult->RefundedAmountInCents . NEWLINE;
+		echo "VoidedAmountInCents: " . $ccTransResult->VoidedAmountInCents . NEWLINE;
+		
+		echo NEWLINE;
+	}
+
+	echo NEWLINE . "Boleto:" . NEWLINE;
+	foreach ($orderResponse->BoletoTransactionResultCollection as $boletoTransResult) {
+		echo "Success: " . $boletoTransResult->Success . NEWLINE;
+		echo "TransactionKey: " . $boletoTransResult->TransactionKey . NEWLINE;
+		echo "TransactionReferece: " . $boletoTransResult->TransactionReference . NEWLINE;
+		echo "AmountInCents: " . $boletoTransResult->AmountInCents . NEWLINE;
+		echo "Barcode: " . $boletoTransResult->Barcode . NEWLINE;
+		echo "BoletoTransactionStatusEnum: " . $boletoTransResult->BoletoTransactionStatusEnum . NEWLINE;
+		echo "BoletoUrl: " . $boletoTransResult->BoletoUrl . NEWLINE;
+		echo "CustomStatus: " . $boletoTransResult->CustomStatus . NEWLINE;
+		echo "NossoNumero: " . $boletoTransResult->NossoNumero . NEWLINE;
+	}
+}
+
+//function CreateManageOrder(CreateOrderResponse $orderResponse) {
+function CreateManageOrder($orderKey) {
+	$manageRequest = new ManageOrderRequest();
+	
+	$manageRequest->OrderKey = $orderKey;
+	
+	$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Capture;
+	
+	return $manageRequest;
+}
 ?>
