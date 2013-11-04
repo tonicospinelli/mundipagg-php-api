@@ -1,5 +1,7 @@
 <?php
 include_once "/Classes/CreateOrderRequest.php";
+include_once "Classes/CreateOrderResponse.php";
+
 //const NEWLINE = "<br>";
 
 class MundiPaggServiceClient {
@@ -43,8 +45,8 @@ class MundiPaggServiceClient {
 		$orderResponse = $result->CreateOrderResult;
 		
 		// Tratar Resultado
-		return $orderResponse;
-		//return ConvertOrderResponse($orderResponse);
+		//return $orderResponse;
+		return $this->ConvertOrderResponse($orderResponse);
 	}
 
 	private function ConvertOrderRequest(CreateOrderRequest $orderRequest) {
@@ -221,14 +223,95 @@ class MundiPaggServiceClient {
 		$response->RequestKey = $orderResponse->RequestKey;
 		$response->Success = $orderResponse->Success;
 		$response->Version = $orderResponse->Version;
-		$response->CreditCardTransactionResultCollection = $orderResponse->CreditCardTransactionResultCollection;
-		$response->BoletoTransactionResultCollection = $orderResponse->BoletoTransactionResultCollection;
-		$response->MundiPaggSuggestion = $orderResponse->MundiPaggSuggestion;
-		$response->ErrorReport = $orderResponse->ErrorReport;
+		
+		//// CreditCardTransactionResultCollection
+		$ccTransCollection = array();
+		$counter = 0;
+		foreach ($orderResponse->CreditCardTransactionResultCollection as $ccTrans) {
+			$newccTrans = new CreditCardTransactionResult;
+			
+			$newccTrans->AcquirerMessage = $ccTrans->AcquirerMessage;
+			$newccTrans->AcquirerReturnCode = $ccTrans->AcquirerReturnCode;
+			$newccTrans->AmountInCents = $ccTrans->AmountInCents;
+			$newccTrans->AuthorizationCode = $ccTrans->AuthorizationCode;
+			$newccTrans->AuthorizedAmountInCents = $ccTrans->AuthorizedAmountInCents;
+			$newccTrans->CapturedAmountInCents = $ccTrans->CapturedAmountInCents;
+			$newccTrans->CreditCardNumber = $ccTrans->CreditCardNumber;
+			$newccTrans->CreditCardOperationEnum = $ccTrans->CreditCardOperationEnum;
+			$newccTrans->CreditCardTransactionStatusEnum = $ccTrans->CreditCardTransactionStatusEnum;
+			$newccTrans->CustomStatus = $ccTrans->CustomStatus;
+			$newccTrans->DueDate = $ccTrans->DueDate;
+			$newccTrans->ExternalTimeInMilliseconds = $ccTrans->ExternalTimeInMilliseconds;
+			$newccTrans->InstantBuyKey = $ccTrans->InstantBuyKey;
+			$newccTrans->RefundedAmountInCents = $ccTrans->RefundedAmountInCents;
+			$newccTrans->Success = $ccTrans->Success;
+			$newccTrans->TransactionIdentifier = $ccTrans->TransactionIdentifier;
+			$newccTrans->TransactionKey = $ccTrans->TransactionKey;
+			$newccTrans->TransactionReference = $ccTrans->TransactionReference;
+			$newccTrans->UniqueSequentialNumber = $ccTrans->UniqueSequentialNumber;
+			$newccTrans->VoidedAmountInCents = $ccTrans->VoidedAmountInCents;
+			$newccTrans->OriginalAcquirerReturnCollection = $ccTrans->OriginalAcquirerReturnCollection;
+			
+			$ccTransCollection[$counter] = $ccTrans;
+			$counter += 1;
+		}
+		
+		$response->CreditCardTransactionResultCollection = $ccTransCollection;
+		
+
+		//// BoletoTransactionResultCollection
+		$boletoTransCollection = array();
+		$counter = 0;
+		foreach ($orderResponse->BoletoTransactionResultCollection as $boletoTrans) {
+			$newBoletoTrans = new BoletoTransactionResult();
+			
+			$newBoletoTrans->AmountInCents = $boletoTrans->AmountInCents;
+			$newBoletoTrans->Barcode = $boletoTrans->Barcode;
+			$newBoletoTrans->BoletoTransactionStatusEnum = $boletoTrans->BoletoTransactionStatusEnum;
+			$newBoletoTrans->BoletoUrl = $boletoTrans->BoletoUrl;
+			$newBoletoTrans->CustomStatus = $boletoTrans->CustomStatus;
+			$newBoletoTrans->NossoNumero = $boletoTrans->NossoNumero;
+			$newBoletoTrans->Success = $boletoTrans->Success;
+			$newBoletoTrans->TransactionKey = $boletoTrans->TransactionKey;
+			$newBoletoTrans->TransactionReference = $boletoTrans->TransactionReference;
+			
+			$boletoTransCollectio[$counter] = $newBoletoTrans;
+			$counter += 1;
+		}
+		
+		$response->BoletoTransactionResultCollection = $boletoTransCollection;
 		
 		
+		//// MundiPaggSuggestion
+		$response->MundiPaggSuggestion = null;
+		if (!is_null($orderResponse->MundiPaggSuggestion)) {
+			$response->MundiPaggSuggestion = new MundiPaggSuggestion();
+			$response->MundiPaggSuggestion->Code = $orderResponse->MundiPaggSuggestion->Code;
+			$response->MundiPaggSuggestion->Message = $orderResponse->MundiPaggSuggestion->Message;
+		}
 		
 		
+		//// ErrorReport
+		$response->ErrorReport = null;
+		if (!is_null($orderResponse->ErrorReport)) {
+			$response->ErrorReport = new ErrorReport();
+			$response->ErrorReport->Category = $orderResponse->ErrorReport->Category;
+			
+			$response->ErrorReport->ErrorItemCollection = null;
+			if (!is_null($orderResponse->ErrorReport->ErrorItemCollection)) {
+				$counter = 0;
+				foreach($orderResponse->ErrorReport->ErrorItemCollection as $errorItem) {
+					$newErrorItem = new ErrorItem();
+					$newErrorItem->Description = $errorItem->Description;
+					$newErrorItem->ErrorCode = $errorItem->ErrorCode;
+					$newErrorItem->ErrorField = $errorItem->ErrorField;
+					$newErrorItem->SeverityCodeEnum = $errorItem->SeverityCodeEnum;
+					
+					$response->ErrorReport->ErrorItemCollection[$counter] = $newErrorItem;
+					$counter += 1;
+				}
+			}
+		}
 		
 		return $response;
 	}

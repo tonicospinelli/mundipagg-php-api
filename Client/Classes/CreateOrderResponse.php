@@ -27,7 +27,7 @@ class CreateOrderResponse {
 		$this->MundiPaggTimeInMilliseconds = 0;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
-		$this->OrderStatusEnum = $OrderStatusEnum::__default;
+		$this->OrderStatusEnum = OrderStatusEnum::__default;
 		$this->RequestKey = null;
 		$this->Success = false;
 		$this->Version = "";
@@ -47,12 +47,12 @@ class CreateOrderResponse {
 		echo "RequestKey: " . $this->RequestKey . NEWLINE;
 		echo "Success: " . $this->Success . NEWLINE;
 		echo "Version: " . $this->Version . NEWLINE;
-		if (is_array($this->CreditCardTransactionResultCollection) {
+		if (is_array($this->CreditCardTransactionResultCollection)) {
 			foreach($this->CreditCardTransactionResultCollection as $ccTrans) {
 				echo "CreditCardTransaction: " . $ccTrans . NEWLINE;
 			}
 		}
-		if (is_array($this->BoletoTransactionResultCollection) {
+		if (is_array($this->BoletoTransactionResultCollection)) {
 			foreach($this->BoletoTransactionResultCollection as $boletoTrans) {
 				echo "BoletoTransaction: " . $boletoTrans . NEWLINE;
 			}

@@ -112,4 +112,37 @@
 		const PartialPaid = 'PartialPaid'; //6;
 		const WithError = 'WithError'; //7;
 	}
+	
+	class CreditCardTransactionStatusEnum {
+		const __default = CreditCardTransactionStatusEnum::AuthorizedPendingCapture;
+		
+		const AuthorizedPendingCapture = 'AuthorizedPendingCapture'; //1,
+        const NotAuthorized = 'NotAuthorized'; //2,
+        const ChargebackPreview = 'ChargebackPreview'; //3,
+        const RefundPreview = 'RefundPreview'; //4,
+        const DepositPreview = 'DepositPreview'; //5,
+        const Captured = 'Captured'; //6,
+        const PartialCapture = 'PartialCapture'; //7,
+        const Refunded = 'Refunded'; //8,
+        const Voided = 'Voided'; //9,
+        const Deposited = 'Deposited'; //10,
+        const OpenedPendindAuth = 'OpenedPendindAuth'; //11,
+        const Chargedback = 'Chargedback'; //12,
+        const PendingVoid = 'PendingVoid'; //13,
+        const Invalid = 'Invalid'; //14,
+        const PartialAuthorize = 'PartialAuthorize'; //15,
+        const PartialRefunded = 'PartialRefunded'; //16,
+        const OverCapture = 'OverCapture'; //17,
+        const PartialVoid = 'PartialVoid'; //18,
+        const PendingRefund = 'PendingRefund'; //19,
+        const UnScheduled = 'UnScheduled'; //20,
+        const WithError = 'WithError'; //99,
+	}
+	
+	class SeverityCodeEnum {
+		const __default = SeverityCodeEnum::Error;
+		
+		const Error = 'Error'; //1;
+		const Warning = 'Warning'; //2;
+	}
 ?>
