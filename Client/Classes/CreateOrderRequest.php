@@ -2,6 +2,7 @@
 include_once "Buyer.php";
 include_once "BoletoTransaction.php";
 include_once "CreditCardTransaction.php";
+include_once "ShoppingCart.php";
 include_once "Enum.php";
 
 class CreateOrderRequest {

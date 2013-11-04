@@ -49,7 +49,7 @@
 	}
 	
 	class FrequencyEnum {
-		const __default = Weekly;
+		const __default = FrequencyEnum::Weekly;
 
 		const Weekly = 'Weekly'; //1;
 		const Monthly = 'Monthly'; //2;
@@ -58,28 +58,28 @@
 	}
 	
 	class GenderEnum {
-		const __default = M;
+		const __default = GenderEnum::M;
 
 		const M = 'M'; //1;
 		const F = 'F'; //2;
 	}
 	
 	class PersonTypeEnum {
-		const __default = Person;
+		const __default = PersonTypeEnum::Person;
 
 		const Person = 'Person'; //1;
 		const Company = 'Company'; //2;
 	}
 	
 	class TaxDocumentTypeEnum {
-		const __default = CPF;
+		const __default = TaxDocumentTypeEnum::CPF;
 
 		const CPF = 'CPF'; //1;
 		const CNPJ = 'CNPJ'; //2;
 	}
 	
 	class AddressTypeEnum {
-		const __default = Billing;
+		const __default = AddressTypeEnum::Billing;
 
 		const Billing = 'Billing'; //1;
 		const Shipping = 'Shipping'; //2;
@@ -88,7 +88,7 @@
 	}
 	
 	class CountryEnum {
-		const __default = Brazil;
+		const __default = CountryEnum::Brazil;
 
 		const Brazil = 'Brazil'; //1;
 		const USA = 'USA'; //2;
@@ -102,7 +102,7 @@
 	}
 	
 	class OrderStatusEnum {
-		const __default = Opened;
+		const __default = OrderStatusEnum::Opened;
 		
 		const Opened = "Opened"; //1;
 		const Closed = 'Closed'; //2;

@@ -1,4 +1,6 @@
 <?php
+const NEWLINE = '<br>';
+
 header('Content-Type: text/html; charset=UTF-8');
 set_time_limit(0);
 $url = "wsdl.xml";
@@ -15,7 +17,7 @@ $soap_client = new SoapClient( $url, $soap_opt );
 $_request["createOrderRequest"]["MerchantKey"] = $key; 
 $_request["createOrderRequest"]["OrderReference"] =""; // Identificação do pedido na loja
 $_request["createOrderRequest"]["AmountInCents"] = "9"; // Valor do pedido em centavos	
-$_request["createOrderRequest"]["AmountInCentsToConsiderPaid"] = "0"; // Valor do pedido para considerar pago
+$_request["createOrderRequest"]["AmountInCentsToConsiderPaid"] = "9"; // Valor do pedido para considerar pago
 $_request["createOrderRequest"]["EmailUpdateToBuyerEnum"] = "No"; // Enviar e-mail de atualização do pedido para o comprador: Yes | No | YesIfAuthorized | YesIfNotAuthorized
 $_request["createOrderRequest"]["EmailUpdateToBuyerEnum"] = "No"; // Enviar e-mail de atualização do pedido para o comprador: Yes | No | YesIfAuthorized | YesIfNotAuthorized
 $_request["createOrderRequest"]["CurrencyIsoEnum"] = "BRL"; //Moeda do pedido
@@ -29,14 +31,18 @@ $_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTr
 $_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTransaction"][0]["ExpMonth"] = "10"; // Mês Exp
 $_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTransaction"][0]["ExpYear"] = "14"; // Ano Exp 
 $_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTransaction"][0]["CreditCardBrandEnum"] = "Mastercard"; // Bandeira do cartão : Visa ,MasterCard ,Hipercard ,Amex */
-$_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTransaction"][0]["PaymentMethodCode"] = ""; // Código do meio de pagamento 
+$_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTransaction"][0]["PaymentMethodCode"] = "1"; // Código do meio de pagamento 
 $_request["createOrderRequest"]["CreditCardTransactionCollection"]["CreditCardTransaction"][0]["CreditCardOperationEnum"] = "AuthAndCapture"; /** Tipo de operação: AuthOnly | AuthAndCapture | AuthAndCaptureWithDelay  */
-
 
 	//Realiza a comunicação com o WebService
 	try{
 			//Envia os dados para o serviço da MundiPagg
 			$_response = $soap_client->CreateOrder($_request); 
+			
+			echo "Request:" . NEWLINE;
+			echo html_entity_decode( $soap_client->__getLastRequest());
+			echo NEWLINE . NEWLINE . "Response:" . NEWLINE;
+			echo html_entity_decode( $soap_client->__getLastResponse()) . NEWLINE . NEWLINE;
 			
 			echo "Sucesso: " . $_response->Success . "<br>";
 			
