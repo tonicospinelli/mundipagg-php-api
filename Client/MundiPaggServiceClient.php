@@ -5,6 +5,8 @@ include_once "/Classes/ManageOrderRequest.php";
 include_once "/Classes/ManageOrderResponse.php";
 include_once "/Classes/RetryOrderRequest.php";
 include_once "Classes/RetryOrderResponse.php";
+include_once "/Classes/QueryOrderRequest.php";
+include_once "Classes/QueryOrderResponse.php";
 
 //const NEWLINE = "<br>";
 
