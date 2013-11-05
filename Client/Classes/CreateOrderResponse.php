@@ -38,27 +38,33 @@ class CreateOrderResponse {
 	}
 	
 	function __tostring() {
-		echo "BuyerKey: " . $this->BuyerKey . NEWLINE;
-		echo "MerchantKey: " . $this->MerchantKey . NEWLINE;
-		echo "MundiPaggTimeInMilliseconds: " . $this->MundiPaggTimeInMilliseconds . NEWLINE;
-		echo "OrderKey: " . $this->OrderKey . NEWLINE;
-		echo "OrderReference: " . $this->OrderReference . NEWLINE;
-		echo "OrderStatusEnum: " . $this->OrderStatusEnum . NEWLINE;
-		echo "RequestKey: " . $this->RequestKey . NEWLINE;
-		echo "Success: " . $this->Success . NEWLINE;
-		echo "Version: " . $this->Version . NEWLINE;
+		$str = "";
+		$ts = '<font color="#0000FF">';
+		$te = '</font>';
+		
+		$str .= $ts . "BuyerKey: " . $te . $this->BuyerKey . NEWLINE;
+		$str .= $ts . "MerchantKey: " . $te . $this->MerchantKey . NEWLINE;
+		$str .= $ts . "MundiPaggTimeInMilliseconds: " . $te . $this->MundiPaggTimeInMilliseconds . NEWLINE;
+		$str .= $ts . "OrderKey: " . $te . $this->OrderKey . NEWLINE;
+		$str .= $ts . "OrderReference: " . $te . $this->OrderReference . NEWLINE;
+		$str .= $ts . "OrderStatusEnum: " . $te . $this->OrderStatusEnum . NEWLINE;
+		$str .= $ts . "RequestKey: " . $te . $this->RequestKey . NEWLINE;
+		$str .= $ts . "Success: " . $te . $this->Success . NEWLINE;
+		$str .= $ts . "Version: " . $te . $this->Version . NEWLINE;
 		if (is_array($this->CreditCardTransactionResultCollection)) {
 			foreach($this->CreditCardTransactionResultCollection as $ccTrans) {
-				echo "CreditCardTransaction: " . $ccTrans . NEWLINE;
+				$str .= $ts . "CreditCardTransaction: " . $te . $ccTrans . NEWLINE;
 			}
 		}
 		if (is_array($this->BoletoTransactionResultCollection)) {
 			foreach($this->BoletoTransactionResultCollection as $boletoTrans) {
-				echo "BoletoTransaction: " . $boletoTrans . NEWLINE;
+				$str .= $ts . "BoletoTransaction: " . $te . $boletoTrans . NEWLINE;
 			}
 		}
-		echo "MundiPaggSuggestion: " . $this->MundiPaggSeggestion . NEWLINE;
-		echo "ErrorReport: " . $this->ErrorReport . NEWLINE;
+		$str .= $ts . "MundiPaggSuggestion: " . $te . $this->MundiPaggSuggestion . NEWLINE;
+		$str .= $ts . "ErrorReport: " . $te . $this->ErrorReport . NEWLINE;
+		
+		return $str;
 	}
 }
 ?>

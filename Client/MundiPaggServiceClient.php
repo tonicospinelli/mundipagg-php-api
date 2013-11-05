@@ -1,7 +1,10 @@
 <?php
 include_once "/Classes/CreateOrderRequest.php";
-include_once "Classes/CreateOrderResponse.php";
-include_once "Classes/ManageOrderRequest.php";
+include_once "/Classes/CreateOrderResponse.php";
+include_once "/Classes/ManageOrderRequest.php";
+include_once "/Classes/ManageOrderResponse.php";
+include_once "/Classes/RetryOrderRequest.php";
+include_once "Classes/RetryOrderResponse.php";
 
 //const NEWLINE = "<br>";
 
@@ -63,11 +66,36 @@ class MundiPaggServiceClient {
 		return $this->ConvertManageOrderResponse($orderResponse);
 	}
 	
+	function RetryOrder(RetryOrderRequest $order) {
+		if (is_null($order)) { return null; }
+		
+		$soapClient = $this->GetSoapClient();
+
+		$request = $this->ConvertRetryOrderRequest($order);
+		
+		try {
+			$result = $soapClient->RetryOrder($request);
+		} catch (SoapFault $fault) {
+			//echo "Fault code: {$fault->faultcode}" . NEWLINE;
+			//echo "Fault string: {$fault->faultstring}" . NEWLINE;
+			if ($soapClient != null) {
+				$soapClient = null;
+			}
+			//exit();
+			throw $fault;
+		}
+
+		$this->WriteXml($soapClient);
+		
+		$orderResponse = $result->RetryOrderResult;
+		
+		// Converte a resposta e retorna o objeto.
+		return $this->ConvertRetryOrderResponse($orderResponse);
+	}
 	
 	
-	
-	
-	
+
+
 	////// Métodos privados
 	private function GetSoapClient() {
 		$soap_opt['encoding'] = 'UTF-8';
@@ -88,6 +116,8 @@ class MundiPaggServiceClient {
 		echo html_entity_decode( $soapClient->__getLastResponse());
 	}
 	
+	
+	////// MAIN CONVERTERS
 	private function ConvertOrderRequest(CreateOrderRequest $orderRequest) {
 		$order = array(); // Cria o pedido
 		$request = array(); // Cria a requisição
@@ -103,61 +133,8 @@ class MundiPaggServiceClient {
 
 		// Copia o Buyer
 		if (!is_null($orderRequest->Buyer)) {
-			$buyer = array();
-			$buyer["BuyerKey"] = $orderRequest->Buyer->BuyerKey;
-			$buyer["BuyerReference"] = $orderRequest->Buyer->BuyerReference;
-			if (!is_null($orderRequest->Buyer->CreateDateInMerchant)) {
-				$buyer["CreateDateInMerchant"] = $orderRequest->Buyer->CreateDateInMerchant;
-			}
-			$buyer["Email"] = $orderRequest->Buyer->Email;
-			$buyer["FacebookId"] = $orderRequest->Buyer->FacebookId;
-			if (!is_null($orderRequest->Buyer->GenderEnum)) {
-				$buyer["GenderEnum"] = $orderRequest->Buyer->GenderEnum;
-			}
-			$buyer["HomePhone"] = $orderRequest->Buyer->HomePhone;
-			$buyer["IpAddress"] = $orderRequest->Buyer->IpAddress;
-			if (!is_null($orderRequest->Buyer->LastBuyerUpdateInMerchant)) {
-				$buyer["LastBuyerUpdateInMerchant"] = $orderRequest->Buyer->LastBuyerUpdateInMerchant;
-			}
-			$buyer["MobilePhone"] = $orderRequest->Buyer->MobilePhone;
-			$buyer["Name"] = $orderRequest->Buyer->Name;
-			if (!is_null($orderRequest->Buyer->PersonTypeEnum)) {
-				$buyer["PersonTypeEnum"] = $orderRequest->Buyer->PersonTypeEnum;
-			}
-			$buyer["TaxDocumentNumber"] = $orderRequest->Buyer->TaxDocumentNumber;
-			if (!is_null($orderRequest->Buyer->TaxDocumentTypeEnum)) {
-				$buyer["TaxDocumentTypeEnum"] = $orderRequest->Buyer->TaxDocumentTypeEnum;
-			}
-			$buyer["TwitterId"] = $orderRequest->Buyer->TwitterId;
-			$buyer["WorkPhone"] = $orderRequest->Buyer->WorkPhone;
-			// Copia os objetos BuyerAddress
-			if (!is_null($orderRequest->Buyer->BuyerAddressCollection)) {
-				if (count($orderRequest->Buyer->BuyerAddressCollection) > 0) {
-					$addrCollection = array(); // Coleção com os endereços do comprador
-
-					$counter = 0;
-					foreach($orderRequest->Buyer->BuyerAddressCollection as $addressItem) {
-						$buyAddress = array(); // Endereço do comprador
-						$buyAddress["AddressTypeEnum"] = $addressItem->AddressTypeEnum;
-						$buyAddress["City"] = $addressItem->City;
-						$buyAddress["Complement"] = $addressItem->Complement;
-						$buyAddress["CountryEnum"] = $addressItem->CountryEnum;
-						$buyAddress["District"] = $addressItem->District;
-						$buyAddress["Number"] = $addressItem->Number;
-						$buyAddress["State"] = $addressItem->State;
-						$buyAddress["Street"] = $addressItem->Street;
-						$buyAddress["ZipCode"] = $addressItem->ZipCode;
-
-						$addressCollection[$counter] = $buyAddress;
-						$counter += 1;
-					}
-					
-					$buyer["BuyerAddressCollection"] = $addressCollection;
-				}
-			}
-			
-			$order["Buyer"] = $buyer;
-		} // FIM do Buyer
+			$order["Buyer"] = $this->ConvertBuyerFromRequest($orderRequest->Buyer);
+		}
 		
 		
 		//Dados da transação de Cartão de Crédito
@@ -165,23 +142,7 @@ class MundiPaggServiceClient {
 			$order["CreditCardTransactionCollection"] = null;
 		}
 		else if (is_array($orderRequest->CreditCardTransactionCollection)) {
-			$counter = 0;
-			foreach($orderRequest->CreditCardTransactionCollection as $ccTransItem) {
-				$ccTrans = array();
-				$ccTrans["AmountInCents"] = $ccTransItem->AmountInCents;
-				$ccTrans["CreditCardNumber"] = $ccTransItem->CreditCardNumber;
-				$ccTrans["InstallmentCount"] = $ccTransItem->InstallmentCount;
-				$ccTrans["HolderName"] = $ccTransItem->HolderName;
-				$ccTrans["SecurityCode"] = $ccTransItem->SecurityCode;
-				$ccTrans["ExpMonth"] = $ccTransItem->ExpMonth;
-				$ccTrans["ExpYear"] = $ccTransItem->ExpYear;
-				$ccTrans["CreditCardBrandEnum"] = $ccTransItem->CreditCardBrandEnum;
-				$ccTrans["PaymentMethodCode"] = $ccTransItem->PaymentMethodCode;
-				$ccTrans["CreditCardOperationEnum"] = $ccTransItem->CreditCardOperationEnum;
-				
-				$order["CreditCardTransactionCollection"]["CreditCardTransaction"][$counter] = $ccTrans;
-				$counter += 1;
-			}
+			$order["CreditCardTransactionCollection"] = $this->ConvertCreditCardTransactionCollectionFromRequest($orderRequest->CreditCardTransactionCollection);
 		}
 		
 		//Dados da transação de Cartão de Crédito
@@ -189,57 +150,13 @@ class MundiPaggServiceClient {
 			$order["BoletoTransactionCollection"] = null;
 		}
 		else if (is_array($orderRequest->BoletoTransactionCollection)) {
-			$counter = 0;
-			foreach($orderRequest->BoletoTransactionCollection as $boletoTransItem) {
-				$boletoTrans = array();
-				$boletoTrans["AmountInCents"] = $boletoTransItem->AmountInCents;
-				$boletoTrans["BankNumber"] = $boletoTransItem->BankNumber;
-				$boletoTrans["Instructions"] = $boletoTransItem->Instructions;
-				$boletoTrans["NossoNumero"] = $boletoTransItem->NossoNumero;
-				$boletoTrans["DaysToAddInBoletoExpirationDate"] = $boletoTransItem->DaysToAddInBoletoExpirationDate;
-				
-				$order["BoletoTransactionCollection"]["BoletoTransaction"][$counter] = $boletoTrans;
-				$counter += 1;
-			}
+			$order["BoletoTransactionCollection"] = $this->ConvertBoletoTransactionCollectionFromRequest($orderRequest->BoletoTransactionCollection);
 		}
 		
 		//Dados do ShoppingCart
 		if (!is_null($orderRequest->ShoppingCartCollection)) {
 			if (is_array($orderRequest->ShoppingCartCollection)) {
-				$scCollection = array(); // Coleção ShopCart
-				$scCounter = 0;
-
-				// Copia cada objeto ShoppingCart
-				foreach ($orderRequest->ShoppingCartCollection as $shopCart) {
-					$newShopCart = array();
-					$newShopCart["FreightCostInCents"] = $shopCart->FreightCostInCents;
-					
-					if (!is_null($shopCart->ShoppingCartItemCollection)) {
-						if (is_array($shopCart->ShoppingCartItemCollection)) {
-							$scItemCollection = array();
-							$scItemCounter = 0;
-							// Copia cada objeto ShoppingCartItem
-							foreach ($shopCart->ShoppingCartItemCollection as $shopCartItem) {
-								$newShopCartItem["Description"] = $shopCartItem->Description;
-								$newShopCartItem["ItemReference"] = $shopCartItem->ItemReference;
-								$newShopCartItem["Name"] = $shopCartItem->Name;
-								$newShopCartItem["Quantity"] = $shopCartItem->Quantity;
-								$newShopCartItem["TotalCostInCents"] = $shopCartItem->TotalCostInCents;
-								$newShopCartItem["UnitCostInCents"] = $shopCartItem->UnitCostInCents;
-								
-								$scItemCollection["ShoppingCartItem"][$scItemCounter] = $newShopCartItem;
-								$scItemCounter += 1;
-							} // foreach (shopCartItem)
-							
-							$newShopCart["ShoppingCartItemCollection"] = $scItemCollection;
-						} // if is_array
-					} // if is_null
-					
-					$scCollection["ShoppingCart"][$scCounter] = $newShopCart;
-					$scCounter += 1;
-				} // foreach ($scCollection)
-				
-				$order["ShoppingCartCollection"] = $scCollection;
+				$order["ShoppingCartCollection"] = $this->ConvertShoppingCartCollectionFromRequest($orderRequest->ShoppingCartCollection);
 			}
 		}
 		
@@ -263,9 +180,282 @@ class MundiPaggServiceClient {
 		$response->Version = $orderResponse->Version;
 		
 		//// CreditCardTransactionResultCollection
-		$ccTransCollection = array();
+		$response->CreditCardTransactionResultCollection = $this->ConvertCreditCardTransactionResultCollectionFromResponse($orderResponse->CreditCardTransactionResultCollection);
+
+		//// BoletoTransactionResultCollection
+		$response->BoletoTransactionResultCollection = $this->ConvertBoletoTransactionResultCollectionFromResponse($orderResponse->BoletoTransactionResultCollection);
+		
+		//// MundiPaggSuggestion
+		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($orderResponse->MundiPaggSuggestion);
+		
+		//// ErrorReport
+		$response->ErrorReport = $this->ConvertErrorReportFromResponse($orderResponse->ErrorReport);
+		
+		return $response;
+	}
+
+	private function ConvertManageOrderRequest(ManageOrderRequest $manageRequest) {
+		$request = array();
+		$order = array();
+		
+		$order["ManageOrderOperationEnum"] = $manageRequest->ManageOrderOperationEnum;
+		$order["MerchantKey"] = $manageRequest->MerchantKey;
+		$order["OrderKey"] = $manageRequest->OrderKey;
+		$order["OrderReference"] = $manageRequest->OrderReference;
+		$order["RequestKey"] = $manageRequest->RequestKey;
+		
+		//ManageCreditCardTransactionCollection
+		if (!is_null($manageRequest->ManageCreditCardTransactionCollection)) {
+			if (is_array($manageRequest->ManageCreditCardTransactionCollection)) {
+				$order["ManageCreditCardTransactionCollection"] = $this->ConvertManageCreditCardTransactionCollection($manageRequest->ManageCreditCardTransactionCollection);
+			}
+		}
+		
+		$request["manageOrderRequest"] = $order; // Adiciona o pedido na requisição
+		
+		return $request;
+	}
+	private function ConvertManageOrderResponse($manageResponse) {
+		if (is_null($manageResponse)) { throw new Exception("Null response!"); }
+		
+		$response = new ManageOrderResponse();
+		
+		$response->ManageOrderOperationEnum = $manageResponse->ManageOrderOperationEnum;
+		$response->MundiPaggTimeInMilliseconds = $manageResponse->MundiPaggTimeInMilliseconds;
+		$response->OrderKey = $manageResponse->OrderKey;
+		$response->OrderReference = $manageResponse->OrderReference;
+		$response->OrderStatusEnum = $manageResponse->OrderStatusEnum;
+		$response->RequestKey = $manageResponse->RequestKey;
+		$response->Success = $manageResponse->Success;
+		$response->Version = $manageResponse->Version;
+
+		// MundiPaggSuggestion
+		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($manageResponse->MundiPaggSuggestion);
+		
+		// ErrorReport
+		$response->ErrorReport = $this->ConvertErrorReportFromResponse($manageResponse->ErrorReport);
+		
+		// CreditCardTransactionResultCollection
+		$response->CreditCardTransactionResultCollection = $this->ConvertCreditCardTransactionResultCollectionFromResponse($manageResponse->CreditCardTransactionResultCollection);
+		
+		// BoletoTransactionResultCollection
+		$response->BoletoTransactionResultCollection = $this->ConvertBoletoTransactionResultCollectionFromResponse($manageResponse->BoletoTransactionResultCollection);
+
+		return $response;
+	}
+
+	private function ConvertRetryOrderRequest(RetryOrderRequest $retryRequest) {
+		$request = array();
+		$order = array();
+		
+		$order["MerchantKey"] = $retryRequest->MerchantKey;
+		$order["OrderKey"] = $retryRequest->OrderKey;
+		$order["OrderReference"] = $retryRequest->OrderReference;
+		$order["RequestKey"] = $retryRequest->RequestKey;
+		
+		if (!is_null($retryRequest->RetryOrderCreditCardTransactionRequestCollection)) {
+			if (is_array(RetryOrderCreditCardTransactionRequestCollection)) {
+				$order["RetryOrderCreditCardTransactionRequestCollection"] = $this->ConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest($retryRequest->RetryOrderCreditCardTransactionRequestCollection);
+			}
+		}
+		
+		$request["manualRetryRequest"] = $order;
+		
+		return $request;
+	}
+	private function ConvertRetryOrderResponse($retryResponse) {
+		$response = new RetryOrderResponse();
+		
+		$response->MundiPaggTimeInMilliseconds = $retryResponse->MundiPaggTimeInMilliseconds;
+		$response->OrderKey = $retryResponse->OrderKey;
+		$response->OrderReference = $retryResponse->OrderReference;
+		$response->OrderStatusEnum = $retryResponse->OrderStatusEnum;
+		$response->RequestKey = $retryResponse->RequestKey;
+		$response->Success = $retryResponse->Success;
+		$response->Version = $retryResponse->Version;
+		
+		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($retryResponse->MundiPaggSuggestion);
+		$response->ErrorReport = $this->ConvertErrorReportFromResponse($retryResponse->ErrorReport);
+	
+		if (!isset($retryResponse->RetryOrderCreditCardTransactionResponse)) {
+			$response->RetryOrderCreditCardTransactionResponse = null;
+		}
+		else {
+			$response->RetryOrderCreditCardTransactionResponse = $this->ConvertCreditCardTransactionResultCollectionFromResponse($retryResponse->RetryOrderCreditCardTransactionResponse);
+		}
+		
+		return $response;
+	}
+
+
+	////// REQUEST CONVERTERS (Classes to Arrays)
+	private function ConvertBuyerFromRequest(Buyer $buyerRequest) {
+		$newBuyer = array();
+		$newBuyer["BuyerKey"] = $buyerRequest->BuyerKey;
+		$newBuyer["BuyerReference"] = $buyerRequest->BuyerReference;
+		if (!is_null($buyerRequest->CreateDateInMerchant)) {
+			$newBuyer["CreateDateInMerchant"] = $buyerRequest->CreateDateInMerchant;
+		}
+		$newBuyer["Email"] = $buyerRequest->Email;
+		$newBuyer["FacebookId"] = $buyerRequest->FacebookId;
+		if (!is_null($buyerRequest->GenderEnum)) {
+			$newBuyer["GenderEnum"] = $buyerRequest->GenderEnum;
+		}
+		$newBuyer["HomePhone"] = $buyerRequest->HomePhone;
+		$newBuyer["IpAddress"] = $buyerRequest->IpAddress;
+		if (!is_null($buyerRequest->LastBuyerUpdateInMerchant)) {
+			$newBuyer["LastBuyerUpdateInMerchant"] = $buyerRequest->LastBuyerUpdateInMerchant;
+		}
+		$newBuyer["MobilePhone"] = $buyerRequest->MobilePhone;
+		$newBuyer["Name"] = $buyerRequest->Name;
+		if (!is_null($buyerRequest->PersonTypeEnum)) {
+			$newBuyer["PersonTypeEnum"] = $buyerRequest->PersonTypeEnum;
+		}
+		$newBuyer["TaxDocumentNumber"] = $buyerRequest->TaxDocumentNumber;
+		if (!is_null($buyerRequest->TaxDocumentTypeEnum)) {
+			$newBuyer["TaxDocumentTypeEnum"] = $buyerRequest->TaxDocumentTypeEnum;
+		}
+		$newBuyer["TwitterId"] = $buyerRequest->TwitterId;
+		$newBuyer["WorkPhone"] = $buyerRequest->WorkPhone;
+		// Copia os objetos BuyerAddress
+		if (!is_null($buyerRequest->BuyerAddressCollection)) {
+			if (count($buyerRequest->BuyerAddressCollection) > 0) {
+				$addrCollection = array(); // Coleção com os endereços do comprador
+
+				$counter = 0;
+				foreach($buyerRequest->BuyerAddressCollection as $addressItem) {
+					$buyAddress = array(); // Endereço do comprador
+					$buyAddress["AddressTypeEnum"] = $addressItem->AddressTypeEnum;
+					$buyAddress["City"] = $addressItem->City;
+					$buyAddress["Complement"] = $addressItem->Complement;
+					$buyAddress["CountryEnum"] = $addressItem->CountryEnum;
+					$buyAddress["District"] = $addressItem->District;
+					$buyAddress["Number"] = $addressItem->Number;
+					$buyAddress["State"] = $addressItem->State;
+					$buyAddress["Street"] = $addressItem->Street;
+					$buyAddress["ZipCode"] = $addressItem->ZipCode;
+
+					$addressCollection[$counter] = $buyAddress;
+					$counter += 1;
+				}
+				
+				$newBuyer["BuyerAddressCollection"] = $addressCollection;
+			}
+		}
+		
+		return $newBuyer;
+	}
+	private function ConvertCreditCardTransactionCollectionFromRequest($creditCardTransactionCollectionRequest) {
+		$newccTransactionCollection = array();
 		$counter = 0;
-		foreach ($orderResponse->CreditCardTransactionResultCollection as $ccTrans) {
+		foreach($creditCardTransactionCollectionRequest as $ccTrans) {
+			$newccTrans = array();
+			$newccTrans["AmountInCents"] = $ccTrans->AmountInCents;
+			$newccTrans["CreditCardNumber"] = $ccTrans->CreditCardNumber;
+			$newccTrans["InstallmentCount"] = $ccTrans->InstallmentCount;
+			$newccTrans["HolderName"] = $ccTrans->HolderName;
+			$newccTrans["SecurityCode"] = $ccTrans->SecurityCode;
+			$newccTrans["ExpMonth"] = $ccTrans->ExpMonth;
+			$newccTrans["ExpYear"] = $ccTrans->ExpYear;
+			$newccTrans["CreditCardBrandEnum"] = $ccTrans->CreditCardBrandEnum;
+			$newccTrans["PaymentMethodCode"] = $ccTrans->PaymentMethodCode;
+			$newccTrans["CreditCardOperationEnum"] = $ccTrans->CreditCardOperationEnum;
+			
+			$newccRequestCollection["CreditCardTransaction"][$counter] = $newccTrans;
+			$counter += 1;
+		}
+		
+		return $newccTransactionCollection;
+	}
+	private function ConvertBoletoTransactionCollectionFromRequest($boletoTransactionCollectionRequest) {
+		$newBoletoTransCollection = array();
+		$counter = 0;
+		foreach($boletoTransactionCollectionRequest as $boletoTransItem) {
+			$boletoTrans = array();
+			$boletoTrans["AmountInCents"] = $boletoTransItem->AmountInCents;
+			$boletoTrans["BankNumber"] = $boletoTransItem->BankNumber;
+			$boletoTrans["Instructions"] = $boletoTransItem->Instructions;
+			$boletoTrans["NossoNumero"] = $boletoTransItem->NossoNumero;
+			$boletoTrans["DaysToAddInBoletoExpirationDate"] = $boletoTransItem->DaysToAddInBoletoExpirationDate;
+			
+			$newBoletoTransCollection["BoletoTransaction"][$counter] = $boletoTrans;
+			$counter += 1;
+		}
+		
+		return $newBoletoTransCollection;
+	}
+	private function ConvertShoppingCartCollectionFromRequest($shoppingCartCollectionRequest) {
+		$newShoppingCartCollection = array();
+		$counter = 0;
+
+		// Copia cada objeto ShoppingCart
+		foreach ($shoppingCartCollectionRequest as $shopCart) {
+			$newShopCart = array();
+			$newShopCart["FreightCostInCents"] = $shopCart->FreightCostInCents;
+			
+			if (!is_null($shopCart->ShoppingCartItemCollection)) {
+				if (is_array($shopCart->ShoppingCartItemCollection)) {
+					$newShopCartItemCollection = array();
+					$itemCounter = 0;
+					// Copia cada objeto ShoppingCartItem
+					foreach ($shopCart->ShoppingCartItemCollection as $shopCartItem) {
+						$newShopCartItem["Description"] = $shopCartItem->Description;
+						$newShopCartItem["ItemReference"] = $shopCartItem->ItemReference;
+						$newShopCartItem["Name"] = $shopCartItem->Name;
+						$newShopCartItem["Quantity"] = $shopCartItem->Quantity;
+						$newShopCartItem["TotalCostInCents"] = $shopCartItem->TotalCostInCents;
+						$newShopCartItem["UnitCostInCents"] = $shopCartItem->UnitCostInCents;
+						
+						$newShopCartItemCollection["ShoppingCartItem"][$itemCounter] = $newShopCartItem;
+						$itemCounter += 1;
+					} // foreach (shopCartItem)
+					
+					$newShopCart["ShoppingCartItemCollection"] = $newShopCartItemCollection;
+				} // if is_array
+			} // if is_null
+			
+			$newShopCartCollection["ShoppingCart"][$counter] = $newShopCart;
+			$counter += 1;
+		}
+		
+		return $newShopCartCollection;
+	}
+	private function ConvertManageCreditCardTransactionCollectionFromRequest($creditCardTransactionCollectionRequest) {
+		$newCreditCardTransCollection = array();
+		$counter = 0;
+		foreach ($creditCardTransactionCollectionRequest as $ccTrans) {
+			$newccTrans = array();
+			
+			$newccTrans["AmountInCents"] = $ccTrans->AmountInCents;
+			$newccTrans["TransactionKey"] = $ccTrans->TransactionKey;
+			$newccTrans["TransactionReference"] = $ccTrans->TransactionReference;
+			
+			$ccTransCollection[$counter] = $newccTrans;
+			$counter += 1;
+		}
+		
+		return $mccTransCollection;
+	}
+	private function ConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest($creditCardTransactionRequestCollection) {
+		$newccTransCollection = array();
+		$counter = 0;
+		foreach ($creditCardTransactionRequestCollection as $ccTransRequest) {
+			$newccTransRequest = array();
+			$newccTransRequest["SecurityCode"] = $ccTransRequest->SecurityCode;
+			$newccTransRequest["TransactionKey"] = $ccTransRequest->TransactionKey;
+
+			$newccTransCollection["RetryOrderCreditCardTransactionRequest"][$counter] = $newcckTransRequest;
+			$counter += 1;
+		}
+		
+		return $newccTransCollection;
+	}
+	
+	////// RESPONSE CONVERTERS
+	private function ConvertCreditCardTransactionResultCollectionFromResponse($creditCardTransactionResultCollection) {
+		$newccTransResultCollection = array();
+		$counter = 0;
+		foreach ($creditCardTransactionResultCollection as $ccTrans) {
 			$newccTrans = new CreditCardTransactionResult;
 			
 			$newccTrans->AcquirerMessage = $ccTrans->AcquirerMessage;
@@ -290,17 +480,16 @@ class MundiPaggServiceClient {
 			$newccTrans->VoidedAmountInCents = $ccTrans->VoidedAmountInCents;
 			$newccTrans->OriginalAcquirerReturnCollection = $ccTrans->OriginalAcquirerReturnCollection;
 			
-			$ccTransCollection[$counter] = $ccTrans;
+			$newccTransResultCollection[$counter] = $ccTrans;
 			$counter += 1;
 		}
 		
-		$response->CreditCardTransactionResultCollection = $ccTransCollection;
-		
-
-		//// BoletoTransactionResultCollection
+		return $newccTransResultCollection;
+	}
+	private function ConvertBoletoTransactionResultCollectionFromResponse($boletoTransactionResultCollection) {
 		$boletoTransCollection = array();
 		$counter = 0;
-		foreach ($orderResponse->BoletoTransactionResultCollection as $boletoTrans) {
+		foreach ($boletoTransactionResultCollection as $boletoTrans) {
 			$newBoletoTrans = new BoletoTransactionResult();
 			
 			$newBoletoTrans->AmountInCents = $boletoTrans->AmountInCents;
@@ -317,189 +506,42 @@ class MundiPaggServiceClient {
 			$counter += 1;
 		}
 		
-		$response->BoletoTransactionResultCollection = $boletoTransCollection;
-		
-		
-		//// MundiPaggSuggestion
-		$response->MundiPaggSuggestion = null;
-		if (!is_null($orderResponse->MundiPaggSuggestion)) {
-			$response->MundiPaggSuggestion = new MundiPaggSuggestion();
-			$response->MundiPaggSuggestion->Code = $orderResponse->MundiPaggSuggestion->Code;
-			$response->MundiPaggSuggestion->Message = $orderResponse->MundiPaggSuggestion->Message;
+		return $boletoTransCollection;
+	}
+	private function ConvertMundiPaggSuggestionFromResponse($suggestionResponse) {
+		$newSuggestion = null;
+		if (!is_null($suggestionResponse)) {
+			$newSuggestion = new MundiPaggSuggestion();
+			$newSuggestion->Code = $orderResponse->MundiPaggSuggestion->Code;
+			$newSuggestion->Message = $orderResponse->MundiPaggSuggestion->Message;
 		}
 		
-		
-		//// ErrorReport
-		$response->ErrorReport = null;
-		if (!is_null($orderResponse->ErrorReport)) {
-			$response->ErrorReport = new ErrorReport();
-			$response->ErrorReport->Category = $orderResponse->ErrorReport->Category;
+		return $newSuggestion;
+	}	
+	private function ConvertErrorReportFromResponse($errorReportResponse) {
+		$newErrorReport = null;
+		if (!is_null($errorReportResponse)) {
+			$newErrorReport = new ErrorReport();
+			$newErrorReport->Category = $errorReport->Category;
 			
-			$response->ErrorReport->ErrorItemCollection = null;
-			if (!is_null($orderResponse->ErrorReport->ErrorItemCollection)) {
+			$newErrorReport->ErrorItemCollection = null;
+			if (!is_null($errorReport->ErrorItemCollection)) {
 				$counter = 0;
-				foreach($orderResponse->ErrorReport->ErrorItemCollection as $errorItem) {
+				foreach($errorReportResponse->ErrorItemCollection as $errorItem) {
 					$newErrorItem = new ErrorItem();
 					$newErrorItem->Description = $errorItem->Description;
 					$newErrorItem->ErrorCode = $errorItem->ErrorCode;
 					$newErrorItem->ErrorField = $errorItem->ErrorField;
 					$newErrorItem->SeverityCodeEnum = $errorItem->SeverityCodeEnum;
 					
-					$response->ErrorReport->ErrorItemCollection[$counter] = $newErrorItem;
+					$newErrorReport->ErrorItemCollection[$counter] = $newErrorItem;
 					$counter += 1;
 				}
 			}
 		}
 		
-		return $response;
+		return $newErrorReport;
 	}
 
-	private function ConvertManageOrderRequest(ManageOrderRequest $manageRequest) {
-		$request = array();
-		$order = array();
-		
-		$order["ManageOrderOperationEnum"] = $manageRequest->ManageOrderOperationEnum;
-		$order["MerchantKey"] = $manageRequest->MerchantKey;
-		$order["OrderKey"] = $manageRequest->OrderKey;
-		$order["OrderReference"] = $manageRequest->OrderReference;
-		$order["RequestKey"] = $manageRequest->RequestKey;
-		
-		//ManageCreditCardTransactionCollection
-		if (!is_null($manageRequest->ManageCreditCardTransactionCollection)) {
-			if (is_array($manageRequest->ManageCreditCardTransactionCollection)) {
-				$mccTransCollection = array();
-				$counter = 0;
-				foreach ($manageRequest->ManageCreditCardTransactionCollection as $mccTrans) {
-					$newmccTrans = array();
-					
-					$newmccTrans["AmountInCents"] = $mccTrans->AmountInCents;
-					$newmccTrans["TransactionKey"] = $mccTrans->TransactionKey;
-					$newmccTrans["TransactionReference"] = $mccTrans->TransactionReference;
-					
-					$mccTransCollection[$counter] = $newmccTrans;
-					$counter += 1;
-				}
-				
-				$order["ManageCreditCardTransactionCollection"] = $mccTransCollection;
-			}
-		}
-		
-		$request["manageOrderRequest"] = $order; // Adiciona o pedido na requisição
-		
-		return $request;
-	}
-	private function ConvertManageOrderResponse($manageResponse) {
-		if (is_null($manageResponse)) { throw new Exception("Null response!"); }
-		
-		$response = new ManageOrderResponse();
-		
-		$response->ManageOrderOperationEnum = $manageResponse->ManageOrderOperationEnum;
-		$response->MundiPaggTimeInMilliseconds = $manageResponse->MundiPaggTimeInMilliseconds;
-		$response->OrderKey = $manageResponse->OrderKey;
-		$response->OrderReference = $manageResponse->OrderReference;
-		$response->OrderStatusEnum = $manageResponse->OrderStatusEnum;
-		$response->RequestKey = $manageResponse->RequestKey;
-		$response->Success = $manageResponse->Success;
-		$response->Version = $manageResponse->Version;
-
-		// MundiPaggSuggestion
-		$response->MundiPaggSuggestion = null;
-		if (!is_null($manageResponse->MundiPaggSuggestion)) {
-			$response->MundiPaggSuggestion = new MundiPaggSuggestion();
-			$response->MundiPaggSuggestion->Code = $manageResponse->MundiPaggSuggestion->Code;
-			$response->MundiPaggSuggestion->Message = $manageResponse->MundiPaggSuggestion->Message;
-		}
-		
-		// ErrorReport
-		$response->ErrorReport = null;
-		if (!is_null($manageResponse->ErrorReport)) {
-			$response->ErrorReport = new ErrorReport();
-			$response->ErrorReport->Category = $manageResponse->ErrorReport->Category;
-			
-			$response->ErrorReport->ErrorItemCollection = null;
-			if (!is_null($manageResponse->ErrorReport->ErrorItemCollection)) {
-				$counter = 0;
-				foreach ($manageResponse->ErrorReport->ErrorItemCollection as $errorItem) {
-					$newErrorItem = new ErrorItem();
-					
-					$newErrorItem->Description = $errorItem->Description;
-					$newErrorItem->ErrorCode = $errorItem->ErrorCode;
-					$newErrorItem->ErrorField = $errorItem->ErrorField;
-					$newErrorItem->SeverityCodeEnum = $errorItem->SeverityCodeEnum;
-					
-					$response->ErrorReport->ErrorItemCollection[$counter] = $newErrorItem;
-					$counter += 1;
-				}
-			}
-		}
-		
-		
-		// CreditCardTransactionResultCollection
-		$response->CreditCardTransactionResultCollection = array();
-		if (count($manageResponse->CreditCardTransactionResultCollection) > 0) {
-			$counter = 0;
-			foreach ($manageResponse->CreditCardTransactionResultCollection as $ccTransResult) {
-				$newccTransResult = new CreditCardTransactionResult();
-				
-				$newccTransResult->AcquirerMessage = $ccTransResult->AcquirerMessage;
-				$newccTransResult->AcquirerReturnCode = $ccTransResult->AcquirerReturnCode;
-				$newccTransResult->AmountInCents = $ccTransResult->AmountInCents;
-				$newccTransResult->AuthorizationCode = $ccTransResult->AuthorizationCode;
-				$newccTransResult->AuthorizedAmountInCents = $ccTransResult->AuthorizedAmountInCents;
-				$newccTransResult->CapturedAmountInCents = $ccTransResult->CapturedAmountInCents;
-				$newccTransResult->CreditCardNumber = $ccTransResult->CreditCardNumber;
-				$newccTransResult->CreditCardOperationEnum = $ccTransResult->CreditCardOperationEnum;
-				$newccTransResult->CreditCardTransactionStatusEnum = $ccTransResult->CreditCardTransactionStatusEnum;
-				$newccTransResult->CustomStatus = $ccTransResult->CustomStatus;
-				$newccTransResult->DueDate = $ccTransResult->DueDate;
-				$newccTransResult->ExternalTimeInMillisecods = $ccTransResult->ExternalTimeInMillisecods;
-				$newccTransResult->InstantBuyKey = $ccTransResult->InstantBuyKey;
-				$newccTransResult->RefundedAmountInCents = $ccTransResult->RefundedAmountInCents;
-				$newccTransResult->Success = $ccTransResult->Success;
-				$newccTransResult->TransactionIdentifier = $ccTransResult->TransactionIdentifier;
-				$newccTransResult->TransactionKey = $ccTransResult->TransactionKey;
-				$newccTransResult->TransactionReference = $ccTransResult->TransactionReference;
-				$newccTransResult->UniqueSequentialNumber = $ccTransResult->UniqueSequentialNumber;
-				$newccTransResult->VoidedAmountInCents = $ccTransResult->VoidedAmountInCents;
-				
-				$newccTransResult->OriginalAcquirerReturnCollection = null;
-				if (!is_null($ccTransResult->OriginalAcquirerReturnCollection)) {
-					foreach ($ccTransResult->OriginalAcquirerReturnCollection as $key => $value) {
-						$newccTransResult->OriginalAcquirerReturnCollection[$key] = $value;
-					}
-				}
-
-				$response->CreditCardTransactionResultCollection[$counter] = $newccTransResult;
-				$counter += 1;
-			}
-		}
-		
-		
-		// BoletoTransactionResultCollection
-		$response->BoletoTransactionResultCollection = array();
-		if (count($manageResponse->BoletoTransactionResultCollection) > 0) {
-			$counter = 0;
-			foreach ($manageResponse->BoletoTransactionResultCollection as $boletoTransResult) {
-				$newBoletoTransResult = new BoletoTransactionResult();
-
-				$newBoletoTransResult->AmountInCents = $boletoTransResult->AmountInCents;
-				$newBoletoTransResult->Barcode = $boletoTransResult->Barcode;
-				$newBoletoTransResult->BoletoTransactionStatusEnum = $boletoTransResult->BoletoTransactionStatusEnum;
-				$newBoletoTransResult->BoletoUrl = $boletoTransResult->BoletoUrl;
-				$newBoletoTransResult->CustomStatus = $boletoTransResult->CustomStatus;
-				$newBoletoTransResult->NossoNumero = $boletoTransResult->NossoNumero;
-				$newBoletoTransResult->Success = $boletoTransResult->Success;
-				$newBoletoTransResult->TransactionKey = $boletoTransResult->TransactionKey;
-				$newBoletoTransResult->TransactionReference = $boletoTransResult->TransactionReference;
-			
-				$response->BoletoTransactionResultCollection[$counter] = $newBoletoTransResult;
-				$counter += 1;
-			}
-		}
-		
-		$response->BoletoTransactionResultCollection = $manageResponse->BoletoTransactionResultCollection;
-
-		return $response;
-	}
 }
 ?>

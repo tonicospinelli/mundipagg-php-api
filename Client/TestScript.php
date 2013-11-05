@@ -18,13 +18,24 @@ echo NEWLINE . NEWLINE;
 echo NEWLINE . NEWLINE;
 
 //$manageRequest = CreateManageOrder($orderResponse);
-$manageRequest = CreateManageOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+//$manageRequest = CreateManageOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+//$manageRequest = CreateManageOrder($orderResponse->OrderKey);
 
-$manageResponse = $client->ManageOrder($manageRequest);
+//$manageResponse = $client->ManageOrder($manageRequest);
 
 
+//echo NEWLINE . NEWLINE . NEWLINE;
+//echo $manageResponse;
 
+$retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
 
+echo NEWLINE . NEWLINE . NEWLINE;
+echo $retryRequest;
+
+$retryResponse = $client->RetryOrder($retryRequest);
+
+echo NEWLINE . NEWLINE . NEWLINE;
+echo $retryResponse;
 
 
 
@@ -164,9 +175,18 @@ function CreateManageOrder($orderKey) {
 	$manageRequest = new ManageOrderRequest();
 	
 	$manageRequest->OrderKey = $orderKey;
+	$manageRequest->MerchantKey = MerchantKey;
 	
 	$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Capture;
 	
 	return $manageRequest;
+}
+
+function CreateRetryOrder($orderKey) {
+	$retryRequest = new RetryOrderRequest();
+	$retryRequest->MerchantKey = MerchantKey;
+	$retryRequest->OrderKey = $orderKey;
+	
+	return $retryRequest;
 }
 ?>
