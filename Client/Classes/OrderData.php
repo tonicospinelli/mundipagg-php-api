@@ -15,7 +15,7 @@ class OrderData {
 		$this->CreateDate = null;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
-		$this->OrderStatusEnum = OrderStatusEnum::__dafault;
+		$this->OrderStatusEnum = OrderStatusEnum::__default;
 		$this->CreditCardTransactionDataCollection = null;
 		$this->BoletoTransactionDataCollection = null;
 	}

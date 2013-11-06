@@ -27,6 +27,7 @@ echo NEWLINE . NEWLINE;
 //echo NEWLINE . NEWLINE . NEWLINE;
 //echo $manageResponse;
 
+/*
 $retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
 
 echo NEWLINE . NEWLINE . NEWLINE;
@@ -36,7 +37,19 @@ $retryResponse = $client->RetryOrder($retryRequest);
 
 echo NEWLINE . NEWLINE . NEWLINE;
 echo $retryResponse;
+*/
 
+/*
+$queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+
+$queryResponse = $client->QueryOrder($queryRequest);
+*/
+
+$instantBuyDataRequest = CreateGetInstantBuyData("90dbcec9-b623-4abf-95a3-df36293cdf19");
+
+$instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
+
+echo $instantBuyDataResponse;
 
 
 function CreateOrder() {
@@ -188,5 +201,23 @@ function CreateRetryOrder($orderKey) {
 	$retryRequest->OrderKey = $orderKey;
 	
 	return $retryRequest;
+}
+
+function CreateQueryOrder($orderKey) {
+	$queryRequest = new QueryOrderRequest();
+	
+	$queryRequest->MerchantKey = MerchantKey;
+	$queryRequest->OrderKey = $orderKey;
+	
+	return $queryRequest;
+}
+
+function CreateGetInstantBuyData($buyerKey) {
+	$instantBuyRequest = new GetInstantBuyDataRequest();
+	
+	$instantBuyRequest->BuyerKey = $buyerKey;
+	$instantBuyRequest->MerchantKey = MerchantKey;
+
+	return $instantBuyRequest;
 }
 ?>

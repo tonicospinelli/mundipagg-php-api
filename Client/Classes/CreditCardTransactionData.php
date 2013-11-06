@@ -2,7 +2,7 @@
 include_once "Enum.php";
 
 class CreditCardTransactionData {
-private string AcquirerAuthorizationCodeField;
+	public $AcquirerAuthorizationCode; // string
 	public $AcquirerName; // string
 	public $AmountInCents; // long
 	public $AuthorizedAmountInCents; // Nullable<long>
@@ -15,7 +15,7 @@ private string AcquirerAuthorizationCodeField;
 	public $DueDate; // Nullable<DateTime>
 	public $InstallmentCount; // int
 	public $InstantBuyKey; // Guid
-	public $IsReccurency; // bool
+	public $IsReccurrency; // bool
 	public $RefundedAmountInCents; // Nullable<long>
 	public $TransactionIdentifier; // string
 	public $TransactionKey; // Guid
@@ -24,6 +24,7 @@ private string AcquirerAuthorizationCodeField;
 	public $VoidedAmountInCents; // Nullable<long>
 	
 	function __construct() {
+		$this->AcquirerAuthorizationCode = "";
 		$this->AcquirerName = "";
 		$this->AmountInCents = 0;
 		$this->AuthorizedAmountInCents = null;
@@ -50,6 +51,7 @@ private string AcquirerAuthorizationCodeField;
 		$ts = '<font color="#0000FF">';
 		$te = '</font>';
 		
+		$str .=  "AcquirerAuthorizationCode: " . $this->AcquirerAuthorizationCode . NEWLINE;
 		$str .=  "AcquirerName: " . $this->AcquirerName . NEWLINE;
 		$str .=  "AmountInCents: " . $this->AmountInCents . NEWLINE;
 		$str .=  "AuthorizedAmountInCents: " . $this->AuthorizedAmountInCents . NEWLINE;

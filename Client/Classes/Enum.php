@@ -153,4 +153,16 @@
 		const Void = 'Void'; //2,
 		const Authorize = 'Authorize'; //3,
 	}
+
+	class BoletoTransactionStatusEnum {
+		const __default = BoletoTransactionStatusEnum::Generated;
+		
+		const Generated = 'Generated'; //1,
+		const Viewed = 'Viewed'; //2,
+		const Underpaid = 'Underpaid'; //3,
+		const Overpaid = 'Overpaid'; //4,
+		const Paid = 'Paid'; //5,
+		const Voided = 'Voided'; //6,
+		const WithError = 'WithError'; //99,
+	}
 ?>

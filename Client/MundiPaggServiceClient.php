@@ -4,11 +4,11 @@ include_once "/Classes/CreateOrderResponse.php";
 include_once "/Classes/ManageOrderRequest.php";
 include_once "/Classes/ManageOrderResponse.php";
 include_once "/Classes/RetryOrderRequest.php";
-include_once "Classes/RetryOrderResponse.php";
+include_once "/Classes/RetryOrderResponse.php";
 include_once "/Classes/QueryOrderRequest.php";
-include_once "Classes/QueryOrderResponse.php";
-
-//const NEWLINE = "<br>";
+include_once "/Classes/QueryOrderResponse.php";
+include_once "/Classes/GetInstantBuyDataRequest.php";
+include_once "/Classes/GetInstantBuyDataResponse.php";
 
 class MundiPaggServiceClient {
 	//const WSDL = 'https://transaction.mundipaggone.com/MundiPaggService.svc?wsdl';
@@ -95,9 +95,60 @@ class MundiPaggServiceClient {
 		return $this->ConvertRetryOrderResponse($orderResponse);
 	}
 	
+	function QueryOrder(QueryOrderRequest $order) {
+		if (is_null($order)) { return null; }
+		
+		$soapClient = $this->GetSoapClient();
+
+		$request = $this->ConvertQueryOrderRequest($order);
+		
+		try {
+			$result = $soapClient->QueryOrder($request);
+		} catch (SoapFault $fault) {
+			//echo "Fault code: {$fault->faultcode}" . NEWLINE;
+			//echo "Fault string: {$fault->faultstring}" . NEWLINE;
+			if ($soapClient != null) {
+				$soapClient = null;
+			}
+			//exit();
+			throw $fault;
+		}
+
+		$this->WriteXml($soapClient);
+		
+		$orderResponse = $result->QueryOrderResult;
+		
+		// Converte a resposta e retorna o objeto.
+		return $this->ConvertQueryOrderResponse($orderResponse);
+	}
+
+	function GetInstantBuyData(GetInstantBuyDataRequest $order) {
+		if (is_null($order)) { return null; }
+		
+		$soapClient = $this->GetSoapClient();
+
+		$request = $this->ConvertGetInstantBuyDataRequest($order);
+		
+		try {
+			$result = $soapClient->GetInstantBuyData($request);
+		} catch (SoapFault $fault) {
+			//echo "Fault code: {$fault->faultcode}" . NEWLINE;
+			//echo "Fault string: {$fault->faultstring}" . NEWLINE;
+			if ($soapClient != null) {
+				$soapClient = null;
+			}
+			//exit();
+			throw $fault;
+		}
+
+		$this->WriteXml($soapClient);
+		
+		$orderResponse = $result->GetInstantBuyDataResult;
+		
+		// Converte a resposta e retorna o objeto.
+		return $this->ConvertGetInstantBuyDataResponse($orderResponse);
+	}
 	
-
-
 	////// Métodos privados
 	private function GetSoapClient() {
 		$soap_opt['encoding'] = 'UTF-8';
@@ -289,7 +340,72 @@ class MundiPaggServiceClient {
 		return $response;
 	}
 
+	private function ConvertQueryOrderRequest(QueryOrderRequest $queryRequest) {
+		$request = array();
+		$order = array();
+		
+		$order["MerchantKey"] = $queryRequest->MerchantKey;
+		$order["OrderKey"] = $queryRequest->OrderKey;
+		$order["OrderReference"] = $queryRequest->OrderReference;
+		$order["RequestKey"] = $queryRequest->RequestKey;
+		
+		$request["queryOrderRequest"] = $order;
+		
+		return $request;
+	}
+	private function ConvertQueryOrderResponse($queryResponse) {
+		$response = new QueryOrderResponse();
+		
+		$response->MundiPaggTimeInMilliseconds = $queryResponse->MundiPaggTimeInMilliseconds;
+		$response->OrderDataCount = $queryResponse->OrderDataCount;
+		$response->RequestKey = $queryResponse->RequestKey;
+		$response->Success = $queryResponse->Success;
+		
+		// OrderDataCollection
+		$response->OrderDataCollection = $this->ConvertOrderDataCollectionFromResponse($queryResponse->OrderDataCollection);
 
+		// MundiPaggSuggestion
+		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($queryResponse->MundiPaggSuggestion);
+		
+		// ErrorReport
+		$response->ErrorReport = $this->ConvertErrorReportFromResponse($queryResponse->ErrorReport);
+		
+		return $response;
+	}
+
+	private function ConvertGetInstantBuyDataRequest(GetInstantBuyDataRequest $instantBuyRequest) {
+		$request = array();
+		$order = array();
+		
+		$order["BuyerKey"] = $instantBuyRequest->BuyerKey;
+		$order["InstantBuyKey"] = $instantBuyRequest->InstantBuyKey;
+		$order["MerchantKey"] = $instantBuyRequest->MerchantKey;
+		$order["RequestKey"] = $instantBuyRequest->RequestKey;
+		
+		$request["queryCreditCardDataRequest"] = $order;
+		
+		return $request;
+	}
+	private function ConvertGetInstantBuyDataResponse($instantBuyResponse) {
+		$response = new GetInstantBuyDataResponse();
+		
+		$response->CreditCardDataCount = $instantBuyResponse->CreditCardDataCount;
+		$response->MundiPaggTimeInMilliseconds = $instantBuyResponse->MundiPaggTimeInMilliseconds;
+		$response->RequestKey = $instantBuyResponse->RequestKey;
+		$response->Success = $instantBuyResponse->Success;
+		
+		// CreditCardDataCollection
+		$response->CreditCardDataCollection = $this->ConvertCreditCardDataCollectionFromResponse($instantBuyResponse->CreditCardDataCollection);
+		
+		// MundiPaggSuggestion
+		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($instantBuyResponse->MundiPaggSuggestion);
+		
+		// ErrorReport
+		$response->ErrorReport = $this->ConvertErrorReportFromResponse($instantBuyResponse->ErrorReport);
+		
+		return $response;
+	}
+	
 	////// REQUEST CONVERTERS (Classes to Arrays)
 	private function ConvertBuyerFromRequest(Buyer $buyerRequest) {
 		$newBuyer = array();
@@ -544,6 +660,103 @@ class MundiPaggServiceClient {
 		
 		return $newErrorReport;
 	}
-
+	private function ConvertOrderDataCollectionFromResponse($orderDataCollection) {
+		$newOrderDataCollection = array();
+		$counter = 0;
+		foreach ($orderDataCollection as $orderData) {
+			$newOrderData = new OrderData();
+			
+			$newOrderData->CreateDate = $orderData->CreateDate;
+			$newOrderData->OrderKey = $orderData->OrderKey;
+			$newOrderData->OrderReference = $orderData->OrderReference;
+			$newOrderData->OrderStatusEnum = $orderData->OrderStatusEnum;
+			
+			$newOrderData->CreditCardTransactionDataCollection = $this->ConvertCreditCardTransactionDataCollectionFromResponse($orderData->CreditCardTransactionDataCollection);
+			$newOrderData->BoletoTransactionDataCollection = $this->ConvertBoletoTransactionDataCollectionFromResponse($orderData->BoletoTransactionDataCollection);
+			
+			$newOrderDataCollection[$counter] = $newOrderData;
+			$counter += 1;
+		}
+		
+		return $newOrderDataCollection;
+	}
+	private function ConvertCreditCardTransactionDataCollectionFromResponse($creditCardTransactionDataCollection) {
+		$newCreditCardTransactionDataCollection = array();
+		
+		$counter = 0;
+		foreach($creditCardTransactionDataCollection as $ccTransData) {
+			$newccTransData = new CreditCardTransactionData();
+			
+			$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
+			$newccTransData->AcquirerName = $ccTransData->AcquirerName;
+			$newccTransData->AmountInCents = $ccTransData->AmountInCents;
+			$newccTransData->AuthorizedAmountInCents = $ccTransData->AuthorizedAmountInCents;
+			$newccTransData->CapturedAmountInCents = $ccTransData->CapturedAmountInCents;
+			$newccTransData->CreateDate = $ccTransData->CreateDate;
+			$newccTransData->CreditCardBrandEnum = $ccTransData->CreditCardBrandEnum;
+			$newccTransData->CreditCardNumber = $ccTransData->CreditCardNumber;
+			$newccTransData->CreditCardTransactionStatusEnum = $ccTransData->CreditCardTransactionStatusEnum;
+			$newccTransData->CustomStatus = $ccTransData->CustomStatus;
+			$newccTransData->DueDate = $ccTransData->DueDate;
+			$newccTransData->InstallmentCount = $ccTransData->InstallmentCount;
+			$newccTransData->InstantBuyKey = $ccTransData->InstantBuyKey;
+			$newccTransData->IsReccurrency = $ccTransData->IsReccurrency;
+			$newccTransData->RefundedAmountInCents = $ccTransData->RefundedAmountInCents;
+			$newccTransData->TransactionIdentifier = $ccTransData->TransactionIdentifier;
+			$newccTransData->TransactionKey = $ccTransData->TransactionKey;
+			$newccTransData->TransactionReference = $ccTransData->TransactionReference;
+			$newccTransData->UniqueSequentialNumber = $ccTransData->UniqueSequentialNumber;
+			$newccTransData->VoidedAmountInCents = $ccTransData->VoidedAmountInCents;
+			
+			$newCreditCardTransactionDataCollection[$counter] = $newccTransData;
+			$counter += 1;
+		}
+		
+		return $newCreditCardTransactionDataCollection;
+	}
+	private function ConvertBoletoTransactionDataCollectionFromResponse($boletoTransactionDataCollection) {
+		$newBoletoTransactionDataCollection = array();
+		
+		$counter = 0;
+		foreach($boletoTransactionDataCollection as $boletoTransData) {
+			$newBoletoTransData = new BoletoTransactionData();
+			
+			$newBoletoTransData->AmountInCents = $boletoTransData->AmountInCents;
+			$newBoletoTransData->AmountPaidInCents = $boletoTransData->AmountPaidInCents;
+			$newBoletoTransData->BankNumber = $boletoTransData->BankNumber;
+			$newBoletoTransData->Barcode = $boletoTransData->Barcode;
+			$newBoletoTransData->BoletoTransactionStatusEnum = $boletoTransData->BoletoTransactionStatusEnum;
+			$newBoletoTransData->BoletoUrl = $boletoTransData->BoletoUrl;
+			$newBoletoTransData->CreateDate = $boletoTransData->CreateDate;
+			$newBoletoTransData->CustomStatus = $boletoTransData->CustomStatus;
+			$newBoletoTransData->ExpirationDate = $boletoTransData->ExpirationDate;
+			$newBoletoTransData->NossoNumero = $boletoTransData->NossoNumero;
+			$newBoletoTransData->TransactionKey = $boletoTransData->TransactionKey;
+			$newBoletoTransData->TransactionReference = $boletoTransData->TransactionReference;
+			
+			$newBoletoTransactionDataCollection[$counter] = $newBoletoTransData;
+			$counter += 1;
+		}
+		
+		return $newBoletoTransactionDataCollection;
+	}
+	private function ConvertCreditCardDataCollectionFromResponse($creditCardDataCollection) {
+		$newCreditCardDataCollection = array();
+		
+		$counter = 0;
+		foreach($creditCardDataCollection as $ccData) {
+			$newccData = new BoletoTransactionData();
+			
+			$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
+			$newccData->CreditCardNumber = $ccData->CreditCardNumber;
+			$newccData->InstantBuyKey = $ccData->InstantBuyKey;
+			$newccData->IsExpiredCreditCard = $ccData->IsExpiredCreditCard;
+			
+			$newCreditCardDataCollection[$counter] = $newccData;
+			$counter += 1;
+		}
+		
+		return $newCreditCardDataCollection;
+	}
 }
 ?>
