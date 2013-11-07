@@ -45,11 +45,16 @@ $queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
 $queryResponse = $client->QueryOrder($queryRequest);
 */
 
+/*
 $instantBuyDataRequest = CreateGetInstantBuyData("90dbcec9-b623-4abf-95a3-df36293cdf19");
 
 $instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
 
-echo $instantBuyDataResponse;
+//echo $instantBuyDataResponse;
+var_dump($instantBuyDataResponse);
+*/
+
+
 
 
 function CreateOrder() {

@@ -163,10 +163,25 @@ class MundiPaggServiceClient {
 	}
 	
 	private function WriteXml($soapClient) {
+		$requestLocation = 'C:\Users\mriboli\Desktop\PHP_SoapRequest.xml';
+		$responseLocation = 'C:\Users\mriboli\Desktop\PHP_SoapResponse.xml';
+		$request = $soapClient->__getLastRequest();
+		$response = $soapClient->__getLastResponse();
+		
+		unlink($requestLocation);
+		$fr = fopen($requestLocation, 'w');
+		fwrite($fr, $request);
+		fclose($fr);
+		
+		unlink($responseLocation);
+		$fr = fopen($responseLocation, 'w');
+		fwrite($fr, $response);
+		fclose($fr);
+		
 		echo "Request:" . NEWLINE;
-		echo html_entity_decode( $soapClient->__getLastRequest());
+		echo html_entity_decode( $request);
 		echo NEWLINE . NEWLINE . "Response:" . NEWLINE;
-		echo html_entity_decode( $soapClient->__getLastResponse());
+		echo html_entity_decode( $response);
 	}
 	
 	
@@ -406,7 +421,7 @@ class MundiPaggServiceClient {
 		return $response;
 	}
 	
-	////// REQUEST CONVERTERS (Classes to Arrays)
+	////// REQUEST CONVERTERS (SdkClasses to Arrays)
 	private function ConvertBuyerFromRequest(Buyer $buyerRequest) {
 		$newBuyer = array();
 		$newBuyer["BuyerKey"] = $buyerRequest->BuyerKey;
@@ -569,7 +584,7 @@ class MundiPaggServiceClient {
 		return $newccTransCollection;
 	}
 	
-	////// RESPONSE CONVERTERS
+	////// RESPONSE CONVERTERS (stdClasses to SdkClasses)
 	private function ConvertCreditCardTransactionResultCollectionFromResponse($creditCardTransactionResultCollection) {
 		$newccTransResultCollection = array();
 		$counter = 0;
