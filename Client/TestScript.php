@@ -9,11 +9,11 @@ $orderRequest = CreateOrder(); // Creates an order
 
 $client = new MundiPaggServiceClient();
 
-//$orderResponse = $client->CreateOrder($orderRequest);
+$orderResponse = $client->CreateOrder($orderRequest);
 
 echo NEWLINE . NEWLINE;
 
-//TratarOrderResponse($orderResponse);
+TratarOrderResponse($orderResponse);
 
 echo NEWLINE . NEWLINE;
 
