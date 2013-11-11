@@ -1,7 +1,7 @@
 <?php
-class RetryOrderCreditCardTransactionRequestCollection {
-	public SecurityCode; // string
-	public TransactionKey; // Guid
+class RetryOrderCreditCardTransactionRequest {
+	public $SecurityCode; // string
+	public $TransactionKey; // Guid
 	
 	function __construct() {
 		$this->SecurityCode = "";

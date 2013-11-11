@@ -1,15 +1,17 @@
 <?php
-include_once "C:\wamp\www\Sdk\UnitTests\AuxFuncions.php";
-include_once "..\Client\Converter.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\..\\Variables.php";
+include_once "AuxFuncions.php";
+include_once $CONVERTERS . "SoapConverter.php";
 
 const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
 
 class ConverterTest extends PHPUnit_Framework_TestCase {
 	function testConvertBuyerFromRequest() {
+		$converter = new SoapConverter();
 		$buyer = CreateBuyer();
 		
 		// Buyer convertido para array
-		$convBuyer = ConvertBuyerFromRequest($buyer);
+		$convBuyer = $converter->ConvertBuyerFromRequest($buyer);
 		
 		$this->assertEquals($buyer->BuyerKey, $convBuyer["BuyerKey"]);
 		$this->assertEquals($buyer->BuyerReference, $convBuyer["BuyerReference"]);
@@ -59,8 +61,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	function testConvertCreditCardTransactionCollectionFromRequest() {
+		$converter = new SoapConverter();
 		$ccTransCollection = CreateCreditCardTransactionCollection(); // Criar método para instanciar a collection
-		$convccTransCollection = ConvertCreditCardTransactionCollectionFromRequest($ccTransCollection);
+		$convccTransCollection = $converter->ConvertCreditCardTransactionCollectionFromRequest($ccTransCollection);
 		
 		$count = count($ccTransCollection);
 		$convCount = count($convccTransCollection);
@@ -85,8 +88,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	function testConvertBoletoTransactionCollectionFromRequest() {
+		$converter = new SoapConverter();
 		$boletoTransCollection = CreateBoletoTransactionCollection();
-		$convBoletoTransCollection = ConvertBoletoTransactionCollectionFromRequest($boletoTransCollection);
+		$convBoletoTransCollection = $converter->ConvertBoletoTransactionCollectionFromRequest($boletoTransCollection);
 		
 		$count = count($boletoTransCollection);
 		$convCount = count($convBoletoTransCollection);
@@ -106,8 +110,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	function testConvertShoppingCartCollectionFromRequest() {
+		$converter = new SoapConverter();
 		$shopCartCollection = CreateShoppingCartCollection();
-		$convShopCartCollection = ConvertShoppingCartCollectionFromRequest($shopCartCollection);
+		$convShopCartCollection = $converter->ConvertShoppingCartCollectionFromRequest($shopCartCollection);
 
 		$count = count($shopCartCollection);
 		$convCount = count($convShopCartCollection);
@@ -144,8 +149,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	function testConvertManageCreditCardTransactionCollectionFromRequest() {
+		$converter = new SoapConverter();
 		$ccTransCollection = CreateManageCreditCardTransactionRequestCollection();
-		$convccTransCollection = ConvertManageCreditCardTransactionCollectionFromRequest($ccTransCollection);
+		$convccTransCollection = $converter->ConvertManageCreditCardTransactionCollectionFromRequest($ccTransCollection);
 		
 		$count = count($ccTransCollection);
 		$convCount = count($convccTransCollection);
@@ -165,21 +171,25 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 	
-	/*
-	function testConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest($creditCardTransactionRequestCollection) {
-		$newccTransCollection = array();
-		$counter = 0;
-		foreach ($creditCardTransactionRequestCollection as $ccTransRequest) {
-			$newccTransRequest = array();
-			$newccTransRequest["SecurityCode"] = $ccTransRequest->SecurityCode;
-			$newccTransRequest["TransactionKey"] = $ccTransRequest->TransactionKey;
-
-			$newccTransCollection["RetryOrderCreditCardTransactionRequest"][$counter] = $newcckTransRequest;
-			$counter += 1;
-		}
+	function testConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest() {
+		$converter = new SoapConverter();
+		$ccTransCollection = CreateRetryOrderCreditCardTransactionRequestCollection();
+		$convccTransCollection = $converter->ConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest($ccTransCollection);
 		
-		return $newccTransCollection;
+		$count = count($ccTransCollection);
+		$convCount = count($convccTransCollection);
+		
+		$this->assertEquals($count, $convCount);
+		
+		var_dump ( $convccTransCollection );
+		return;
+		for($counter = 0; $counter < $count; $counter++) {
+			$ccTrans  = $ccTransCollection[$counter];
+			$convccTrans = $convccTransCollection[$counter];
+			
+			$this->assertEquals($ccTrans->SecurityCode, $convccTrans["SecurityCode"]);
+			$this->assertEquals($ccTrans->TransactionKey, $convccTrans["TransactionKey"]);
+		}
 	}
-	*/
 }
 ?>

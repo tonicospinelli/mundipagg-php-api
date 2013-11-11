@@ -1,5 +1,6 @@
 <?php
-include_once "..\Client\Classes\Enum.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\Variables.php";
+include_once $MAIN_CLASSES . "Enum.php";
 
 final class StatusNotification {
 	public $AmountInCents;

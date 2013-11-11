@@ -1,4 +1,7 @@
 <?php
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\Variables.php";
+include_once $MAIN_CLASSES . "RetryOrderCreditCardTransactionRequest.php";
+
 class RetryOrderRequest {
 	public $MerchantKey; // Guid
 	public $OrderKey; // Guid

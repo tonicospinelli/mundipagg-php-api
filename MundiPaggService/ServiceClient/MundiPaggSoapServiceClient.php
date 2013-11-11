@@ -1,17 +1,15 @@
 <?php
-include_once "Converter.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\Variables.php";
+include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.php
 
-class MundiPaggServiceClient {
-	//const WSDL = 'https://transaction.mundipaggone.com/MundiPaggService.svc?wsdl';
-	const PRODUCTION_WSDL = 'wsdl.xml';
-	const SANDBOX_WSDL = 'wsdl.xml';
-	
+class MundiPaggSoapServiceClient {
 	private $soapClient = null;
-	private $isClosed = true;
+	private $converter = null;
+	private $needToCloseClient = false;
 	
 	public $showXmlData = false; // Variável para testes apenas. LEMBRETE: Retirar variável após todos os testes concluídos.
-	
-	function __construct($wsdlUrl = null) {
+		
+	function __construct(string $wsdlUrl = null, ISoapConverter $converter = null) {
 		$soap_opt = array();
 		$soap_opt['encoding'] = 'UTF-8';
 		$soap_opt['trace'] = true;
@@ -19,12 +17,15 @@ class MundiPaggServiceClient {
 		//$soap_opt['cache_wsdl'] = WSDL_CACHE_NONE;
 		//$soap_opt['soap_version'] = SOAP_1_1;
 		
-		if (is_null($wsdlUrl)) { $wsdlUrl = MundiPaggServiceClient::PRODUCTION_WSDL; }
-		if (strtoupper(trim($wsdlUrl)) == 'SANDBOX') { $wsdlUrl = MundiPaggServiceClient::SANDBOX_WSDL; }
+		global $PRODUCTION_WSDL, $SANDBOX_WSDL, $CONVERTERS;
+		
+		if (is_null($wsdlUrl)) { $wsdlUrl = $PRODUCTION_WSDL; }
+		if (is_null($converter)) { $converter = new SoapConverter(); }
+		if (strtoupper(trim($wsdlUrl)) == 'SANDBOX') { $wsdlUrl = $SANDBOX_WSDL; }
 		
 		try {
 			$soapClient = new SoapClient($wsdlUrl, $soap_opt);
-		} catch(SoapFault $falut) {
+		} catch(SoapFault $fault) {
 			$this->soapClient = null;
 			$this->isClosed = true;
 			
@@ -34,11 +35,11 @@ class MundiPaggServiceClient {
 		$this->soapClient = $soapClient;
 		$this->isClosed = false;
 	}
-	
+		
 	function __destruct() {
 		$this->Close();
 	}
-	
+		
 	///////////////////////////////////////////////////////
 	////// Main Methods ///////////////////////////////////
 	///////////////////////////////////////////////////////
@@ -46,9 +47,10 @@ class MundiPaggServiceClient {
 		if (!$this->isClosed) {
 			$this->isClosed = true;
 			try {
-			$this->soapClient->close();
-			} catch (Exception ex) { }
+				$this->soapClient->close();
+			} catch (Exception $ex) { }
 			$this->soapClient = null;
+			$this->converter = null;
 		}
 	}
 	
@@ -57,7 +59,7 @@ class MundiPaggServiceClient {
 		
 		if (is_null($order)) { return null; }
 		
-		$request = ConvertOrderRequest($order);
+		$request = $this->converter->ConvertOrderRequest($order);
 		
 		try {
 			$result = $this->soapClient->CreateOrder($request);
@@ -73,7 +75,7 @@ class MundiPaggServiceClient {
 		$orderResponse = $result->CreateOrderResult;
 		
 		// Converte a resposta e retorna o objeto.
-		return ConvertOrderResponse($orderResponse);
+		return $this->converter->ConvertOrderResponse($orderResponse);
 	}
 
 	function ManageOrder(ManageOrderRequest $order) {
@@ -81,7 +83,7 @@ class MundiPaggServiceClient {
 
 		if (is_null($order)) { return null; }
 		
-		$request = ConvertManageOrderRequest($order);
+		$request = $this->converter->ConvertManageOrderRequest($order);
 		
 		try {
 			$result = $this->soapClient->ManageOrder($request);
@@ -94,7 +96,7 @@ class MundiPaggServiceClient {
 		$orderResponse = $result->ManageOrderResult;
 		
 		// Converte a resposta e retorna o objeto.
-		return ConvertManageOrderResponse($orderResponse);
+		return $this->converter->ConvertManageOrderResponse($orderResponse);
 	}
 	
 	function RetryOrder(RetryOrderRequest $order) {
@@ -102,7 +104,7 @@ class MundiPaggServiceClient {
 		
 		if (is_null($order)) { return null; }
 		
-		$request = ConvertRetryOrderRequest($order);
+		$request = $this->converter->ConvertRetryOrderRequest($order);
 		
 		try {
 			$result = $this->soapClient->RetryOrder($request);
@@ -115,7 +117,7 @@ class MundiPaggServiceClient {
 		$orderResponse = $result->RetryOrderResult;
 		
 		// Converte a resposta e retorna o objeto.
-		return ConvertRetryOrderResponse($orderResponse);
+		return $this->converter->ConvertRetryOrderResponse($orderResponse);
 	}
 	
 	function QueryOrder(QueryOrderRequest $order) {
@@ -123,7 +125,7 @@ class MundiPaggServiceClient {
 		
 		if (is_null($order)) { return null; }
 		
-		$request = ConvertQueryOrderRequest($order);
+		$request = $this->converter->ConvertQueryOrderRequest($order);
 		
 		try {
 			$result = $this->soapClient->QueryOrder($request);
@@ -136,7 +138,7 @@ class MundiPaggServiceClient {
 		$orderResponse = $result->QueryOrderResult;
 		
 		// Converte a resposta e retorna o objeto.
-		return ConvertQueryOrderResponse($orderResponse);
+		return $this->converter->ConvertQueryOrderResponse($orderResponse);
 	}
 
 	function GetInstantBuyData(GetInstantBuyDataRequest $order) {
@@ -144,7 +146,7 @@ class MundiPaggServiceClient {
 		
 		if (is_null($order)) { return null; }
 		
-		$request = ConvertGetInstantBuyDataRequest($order);
+		$request = $this->converter->ConvertGetInstantBuyDataRequest($order);
 		
 		try {
 			$result = $this->soapClient->GetInstantBuyData($request);
@@ -157,7 +159,7 @@ class MundiPaggServiceClient {
 		$orderResponse = $result->GetInstantBuyDataResult;
 		
 		// Converte a resposta e retorna o objeto.
-		return ConvertGetInstantBuyDataResponse($orderResponse);
+		return $this->converter->ConvertGetInstantBuyDataResponse($orderResponse);
 	}
 	
 	///////////////////////////////////////////////////////

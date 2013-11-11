@@ -1,5 +1,6 @@
 <?php
-include_once "MundiPaggServiceClient.php";
+include "Variables.php";
+include_once $SERVICE_CLIENT . "MundiPaggSoapServiceClient.php";
 
 const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
 
@@ -7,15 +8,15 @@ $orderRequest = CreateOrder(); // Creates an order
 
 //echo $orderRequest;
 
-$client = new MundiPaggServiceClient();
+$client = new MundiPaggSoapServiceClient();
 
-$orderResponse = $client->CreateOrder($orderRequest);
-
-echo NEWLINE . NEWLINE;
-
-TratarOrderResponse($orderResponse);
+//$orderResponse = $client->CreateOrder($orderRequest);
 
 echo NEWLINE . NEWLINE;
+
+//TratarOrderResponse($orderResponse);
+
+//echo NEWLINE . NEWLINE;
 
 //$manageRequest = CreateManageOrder($orderResponse);
 //$manageRequest = CreateManageOrder("c4759866-ccaf-4533-a959-ce7c57880886");
@@ -27,7 +28,6 @@ echo NEWLINE . NEWLINE;
 //echo NEWLINE . NEWLINE . NEWLINE;
 //echo $manageResponse;
 
-/*
 $retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
 
 echo NEWLINE . NEWLINE . NEWLINE;
@@ -37,7 +37,6 @@ $retryResponse = $client->RetryOrder($retryRequest);
 
 echo NEWLINE . NEWLINE . NEWLINE;
 echo $retryResponse;
-*/
 
 /*
 $queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880886");

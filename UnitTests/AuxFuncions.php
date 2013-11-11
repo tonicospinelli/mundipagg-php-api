@@ -116,6 +116,14 @@ function CreateManageCreditCardTransactionRequest() {
 	return $ccTrans;
 }
 
+function CreateRetryOrderCreditCardTransactionRequest() {
+	$ccTrans1 = new RetryOrderCreditCardTransactionRequest();
+	$ccTrans1->SecurityCode = 123;
+	$ccTrans1->TransactionKey = "c4759866-ccaf-4533-a959-ce7c57880886";
+	
+	return $ccTrans1;
+}
+
 function CreateCreditCardTransactionCollection() {
 	$ccTrans1 = CreateCreditCardTransaction();
 	$ccTransCollection = array( $ccTrans1 );
@@ -134,6 +142,12 @@ function CreateShoppingCartCollection() {
 
 function CreateManageCreditCardTransactionRequestCollection() {
 	$ccTrans1 = CreateManageCreditCardTransactionRequest();
+	$ccTransCollection = array ( $ccTrans1 );
+	return $ccTransCollection;
+}
+
+function CreateRetryOrderCreditCardTransactionRequestCollection() {
+	$ccTrans1 = CreateRetryOrderCreditCardTransactionRequest();
 	$ccTransCollection = array ( $ccTrans1 );
 	return $ccTransCollection;
 }
