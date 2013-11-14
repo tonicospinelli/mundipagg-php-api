@@ -241,7 +241,7 @@ class SoapConverter implements ISoapConverter {
 	}
 
 	///////////////////////////////////////////////////////
-	////// REQUEST CONVERTERS (SdkClasses to Arrays) //////
+	////// REQUEST CONVERTERS (Entities to Arrays) //////
 	///////////////////////////////////////////////////////
 	public function ConvertBuyerFromRequest(Buyer $buyerRequest) {
 		$newBuyer = array();
@@ -407,7 +407,7 @@ class SoapConverter implements ISoapConverter {
 	}
 
 	///////////////////////////////////////////////////////
-	////// RESPONSE CONVERTERS (stdClasses to SdkClasses) /
+	////// RESPONSE CONVERTERS (stdClasses to Entities) /
 	///////////////////////////////////////////////////////
 	public function ConvertCreditCardTransactionResultCollectionFromResponse($creditCardTransactionResultCollection) {
 		$newccTransResultCollection = array();

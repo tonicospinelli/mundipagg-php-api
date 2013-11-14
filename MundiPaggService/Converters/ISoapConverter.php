@@ -1,16 +1,16 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "\\Variables.php";
-include_once $MAIN_CLASSES . "Enum.php";
-include_once $MAIN_CLASSES . "CreateOrderRequest.php";
-include_once $MAIN_CLASSES . "CreateOrderResponse.php";
-include_once $MAIN_CLASSES . "ManageOrderRequest.php";
-include_once $MAIN_CLASSES . "ManageOrderResponse.php";
-include_once $MAIN_CLASSES . "RetryOrderRequest.php";
-include_once $MAIN_CLASSES . "RetryOrderResponse.php";
-include_once $MAIN_CLASSES . "QueryOrderRequest.php";
-include_once $MAIN_CLASSES . "QueryOrderResponse.php";
-include_once $MAIN_CLASSES . "GetInstantBuyDataRequest.php";
-include_once $MAIN_CLASSES . "GetInstantBuyDataResponse.php";
+include_once $ENTITY . "Enum.php";
+include_once $ENTITY . "CreateOrderRequest.php";
+include_once $ENTITY . "CreateOrderResponse.php";
+include_once $ENTITY . "ManageOrderRequest.php";
+include_once $ENTITY . "ManageOrderResponse.php";
+include_once $ENTITY . "RetryOrderRequest.php";
+include_once $ENTITY . "RetryOrderResponse.php";
+include_once $ENTITY . "QueryOrderRequest.php";
+include_once $ENTITY . "QueryOrderResponse.php";
+include_once $ENTITY . "GetInstantBuyDataRequest.php";
+include_once $ENTITY . "GetInstantBuyDataResponse.php";
 
 interface ISoapConverter {
 	///////////////////////////////////////////////////////

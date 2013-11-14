@@ -2,10 +2,10 @@
 	//$DOCUMENT_ROOT = $_SERVER["DOCUMENT_ROOT"];
 	$DOCUMENT_ROOT = "C:\\wamp\\www";
 	
-	$SDK = "$DOCUMENT_ROOT\\MundiPaggService";
+	$SDK = "$DOCUMENT_ROOT\\Sdk\\MundiPaggService";
 	
-	$MAIN_CLASSES = "$SDK\\Classes\\";
-	$LOCAL_WSDL = "$SDK\\SDK/LocalWSDL\\";
+	$ENTITY = "$SDK\\Entity\\";
+	$LOCAL_WSDL = "$SDK\\LocalWSDL\\";
 	$POST_NOTIFICATION = "$SDK\\PostNotification\\";
 	$CONVERTERS = "$SDK\\Converters\\";
 	$SERVICE_CLIENT = "$SDK\\ServiceClient\\";

@@ -6,6 +6,7 @@ include_once $CONVERTERS . "SoapConverter.php";
 const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
 
 class ConverterTest extends PHPUnit_Framework_TestCase {
+
 	function testConvertBuyerFromRequest() {
 		$converter = new SoapConverter();
 		$buyer = CreateBuyer();
@@ -170,7 +171,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($ccTrans->TransactionReference, $convccTrans["TransactionReference"]);
 		}
 	}
-	
+
 	function testConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest() {
 		$converter = new SoapConverter();
 		$ccTransCollection = CreateRetryOrderCreditCardTransactionRequestCollection();
