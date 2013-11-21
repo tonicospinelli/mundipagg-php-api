@@ -1,4 +1,7 @@
 <?php
+///////////////////////////////////////////////////////
+////// REQUESTS ENTITIES //////////////////////////////
+///////////////////////////////////////////////////////
 function CreateOrder() {
 	$orderRequest = new CreateOrderRequest();
 	//$orderRequest = new stdClass();
@@ -124,6 +127,10 @@ function CreateRetryOrderCreditCardTransactionRequest() {
 	return $ccTrans1;
 }
 
+
+///////////////////////////////////////////////////////
+////// REQUEST COLLECTIONS ////////////////////////////
+///////////////////////////////////////////////////////
 function CreateCreditCardTransactionCollection() {
 	$ccTrans1 = CreateCreditCardTransaction();
 	$ccTransCollection = array( $ccTrans1 );
@@ -151,4 +158,68 @@ function CreateRetryOrderCreditCardTransactionRequestCollection() {
 	$ccTransCollection = array ( $ccTrans1 );
 	return $ccTransCollection;
 }
+
+
+///////////////////////////////////////////////////////
+////// RESPONSE STDCLASSES ////////////////////////////
+///////////////////////////////////////////////////////
+function CreateCreditCardTransactionResult() {
+	$ccTransResult = new stdclass();
+	
+	$ccTransResult->AcquirerMessage = 'Teste';
+	$ccTransResult->AcquirerReturnCode = 2;
+	$ccTransResult->AmountInCents = 20000;
+	$ccTransResult->AuthorizationCode = 5;
+	$ccTransResult->AuthorizedAmountInCents = 30000;
+	$ccTransResult->CapturedAmountInCents = 10000;
+	$ccTransResult->CreditCardNumber = '12345646512211';
+	$ccTransResult->CreditCardOperationEnum = 'AuthAndCapture';
+	$ccTransResult->CreditCardTransactionStatusEnum = 'Captured';
+	$ccTransResult->CustomStatus = 'Paid';
+	$ccTransResult->DueDate = null;
+	$ccTransResult->ExternalTimeInMilliseconds = 2009;
+	$ccTransResult->InstantBuyKey = "00000-000-0000-00000-00000000";
+	$ccTransResult->RefundedAmounInCents = 500;
+	$ccTransResult->Success = true;
+	$ccTransResult->TransactionIdentifier = "1";
+	$ccTransResult->TransactionKey = "11111-1111-1111-111111111-11111";
+	$ccTransResult->TransactionReference = "Nothing Really";
+	$ccTransResult->UniqueSequentialNumber = "1234567890";
+	$ccTransResult->VoidedAmountInCents = 400;
+	$ccTransResult->OriginalAcquirerReturnCollection = array ( "algo" => "seila" );
+	
+	return $ccTransResult;
+}
+
+function CreateBoletoTransactionResult() {
+	$boletoTrans = new stdclass();
+	
+	$boletoTrans->AmountInCents = 10000;
+	$boletoTrans->Barcode = "8888";
+	$boletoTrans->BoletoTransactionStatusEnum = 'Paid';
+	$boletoTrans->BoletoUrl = 'www.mundipagg.com';
+	$boletoTrans->CustomStatus = 'Paid';
+	$boletoTrans->NossoNumero = '12121245';
+	$boletoTrans->Success = true;
+	$boletoTrans->TransactionKey = "5555515-1121121-45556-4511515-44454";
+	$boletoTrans->TransactionReference = "SeiLa";
+	
+	return $boletoTrans;
+}
+
+///////////////////////////////////////////////////////
+////// RESPONSE COLLECTIONS ///////////////////////////
+///////////////////////////////////////////////////////
+function CreateCreditCardTransactionResultCollection() {
+	$ccTrans1 = CreateCreditCardTransactionResult();
+	$ccTransCollection = array ( $ccTrans1 );
+	return $ccTransCollection;
+}
+
+function CreateBoletoTransactionResultCollection() {
+	$boletoTrans1 = CreateBoletoTransactionResult();
+	$boletoTransCollection = array ( $boletoTrans1 );
+	return $boletoTransCollection;
+}
+
 ?>

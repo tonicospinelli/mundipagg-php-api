@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\Variables.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
 include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.php
 
 class MundiPaggSoapServiceClient {
@@ -73,7 +73,7 @@ class MundiPaggSoapServiceClient {
 		$this->WriteXml($this->soapClient);
 		
 		$orderResponse = $result->CreateOrderResult;
-		
+		var_dump($orderResponse);
 		// Converte a resposta e retorna o objeto.
 		return $this->converter->ConvertOrderResponse($orderResponse);
 	}

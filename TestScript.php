@@ -1,5 +1,5 @@
 <?php
-include "Variables.php";
+include $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
 include_once $SERVICE_CLIENT . "MundiPaggSoapServiceClient.php";
 
 const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
@@ -10,8 +10,8 @@ $orderRequest = CreateOrder(); // Creates an order
 
 $client = new MundiPaggSoapServiceClient();
 
-//$orderResponse = $client->CreateOrder($orderRequest);
-
+$orderResponse = $client->CreateOrder($orderRequest);
+exit();
 echo NEWLINE . NEWLINE;
 
 //TratarOrderResponse($orderResponse);
