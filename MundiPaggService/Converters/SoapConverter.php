@@ -469,8 +469,8 @@ class SoapConverter implements ISoapConverter {
 		$newSuggestion = null;
 		if (!is_null($suggestionResponse)) {
 			$newSuggestion = new MundiPaggSuggestion();
-			$newSuggestion->Code = $orderResponse->MundiPaggSuggestion->Code;
-			$newSuggestion->Message = $orderResponse->MundiPaggSuggestion->Message;
+			$newSuggestion->Code = $suggestionResponse->Code;
+			$newSuggestion->Message = $suggestionResponse->Message;
 		}
 		
 		return $newSuggestion;

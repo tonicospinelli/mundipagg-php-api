@@ -179,7 +179,7 @@ function CreateCreditCardTransactionResult() {
 	$ccTransResult->DueDate = null;
 	$ccTransResult->ExternalTimeInMilliseconds = 2009;
 	$ccTransResult->InstantBuyKey = "00000-000-0000-00000-00000000";
-	$ccTransResult->RefundedAmounInCents = 500;
+	$ccTransResult->RefundedAmountInCents = 500;
 	$ccTransResult->Success = true;
 	$ccTransResult->TransactionIdentifier = "1";
 	$ccTransResult->TransactionKey = "11111-1111-1111-111111111-11111";
@@ -205,6 +205,37 @@ function CreateBoletoTransactionResult() {
 	$boletoTrans->TransactionReference = "SeiLa";
 	
 	return $boletoTrans;
+}
+
+function CreateMundiPaggSuggestion() {
+	$suggestion = new stdclass();
+
+	$suggestion->Code = 200;
+	$suggestion->Message = "Mensagem";
+	
+	return $suggestion;
+}
+
+function CreateErrorReport() {
+	$errorReport = new stdclass();
+	
+	$errorReport->Category = "Teste";
+	
+	$errorItem1 = new stdclass();
+	$errorItem1->Description = "So testando...";
+	$errorItem1->ErrorCode = 12;
+	$errorItem1->ErrorField = "Nada";
+	$errorItem1->SeverityCodeEnum = "Error";
+	
+	$errorItem2 = new stdclass();
+	$errorItem2->Description = "Nada alem de um teste";
+	$errorItem2->ErrorCode = 400;
+	$errorItem2->ErrorField = "Hein";
+	$errorItem2->SeverityCodeEnum = "Warning";
+	
+	$errorReport->ErrorItemCollection = array ( $errorItem1, $errorItem2 );
+
+	return $errorReport;
 }
 
 ///////////////////////////////////////////////////////

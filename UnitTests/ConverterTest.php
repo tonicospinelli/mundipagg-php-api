@@ -1,5 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\..\\..\\MundiPaggServiceConfiguration.php";
+$_SERVER["DOCUMENT_ROOT"] = "C:\\wamp\\www";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
 include_once "AuxFuncions.php";
 include_once $CONVERTERS . "SoapConverter.php";
 
@@ -262,49 +263,44 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 	
-	public function ConvertMundiPaggSuggestionFromResponse() {
+	public function testConvertMundiPaggSuggestionFromResponse() {
 		$converter = new SoapConverter();
 		$mundiPaggSuggestion = CreateMundiPaggSuggestion();
 		$convMundiPaggSuggestion = $converter->ConvertMundiPaggSuggestionFromResponse($mundiPaggSuggestion);
 		
-		if (!is_null($suggestionResponse)) {
-			$newSuggestion = new MundiPaggSuggestion();
-			$newSuggestion->Code = $orderResponse->MundiPaggSuggestion->Code;
-			$newSuggestion->Message = $orderResponse->MundiPaggSuggestion->Message;
-		}
-		
-		return $newSuggestion;
+		$this->assertEquals($mundiPaggSuggestion->Code, $convMundiPaggSuggestion->Code);
+		$this->assertEquals($mundiPaggSuggestion->Message, $convMundiPaggSuggestion->Message);
 	}
 	
-	
-	/*
-	public function ConvertErrorReportFromResponse($errorReport) {
-		$newErrorReport = null;
-		if (!is_null($errorReport)) {
-			$newErrorReport = new ErrorReport();
-			$newErrorReport->Category = $errorReport->Category;
+	public function testConvertErrorReportFromResponse() {
+		$converter = new SoapConverter();
+		$errorReport = CreateErrorReport();
+		$convErrorReport = $converter->ConvertErrorReportFromResponse($errorReport);
+
+		$this->assertEquals($errorReport->Category, $convErrorReport->Category);
+		
+		$count = count($errorReport->ErrorItemCollection);
+		$convCount = count($convErrorReport->ErrorItemCollection);
+		
+		$this->assertEquals($count, $convCount);
+		
+		for($counter = 0; $counter < $count; $counter++) {
+			$errorItem = $errorReport->ErrorItemCollection[$counter];
+			$convErrorItem = $convErrorReport->ErrorItemCollection[$counter];
 			
-			$newErrorReport->ErrorItemCollection = null;
-			if (!is_null($errorReport->ErrorItemCollection)) {
-				$counter = 0;
-				foreach($errorReport->ErrorItemCollection as $errorItem) {
-					$newErrorItem = new ErrorItem();
-					$newErrorItem->Description = $errorItem->Description;
-					$newErrorItem->ErrorCode = $errorItem->ErrorCode;
-					$newErrorItem->ErrorField = $errorItem->ErrorField;
-					$newErrorItem->SeverityCodeEnum = $errorItem->SeverityCodeEnum;
-					
-					$newErrorReport->ErrorItemCollection[$counter] = $newErrorItem;
-					$counter += 1;
-				}
-			}
+			$this->assertEquals($errorItem->Description, $convErrorItem->Description);
+			$this->assertEquals($errorItem->ErrorCode, $convErrorItem->ErrorCode);
+			$this->assertEquals($errorItem->ErrorField, $convErrorItem->ErrorField);
+			$this->assertEquals($errorItem->SeverityCodeEnum, $convErrorItem->SeverityCodeEnum);
 		}
-		
-		return $newErrorReport;
 	}
-	public function ConvertOrderDataCollectionFromResponse($orderDataCollection) {
-		$newOrderDataCollection = array();
-		$counter = 0;
+	
+	public function ConvertOrderDataCollectionFromResponse() {
+		$converter = new SoapConverter();
+		$orderDataCollection = CreateOrderDataCollection();
+		$convOrderDataCollection = $converter->ConvertOrderDataCollectionFromResponse($orderDataCollection);
+		
+		
 		foreach ($orderDataCollection as $orderData) {
 			$newOrderData = new OrderData();
 			
@@ -322,6 +318,8 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 		
 		return $newOrderDataCollection;
 	}
+
+	/*
 	public function ConvertCreditCardTransactionDataCollectionFromResponse($creditCardTransactionDataCollection) {
 		$newCreditCardTransactionDataCollection = array();
 		
