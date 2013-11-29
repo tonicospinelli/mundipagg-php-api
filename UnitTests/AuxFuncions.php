@@ -238,6 +238,65 @@ function CreateErrorReport() {
 	return $errorReport;
 }
 
+function CreateOrderData() {
+	$orderData = new stdclass();
+	
+	$orderData->CreateDate = date("d/m/Y");
+	$orderData->OrderKey = '123456';
+	$orderData->OrderReference = 'MyOrder123';
+	$orderData->OrderStatusEnum = 'Opened';
+	$orderData->CreditCardTransactionDataCollection = CreateCreditCardTransactionDataCollection();
+	$orderData->BoletoTransactionDataCollection = CreateBoletoTransactionDataCollection();
+	
+	return $orderData;
+}
+
+function CreateCreditCardTransactionData() {
+	$creditCardTransactionData = new stdclass();
+	
+	$creditCardTransactionData->AcquirerAuthorizationCode = '2';
+	$creditCardTransactionData->AcquirerName = 'SDK_TESTER';
+	$creditCardTransactionData->AmountInCents = 10;
+	$creditCardTransactionData->AuthorizedAmountInCents = 5;
+	$creditCardTransactionData->CapturedAmountInCents = 20;
+	$creditCardTransactionData->CreateDate = date("d/m/Y");
+	$creditCardTransactionData->CreditCardBrandEnum = 'Visa';
+	$creditCardTransactionData->CreditCardNumber = '299298737316';
+	$creditCardTransactionData->CreditCardTransactionStatusEnum = 'AuthorizedPendingCapture';
+	$creditCardTransactionData->CustomStatus = 'Authorized';
+	$creditCardTransactionData->DueDate = date("d/m/Y");
+	$creditCardTransactionData->InstallmentCount = 0;
+	$creditCardTransactionData->InstantBuyKey = '9169FC79-50E2-4182-94CB-AAC0EB142062';
+	$creditCardTransactionData->IsReccurrency = false;
+	$creditCardTransactionData->RefundedAmountInCents = 300;
+	$creditCardTransactionData->TransactionIdentifier = '111222333444';
+	$creditCardTransactionData->TransactionKey = 'B1FE59C3-FED9-4153-A422-0FEB68306F5A';
+	$creditCardTransactionData->TransactionReference = 'MyCreditCardTransaction123';
+	$creditCardTransactionData->UniqueSequentialNumber = '654321';
+	$creditCardTransactionData->VoidedAmountInCents = 99;
+	
+	return $creditCardTransactionData;
+}
+
+function CreateBoletoTransactionData() {
+	$boletoTransactionData = new stdclass();
+	
+	$boletoTransactionData->AmountInCents = 15;
+	$boletoTransactionData->AmountPaidInCents = 020;
+	$boletoTransactionData->BankNumber = '29991002';
+	$boletoTransactionData->Barcode = '00394009949303';
+	$boletoTransactionData->BoletoTransactionStatusEnum = 'Generated';
+	$boletoTransactionData->BoletoUrl = 'www.mundipagg.com';
+	$boletoTransactionData->CreateDate = date("d/m/Y");
+	$boletoTransactionData->CustomStatus = 'Opened';
+	$boletoTransactionData->ExpirationDate = date("d/m/Y");
+	$boletoTransactionData->NossoNumero = '200028818';
+	$boletoTransactionData->TransactionKey = '27DBBB72-F730-4B8D-8504-2F83E4F47C19';
+	$boletoTransactionData->TransactionReference = 'MyBoletoTransaction123';
+
+	return $boletoTransactionData;
+}
+
 ///////////////////////////////////////////////////////
 ////// RESPONSE COLLECTIONS ///////////////////////////
 ///////////////////////////////////////////////////////
@@ -253,4 +312,22 @@ function CreateBoletoTransactionResultCollection() {
 	return $boletoTransCollection;
 }
 
+function CreateOrderDataCollection() {
+	$orderData = CreateOrderData();
+	$orderDataCollection = array ( $orderData );
+	return $orderDataCollection;
+}
+
+function CreateCreditCardTransactionDataCollection() {
+	$creditCardTransactionData = CreateCreditCardTransactionData();
+	$creditCardTransactionDataCollection = array ( $creditCardTransactionData );
+	return $creditCardTransactionDataCollection;
+}
+
+function CreateBoletoTransactionDataCollection() {
+	$boletoTransactionData = CreateBoletoTransactionData();
+	$boletoTransactionDataCollection = array ( $boletoTransactionData );
+	return $boletoTransactionDataCollection;
+
+}
 ?>

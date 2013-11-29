@@ -2,29 +2,53 @@
 include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
 include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.php
 
+/**
+* @author: Matheus
+* @version: 1.0
+* @last revision: 2013/11/29
+* 
+* This client consumes the MundiPagg One Service, using Soap.
+*/
 class MundiPaggSoapServiceClient {
 	private $soapClient = null;
 	private $converter = null;
 	private $needToCloseClient = false;
 	
-	public $showXmlData = false; // Variável para testes apenas. LEMBRETE: Retirar variável após todos os testes concluídos.
+	public $showXmlData = false; // For tests only. REMINDER: REMOVE THIS VARIABLE AFTER ALL TESTS ARE DONE.
 		
-	function __construct(string $wsdlUrl = null, ISoapConverter $converter = null) {
+	/**
+	* @param string $wsdlUri WSDL contract location.
+	* @param ISoapConverter $converter The object used to convert data in requests and responses.
+	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
+	*/
+	function __construct(string $wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = false) {
+		global $ENABLE_WSDL_CACHE; // Configuration Property
+		
+		$this->showXmlData = $traceSoapXml;
 		$soap_opt = array();
 		$soap_opt['encoding'] = 'UTF-8';
-		$soap_opt['trace'] = true;
+		$soap_opt['trace'] = $traceSoapXml;
 		$soap_opt['exceptions'] = true;
-		//$soap_opt['cache_wsdl'] = WSDL_CACHE_NONE;
+		// WSDL_CACHE_NONE, WSDL_CACHE_DISK, WSDL_CACHE_MEMORY or WSDL_CACHE_BOTH
+		if ($ENABLE_WSDL_CACHE) {
+			$soap_opt['cache_wsdl'] = WSDL_CACHE_MEMORY;
+		}
+		else {
+			$soap_opt['cache_wsdl'] = WSDL_CACHE_NONE;
+		}
 		//$soap_opt['soap_version'] = SOAP_1_1;
 		
-		global $PRODUCTION_WSDL, $SANDBOX_WSDL, $CONVERTERS;
+		global $PRODUCTION_WSDL, $SANDBOX_WSDL, $CONVERTERS; // Configuration Properties
 		
-		if (is_null($wsdlUrl)) { $wsdlUrl = $PRODUCTION_WSDL; }
+		if (is_null($wsdlUri)) { $wsdlUri = $PRODUCTION_WSDL; }
+		if (strtoupper(trim($wsdlUri)) == 'SANDBOX') { $wsdlUri = $SANDBOX_WSDL; }
+		if (strtoupper(trim($wsdlUri)) == 'PRODUCTION') { $wsdlUri = $PRODUCTION_WSDL; }
 		if (is_null($converter)) { $converter = new SoapConverter(); }
-		if (strtoupper(trim($wsdlUrl)) == 'SANDBOX') { $wsdlUrl = $SANDBOX_WSDL; }
+		$this->converter = $converter;
 		
 		try {
-			$soapClient = new SoapClient($wsdlUrl, $soap_opt);
+			// Creates the soap client.
+			$soapClient = new SoapClient($wsdlUri, $soap_opt);
 		} catch(SoapFault $fault) {
 			$this->soapClient = null;
 			$this->isClosed = true;
@@ -43,49 +67,63 @@ class MundiPaggSoapServiceClient {
 	///////////////////////////////////////////////////////
 	////// Main Methods ///////////////////////////////////
 	///////////////////////////////////////////////////////
+	/**
+	* Closes the client.
+	*/
 	function Close() {
-		if (!$this->isClosed) {
-			$this->isClosed = true;
+		// If the connection is open, closes it.
+		if ($this->isClosed == false) {
 			try {
 				$this->soapClient->close();
 			} catch (Exception $ex) { }
+			
 			$this->soapClient = null;
 			$this->converter = null;
+			$this->isClosed = true;
 		}
 	}
 	
-	function CreateOrder(CreateOrderRequest $order) {
+	/**
+	* Creates an order in MundiPagg One.
+	* @param CreateOrderRequest $createOrderRequest Then order to be created.
+	*/
+	function CreateOrder(CreateOrderRequest $createOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 		
-		if (is_null($order)) { return null; }
+		if (is_null($createOrderRequest)) { return null; }
 		
-		$request = $this->converter->ConvertOrderRequest($order);
+		// Converts the request to be sent by the SoapClient.
+		$request = $this->converter->ConvertOrderRequest($createOrderRequest);
 		
 		try {
+			// Executes the method.
 			$result = $this->soapClient->CreateOrder($request);
 		} catch (SoapFault $fault) {
-			//echo "Fault code: {$fault->faultcode}" . NEWLINE;
-			//echo "Fault string: {$fault->faultstring}" . NEWLINE;
 			throw $fault;
-			//return null;
 		}
 
 		$this->WriteXml($this->soapClient);
 		
-		$orderResponse = $result->CreateOrderResult;
-		var_dump($orderResponse);
-		// Converte a resposta e retorna o objeto.
-		return $this->converter->ConvertOrderResponse($orderResponse);
+		$createOrderResponse = $result->CreateOrderResult;
+		
+		// Converts and returns the response.
+		return $this->converter->ConvertOrderResponse($createOrderResponse);
 	}
 
-	function ManageOrder(ManageOrderRequest $order) {
+	/**
+	* Manages an order in MundiPagg One.
+	* @param ManageOrderRequest $manageOrderRequest Then order to be managed.
+	*/
+	function ManageOrder(ManageOrderRequest $manageOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 
-		if (is_null($order)) { return null; }
+		if (is_null($manageOrderRequest)) { return null; }
 		
-		$request = $this->converter->ConvertManageOrderRequest($order);
+		// Converts the request to be sent by the SoapClient.
+		$request = $this->converter->ConvertManageOrderRequest($manageOrderRequest);
 		
 		try {
+			// Executes the method.
 			$result = $this->soapClient->ManageOrder($request);
 		} catch (SoapFault $fault) {
 			throw $fault;
@@ -93,20 +131,26 @@ class MundiPaggSoapServiceClient {
 
 		$this->WriteXml($this->soapClient);
 		
-		$orderResponse = $result->ManageOrderResult;
+		$manageOrderResponse = $result->ManageOrderResult;
 		
-		// Converte a resposta e retorna o objeto.
-		return $this->converter->ConvertManageOrderResponse($orderResponse);
+		// Converts and returns the response.
+		return $this->converter->ConvertManageOrderResponse($manageOrderResponse);
 	}
 	
-	function RetryOrder(RetryOrderRequest $order) {
+	/**
+	* Retries an order in MundiPagg One.
+	* @param RetryOrderRequest $retryOrderRequest Then order to be retried.
+	*/
+	function RetryOrder(RetryOrderRequest $retryOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 		
-		if (is_null($order)) { return null; }
+		if (is_null($retryOrderRequest)) { return null; }
 		
-		$request = $this->converter->ConvertRetryOrderRequest($order);
+		// Converts the request to be sent by the SoapClient.
+		$request = $this->converter->ConvertRetryOrderRequest($retryOrderRequest);
 		
 		try {
+			// Executes the method.
 			$result = $this->soapClient->RetryOrder($request);
 		} catch (SoapFault $fault) {
 			throw $fault;
@@ -114,20 +158,26 @@ class MundiPaggSoapServiceClient {
 
 		$this->WriteXml($this->soapClient);
 		
-		$orderResponse = $result->RetryOrderResult;
+		$retryOrderResponse = $result->RetryOrderResult;
 		
-		// Converte a resposta e retorna o objeto.
-		return $this->converter->ConvertRetryOrderResponse($orderResponse);
+		// Converts and returns the response.
+		return $this->converter->ConvertRetryOrderResponse($retryOrderResponse);
 	}
 	
-	function QueryOrder(QueryOrderRequest $order) {
+	/**
+	* Returns all information about an order in MundiPagg One.
+	* @param QueryOrderRequest $queryOrderRequest Then order to be returned.
+	*/
+	function QueryOrder(QueryOrderRequest $queryOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 		
-		if (is_null($order)) { return null; }
+		if (is_null($queryOrderRequest)) { return null; }
 		
-		$request = $this->converter->ConvertQueryOrderRequest($order);
+		// Converts the request to be sent by the SoapClient.
+		$request = $this->converter->ConvertQueryOrderRequest($queryOrderRequest);
 		
 		try {
+			// Executes the method.
 			$result = $this->soapClient->QueryOrder($request);
 		} catch (SoapFault $fault) {
 			throw $fault;
@@ -135,20 +185,26 @@ class MundiPaggSoapServiceClient {
 
 		$this->WriteXml($this->soapClient);
 		
-		$orderResponse = $result->QueryOrderResult;
+		$queryOrderResponse = $result->QueryOrderResult;
 		
-		// Converte a resposta e retorna o objeto.
-		return $this->converter->ConvertQueryOrderResponse($orderResponse);
+		// Converts and returns the response.
+		return $this->converter->ConvertQueryOrderResponse($queryOrderResponse);
 	}
 
-	function GetInstantBuyData(GetInstantBuyDataRequest $order) {
+	/**
+	* Returns information about a buyer's credit cards.
+	* @param GetInstantBuyDataRequest $getInstantBuyDataRequest Then order to be created.
+	*/
+	function GetInstantBuyData(GetInstantBuyDataRequest $getInstantBuyDataRequest) {
 		$this->ThrowExceptionIfClosed();
 		
-		if (is_null($order)) { return null; }
+		if (is_null($getInstantBuyDataRequest)) { return null; }
 		
-		$request = $this->converter->ConvertGetInstantBuyDataRequest($order);
+		// Converts the request to be sent by the SoapClient.
+		$request = $this->converter->ConvertGetInstantBuyDataRequest($getInstantBuyDataRequest);
 		
 		try {
+			// Executes the method.
 			$result = $this->soapClient->GetInstantBuyData($request);
 		} catch (SoapFault $fault) {
 			throw $fault;
@@ -156,15 +212,16 @@ class MundiPaggSoapServiceClient {
 
 		$this->WriteXml($this->soapClient);
 		
-		$orderResponse = $result->GetInstantBuyDataResult;
+		$getInstantBuyDataResponse = $result->GetInstantBuyDataResult;
 		
-		// Converte a resposta e retorna o objeto.
-		return $this->converter->ConvertGetInstantBuyDataResponse($orderResponse);
+		// Converts and returns the response.
+		return $this->converter->ConvertGetInstantBuyDataResponse($getInstantBuyDataResponse);
 	}
 	
 	///////////////////////////////////////////////////////
-	////// Métodos privados ///////////////////////////////
+	////// Aux Methods ////////////////////////////////////
 	///////////////////////////////////////////////////////
+	/// For tests only. Writes the xml request in a file. REMINDER: Remove after all tests are done.
 	private function WriteXml($soapClient) {
 		if (!$this->showXmlData) { return; }
 		$requestLocation = 'C:\Users\mriboli\Desktop\PHP_SoapRequest.xml';
@@ -188,6 +245,9 @@ class MundiPaggSoapServiceClient {
 		echo html_entity_decode( $response);
 	}
 	
+	/**
+	* Throws an exception if the client is closed.
+	*/
 	private function ThrowExceptionIfClosed() {
 		if ($this->isClosed) { throw new Exception("The client is closed!"); }
 	}

@@ -4,59 +4,37 @@ include_once $SERVICE_CLIENT . "MundiPaggSoapServiceClient.php";
 
 const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
 
-$orderRequest = CreateOrder(); // Creates an order
-
-//echo $orderRequest;
-
 $client = new MundiPaggSoapServiceClient();
 
-$orderResponse = $client->CreateOrder($orderRequest);
-exit();
-echo NEWLINE . NEWLINE;
+// $orderRequest = CreateCreateOrder(); // Creates an order
+// $orderResponse = $client->CreateOrder($orderRequest);
+// var_dump($orderResponse);
 
 //TratarOrderResponse($orderResponse);
 
-//echo NEWLINE . NEWLINE;
+// $manageRequest = CreateManageOrder("e7b4534c-1b22-4491-acea-67121606b697");
+// $manageResponse = $client->ManageOrder($manageRequest);
+// var_dump ($manageResponse);
 
-//$manageRequest = CreateManageOrder($orderResponse);
-//$manageRequest = CreateManageOrder("c4759866-ccaf-4533-a959-ce7c57880886");
-//$manageRequest = CreateManageOrder($orderResponse->OrderKey);
+//$retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+//$retryRequest = CreateRetryOrder($orderResponse->OrderKey);
+//$retryResponse = $client->RetryOrder($retryRequest);
+//var_dump($retryResponse);
 
-//$manageResponse = $client->ManageOrder($manageRequest);
+// $queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+// //$queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880881"); // Não existe.
+// $queryResponse = $client->QueryOrder($queryRequest);
+// var_dump($queryResponse, $queryResponse->OrderDataCollection[0]);
 
 
-//echo NEWLINE . NEWLINE . NEWLINE;
-//echo $manageResponse;
-
-$retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
-
-echo NEWLINE . NEWLINE . NEWLINE;
-echo $retryRequest;
-
-$retryResponse = $client->RetryOrder($retryRequest);
-
-echo NEWLINE . NEWLINE . NEWLINE;
-echo $retryResponse;
-
-/*
-$queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
-
-$queryResponse = $client->QueryOrder($queryRequest);
-*/
-
-/*
 $instantBuyDataRequest = CreateGetInstantBuyData("90dbcec9-b623-4abf-95a3-df36293cdf19");
-
 $instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
-
-//echo $instantBuyDataResponse;
 var_dump($instantBuyDataResponse);
-*/
+
+exit();
 
 
-
-
-function CreateOrder() {
+function CreateCreateOrder() {
 	$orderRequest = new CreateOrderRequest();
 	//$orderRequest = new stdClass();
 
@@ -194,7 +172,8 @@ function CreateManageOrder($orderKey) {
 	$manageRequest->OrderKey = $orderKey;
 	$manageRequest->MerchantKey = MerchantKey;
 	
-	$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Capture;
+	//$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Capture;
+	$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Void;
 	
 	return $manageRequest;
 }

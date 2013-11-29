@@ -295,110 +295,107 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 	
-	public function ConvertOrderDataCollectionFromResponse() {
+	public function testConvertOrderDataCollectionFromResponse() {
 		$converter = new SoapConverter();
 		$orderDataCollection = CreateOrderDataCollection();
 		$convOrderDataCollection = $converter->ConvertOrderDataCollectionFromResponse($orderDataCollection);
 		
+		$count = count($orderDataCollection);
+		$convCount = count($convOrderDataCollection);
 		
-		foreach ($orderDataCollection as $orderData) {
-			$newOrderData = new OrderData();
+		$this->assertEquals($count, $convCount);
+		
+		for($counter = 0; $counter < $count; $counter++) {
+			$orderData = $orderDataCollection[$counter];
+			$convOrderData = $convOrderDataCollection[$counter];
 			
-			$newOrderData->CreateDate = $orderData->CreateDate;
-			$newOrderData->OrderKey = $orderData->OrderKey;
-			$newOrderData->OrderReference = $orderData->OrderReference;
-			$newOrderData->OrderStatusEnum = $orderData->OrderStatusEnum;
+			$this->assertEquals($orderData->CreateDate, $convOrderData->CreateDate);
+			$this->assertEquals($orderData->OrderKey, $convOrderData->OrderKey);
+			$this->assertEquals($orderData->OrderReference, $convOrderData->OrderReference);
+			$this->assertEquals($orderData->OrderStatusEnum, $convOrderData->OrderStatusEnum);
 			
-			$newOrderData->CreditCardTransactionDataCollection = $this->ConvertCreditCardTransactionDataCollectionFromResponse($orderData->CreditCardTransactionDataCollection);
-			$newOrderData->BoletoTransactionDataCollection = $this->ConvertBoletoTransactionDataCollectionFromResponse($orderData->BoletoTransactionDataCollection);
-			
-			$newOrderDataCollection[$counter] = $newOrderData;
-			$counter += 1;
+			$this->checkCreditCardTransactionDataCollection($orderData->CreditCardTransactionDataCollection, $convOrderData->CreditCardTransactionDataCollection);
+			$this->checkBoletoTransactionDataCollection($orderData->BoletoTransactionDataCollection, $convOrderData->BoletoTransactionDataCollection);
 		}
-		
-		return $newOrderDataCollection;
 	}
 
-	/*
-	public function ConvertCreditCardTransactionDataCollectionFromResponse($creditCardTransactionDataCollection) {
-		$newCreditCardTransactionDataCollection = array();
+	public function testConvertCreditCardTransactionDataCollectionFromResponse() {
+		$converter = new SoapConverter();
+		$creditCardTransactionDataCollection = CreateCreditCardTransactionDataCollection();
+		$convCreditCardTransactionDataCollection = $converter->ConvertCreditCardTransactionDataCollectionFromResponse($creditCardTransactionDataCollection);
 		
-		$counter = 0;
-		foreach($creditCardTransactionDataCollection as $ccTransData) {
-			$newccTransData = new CreditCardTransactionData();
-			
-			$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
-			$newccTransData->AcquirerName = $ccTransData->AcquirerName;
-			$newccTransData->AmountInCents = $ccTransData->AmountInCents;
-			$newccTransData->AuthorizedAmountInCents = $ccTransData->AuthorizedAmountInCents;
-			$newccTransData->CapturedAmountInCents = $ccTransData->CapturedAmountInCents;
-			$newccTransData->CreateDate = $ccTransData->CreateDate;
-			$newccTransData->CreditCardBrandEnum = $ccTransData->CreditCardBrandEnum;
-			$newccTransData->CreditCardNumber = $ccTransData->CreditCardNumber;
-			$newccTransData->CreditCardTransactionStatusEnum = $ccTransData->CreditCardTransactionStatusEnum;
-			$newccTransData->CustomStatus = $ccTransData->CustomStatus;
-			$newccTransData->DueDate = $ccTransData->DueDate;
-			$newccTransData->InstallmentCount = $ccTransData->InstallmentCount;
-			$newccTransData->InstantBuyKey = $ccTransData->InstantBuyKey;
-			$newccTransData->IsReccurrency = $ccTransData->IsReccurrency;
-			$newccTransData->RefundedAmountInCents = $ccTransData->RefundedAmountInCents;
-			$newccTransData->TransactionIdentifier = $ccTransData->TransactionIdentifier;
-			$newccTransData->TransactionKey = $ccTransData->TransactionKey;
-			$newccTransData->TransactionReference = $ccTransData->TransactionReference;
-			$newccTransData->UniqueSequentialNumber = $ccTransData->UniqueSequentialNumber;
-			$newccTransData->VoidedAmountInCents = $ccTransData->VoidedAmountInCents;
-			
-			$newCreditCardTransactionDataCollection[$counter] = $newccTransData;
-			$counter += 1;
-		}
-		
-		return $newCreditCardTransactionDataCollection;
+		$this->checkCreditCardTransactionDataCollection($creditCardTransactionDataCollection, $convCreditCardTransactionDataCollection);
 	}
-	public function ConvertBoletoTransactionDataCollectionFromResponse($boletoTransactionDataCollection) {
-		$newBoletoTransactionDataCollection = array();
+	
+	public function testConvertBoletoTransactionDataCollectionFromResponse() {
+		$converter = new SoapConverter();
+		$boletoTransactionDataCollection = CreateBoletoTransactionDataCollection();
+		$convBoletoTransactionDataCollection = $converter->ConvertBoletoTransactionDataCollectionFromResponse($boletoTransactionDataCollection);
 		
-		$counter = 0;
-		foreach($boletoTransactionDataCollection as $boletoTransData) {
-			$newBoletoTransData = new BoletoTransactionData();
-			
-			$newBoletoTransData->AmountInCents = $boletoTransData->AmountInCents;
-			$newBoletoTransData->AmountPaidInCents = $boletoTransData->AmountPaidInCents;
-			$newBoletoTransData->BankNumber = $boletoTransData->BankNumber;
-			$newBoletoTransData->Barcode = $boletoTransData->Barcode;
-			$newBoletoTransData->BoletoTransactionStatusEnum = $boletoTransData->BoletoTransactionStatusEnum;
-			$newBoletoTransData->BoletoUrl = $boletoTransData->BoletoUrl;
-			$newBoletoTransData->CreateDate = $boletoTransData->CreateDate;
-			$newBoletoTransData->CustomStatus = $boletoTransData->CustomStatus;
-			$newBoletoTransData->ExpirationDate = $boletoTransData->ExpirationDate;
-			$newBoletoTransData->NossoNumero = $boletoTransData->NossoNumero;
-			$newBoletoTransData->TransactionKey = $boletoTransData->TransactionKey;
-			$newBoletoTransData->TransactionReference = $boletoTransData->TransactionReference;
-			
-			$newBoletoTransactionDataCollection[$counter] = $newBoletoTransData;
-			$counter += 1;
-		}
-		
-		return $newBoletoTransactionDataCollection;
-	}
-	public function ConvertCreditCardDataCollectionFromResponse($creditCardDataCollection) {
-		$newCreditCardDataCollection = array();
-		
-		$counter = 0;
-		foreach($creditCardDataCollection as $ccData) {
-			$newccData = new BoletoTransactionData();
-			
-			$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
-			$newccData->CreditCardNumber = $ccData->CreditCardNumber;
-			$newccData->InstantBuyKey = $ccData->InstantBuyKey;
-			$newccData->IsExpiredCreditCard = $ccData->IsExpiredCreditCard;
-			
-			$newCreditCardDataCollection[$counter] = $newccData;
-			$counter += 1;
-		}
-		
-		return $newCreditCardDataCollection;
+		$this->checkBoletoTransactionDataCollection($boletoTransactionDataCollection, $convBoletoTransactionDataCollection);
 	}
 
-	*/
+	public function testConvertCreditCardDataCollectionFromResponse() {
+		throw new Exception("Not implemented method.");
+	}
+	
+	////// AUX METHODS //////////
+	function checkCreditCardTransactionDataCollection($creditCardTransactionDataCollection, $convCreditCardTransactionDataCollection) {
+		$count = count($creditCardTransactionDataCollection);
+		$convCount = count($convCreditCardTransactionDataCollection);
+		
+		$this->assertEquals($count, $convCount);
+		
+		for($counter = 0; $counter < $count; $counter++) {
+			$creditCardTransactionData = $creditCardTransactionDataCollection[$counter];
+			$convCreditCardTransactionData = $convCreditCardTransactionDataCollection[$counter];
+		
+			$this->assertEquals($creditCardTransactionData->AcquirerAuthorizationCode, $convCreditCardTransactionData->AcquirerAuthorizationCode);
+			$this->assertEquals($creditCardTransactionData->AcquirerName, $convCreditCardTransactionData->AcquirerName);
+			$this->assertEquals($creditCardTransactionData->AmountInCents, $convCreditCardTransactionData->AmountInCents);
+			$this->assertEquals($creditCardTransactionData->AuthorizedAmountInCents, $convCreditCardTransactionData->AuthorizedAmountInCents);
+			$this->assertEquals($creditCardTransactionData->CapturedAmountInCents, $convCreditCardTransactionData->CapturedAmountInCents);
+			$this->assertEquals($creditCardTransactionData->CreateDate, $convCreditCardTransactionData->CreateDate);
+			$this->assertEquals($creditCardTransactionData->CreditCardBrandEnum, $convCreditCardTransactionData->CreditCardBrandEnum);
+			$this->assertEquals($creditCardTransactionData->CreditCardNumber, $convCreditCardTransactionData->CreditCardNumber);
+			$this->assertEquals($creditCardTransactionData->CreditCardTransactionStatusEnum, $convCreditCardTransactionData->CreditCardTransactionStatusEnum);
+			$this->assertEquals($creditCardTransactionData->CustomStatus, $convCreditCardTransactionData->CustomStatus);
+			$this->assertEquals($creditCardTransactionData->DueDate, $convCreditCardTransactionData->DueDate);
+			$this->assertEquals($creditCardTransactionData->InstallmentCount, $convCreditCardTransactionData->InstallmentCount);
+			$this->assertEquals($creditCardTransactionData->InstantBuyKey, $convCreditCardTransactionData->InstantBuyKey);
+			$this->assertEquals($creditCardTransactionData->IsReccurrency, $convCreditCardTransactionData->IsReccurrency);
+			$this->assertEquals($creditCardTransactionData->RefundedAmountInCents, $convCreditCardTransactionData->RefundedAmountInCents);
+			$this->assertEquals($creditCardTransactionData->TransactionIdentifier, $convCreditCardTransactionData->TransactionIdentifier);
+			$this->assertEquals($creditCardTransactionData->TransactionKey, $convCreditCardTransactionData->TransactionKey);
+			$this->assertEquals($creditCardTransactionData->TransactionReference, $convCreditCardTransactionData->TransactionReference);
+			$this->assertEquals($creditCardTransactionData->UniqueSequentialNumber, $convCreditCardTransactionData->UniqueSequentialNumber);
+			$this->assertEquals($creditCardTransactionData->VoidedAmountInCents, $convCreditCardTransactionData->VoidedAmountInCents);
+		}
+	}
+	
+	function checkBoletoTransactionDataCollection($boletoTransactionDataCollection, $convBoletoTransactionDataCollection) {
+		$count = count($boletoTransactionDataCollection);
+		$convCount = count($convBoletoTransactionDataCollection);
+		
+		$this->assertEquals($count, $convCount);
+		
+		for($counter = 0; $counter < $count; $counter++) {
+			$boletoTransactionData = $boletoTransactionDataCollection[$counter];
+			$convBoletoTransactionData = $convBoletoTransactionDataCollection[$counter];
+		
+			$this->assertEquals($boletoTransactionData->AmountInCents, $convBoletoTransactionData->AmountInCents);
+			$this->assertEquals($boletoTransactionData->AmountPaidInCents, $convBoletoTransactionData->AmountPaidInCents);
+			$this->assertEquals($boletoTransactionData->BankNumber, $convBoletoTransactionData->BankNumber);
+			$this->assertEquals($boletoTransactionData->Barcode, $convBoletoTransactionData->Barcode);
+			$this->assertEquals($boletoTransactionData->BoletoTransactionStatusEnum, $convBoletoTransactionData->BoletoTransactionStatusEnum);
+			$this->assertEquals($boletoTransactionData->BoletoUrl, $convBoletoTransactionData->BoletoUrl);
+			$this->assertEquals($boletoTransactionData->CreateDate, $convBoletoTransactionData->CreateDate);
+			$this->assertEquals($boletoTransactionData->CustomStatus, $convBoletoTransactionData->CustomStatus);
+			$this->assertEquals($boletoTransactionData->ExpirationDate, $convBoletoTransactionData->ExpirationDate);
+			$this->assertEquals($boletoTransactionData->NossoNumero, $convBoletoTransactionData->NossoNumero);
+			$this->assertEquals($boletoTransactionData->TransactionKey, $convBoletoTransactionData->TransactionKey);
+			$this->assertEquals($boletoTransactionData->TransactionReference, $convBoletoTransactionData->TransactionReference);
+		}
+	}
 }
 ?>

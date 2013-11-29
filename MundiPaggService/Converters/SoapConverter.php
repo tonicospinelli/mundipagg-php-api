@@ -437,7 +437,7 @@ class SoapConverter implements ISoapConverter {
 			$newccTrans->VoidedAmountInCents = $ccTrans->VoidedAmountInCents;
 			$newccTrans->OriginalAcquirerReturnCollection = $ccTrans->OriginalAcquirerReturnCollection;
 			
-			$newccTransResultCollection[$counter] = $ccTrans;
+			$newccTransResultCollection[$counter] = $newccTrans;
 			$counter += 1;
 		}
 		
@@ -467,7 +467,7 @@ class SoapConverter implements ISoapConverter {
 	}
 	public function ConvertMundiPaggSuggestionFromResponse($suggestionResponse) {
 		$newSuggestion = null;
-		if (!is_null($suggestionResponse)) {
+		if (is_null($suggestionResponse) == false) {
 			$newSuggestion = new MundiPaggSuggestion();
 			$newSuggestion->Code = $suggestionResponse->Code;
 			$newSuggestion->Message = $suggestionResponse->Message;
@@ -500,21 +500,25 @@ class SoapConverter implements ISoapConverter {
 		return $newErrorReport;
 	}
 	public function ConvertOrderDataCollectionFromResponse($orderDataCollection) {
-		$newOrderDataCollection = array();
-		$counter = 0;
-		foreach ($orderDataCollection as $orderData) {
-			$newOrderData = new OrderData();
-			
-			$newOrderData->CreateDate = $orderData->CreateDate;
-			$newOrderData->OrderKey = $orderData->OrderKey;
-			$newOrderData->OrderReference = $orderData->OrderReference;
-			$newOrderData->OrderStatusEnum = $orderData->OrderStatusEnum;
-			
-			$newOrderData->CreditCardTransactionDataCollection = $this->ConvertCreditCardTransactionDataCollectionFromResponse($orderData->CreditCardTransactionDataCollection);
-			$newOrderData->BoletoTransactionDataCollection = $this->ConvertBoletoTransactionDataCollectionFromResponse($orderData->BoletoTransactionDataCollection);
-			
-			$newOrderDataCollection[$counter] = $newOrderData;
-			$counter += 1;
+		$newOrderDataCollection = null;
+
+		if (is_null($orderDataCollection) == false) {
+			$newOrderDataCollection = array();
+			$counter = 0;
+			foreach ($orderDataCollection as $orderData) {
+				$newOrderData = new OrderData();
+				
+				$newOrderData->CreateDate = $orderData->CreateDate;
+				$newOrderData->OrderKey = $orderData->OrderKey;
+				$newOrderData->OrderReference = $orderData->OrderReference;
+				$newOrderData->OrderStatusEnum = $orderData->OrderStatusEnum;
+				
+				$newOrderData->CreditCardTransactionDataCollection = $this->ConvertCreditCardTransactionDataCollectionFromResponse($orderData->CreditCardTransactionDataCollection);
+				$newOrderData->BoletoTransactionDataCollection = $this->ConvertBoletoTransactionDataCollectionFromResponse($orderData->BoletoTransactionDataCollection);
+				
+				$newOrderDataCollection[$counter] = $newOrderData;
+				$counter += 1;
+			}
 		}
 		
 		return $newOrderDataCollection;
@@ -529,23 +533,35 @@ class SoapConverter implements ISoapConverter {
 			$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
 			$newccTransData->AcquirerName = $ccTransData->AcquirerName;
 			$newccTransData->AmountInCents = $ccTransData->AmountInCents;
-			$newccTransData->AuthorizedAmountInCents = $ccTransData->AuthorizedAmountInCents;
-			$newccTransData->CapturedAmountInCents = $ccTransData->CapturedAmountInCents;
+			if (isset($ccTransData->AuthorizedAmountInCents)) {
+				$newccTransData->AuthorizedAmountInCents = $ccTransData->AuthorizedAmountInCents;
+			}
+			if (isset($ccTransData->CapturedAmountInCents)) {
+				$newccTransData->CapturedAmountInCents = $ccTransData->CapturedAmountInCents;
+			}
 			$newccTransData->CreateDate = $ccTransData->CreateDate;
 			$newccTransData->CreditCardBrandEnum = $ccTransData->CreditCardBrandEnum;
 			$newccTransData->CreditCardNumber = $ccTransData->CreditCardNumber;
 			$newccTransData->CreditCardTransactionStatusEnum = $ccTransData->CreditCardTransactionStatusEnum;
 			$newccTransData->CustomStatus = $ccTransData->CustomStatus;
-			$newccTransData->DueDate = $ccTransData->DueDate;
+			if (isset($ccTransData->DueDate)) {
+				$newccTransData->DueDate = $ccTransData->DueDate;
+			}
 			$newccTransData->InstallmentCount = $ccTransData->InstallmentCount;
 			$newccTransData->InstantBuyKey = $ccTransData->InstantBuyKey;
-			$newccTransData->IsReccurrency = $ccTransData->IsReccurrency;
-			$newccTransData->RefundedAmountInCents = $ccTransData->RefundedAmountInCents;
+			if (isset($ccTransData->IsReccurrency)) {
+				$newccTransData->IsReccurrency = $ccTransData->IsReccurrency;
+			}
+			if (isset($ccTransData->RefundedAmountInCents)) {
+				$newccTransData->RefundedAmountInCents = $ccTransData->RefundedAmountInCents;
+			}
 			$newccTransData->TransactionIdentifier = $ccTransData->TransactionIdentifier;
 			$newccTransData->TransactionKey = $ccTransData->TransactionKey;
 			$newccTransData->TransactionReference = $ccTransData->TransactionReference;
 			$newccTransData->UniqueSequentialNumber = $ccTransData->UniqueSequentialNumber;
-			$newccTransData->VoidedAmountInCents = $ccTransData->VoidedAmountInCents;
+			if (isset($ccTransData->VoidedAmountInCents)) {
+				$newccTransData->VoidedAmountInCents = $ccTransData->VoidedAmountInCents;
+			}
 			
 			$newCreditCardTransactionDataCollection[$counter] = $newccTransData;
 			$counter += 1;
@@ -584,7 +600,7 @@ class SoapConverter implements ISoapConverter {
 		
 		$counter = 0;
 		foreach($creditCardDataCollection as $ccData) {
-			$newccData = new BoletoTransactionData();
+			$newccData = new CreditCardData();
 			
 			$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
 			$newccData->CreditCardNumber = $ccData->CreditCardNumber;
