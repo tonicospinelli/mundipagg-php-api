@@ -3,22 +3,37 @@ include_once "Recurrency.php";
 include_once "Enum.php";
 
 class CreditCardTransaction {
+	/*@var [Long] Transaction amount in cents*/
 	public $AmountInCents; //long
-	public $CaptureDelayInMinutes; // int
-	public $CreditCardBrandEnum; // CreditCardBrandEnum
-	public $CreditCardNumber; // string
-	public $CreditCardOperationEnum; // Nullable<CreditCardOperationEnum>
-	public $ExpMonth; // int
-	public $ExpYear; // int
-	public $HolderName; // string
-	public $IataAmountInCents; // long
-	public $InstallmentCount; // int
-	public $InstantBuyKey; // Guid
-	public $PaymentMethodCode; // int
-	public $SecurityCode; // string
+	/*@var [int] capture delay in minutes */
+	public $CaptureDelayInMinutes;
+	/*@var [String] Card brand. Use the static property BrandEnum*/
+	public $CreditCardBrandEnum;
+	/*@var [String] Credit Card Number.*/
+	public $CreditCardNumber;
+	/*@var [String] Type of operation. Use the static property OperationEnum*/
+	public $CreditCardOperationEnum;
+	/*@var [Integer] Credit card expiration month*/
+	public $ExpMonth; 
+	/*@return [Integer] Credit card expiration year*/
+	public $ExpYear;
+	/*@var [Integer] Name in the credit card*/
+	public $HolderName;
+	/*@var [long] Iata Value */
+	public $IataAmountInCents;
+	/*@var [Integer] Transaction installments count.*/
+	public $InstallmentCount;
+	/*@var [guid] Instant buy key*/
+	public $InstantBuyKey;
+	/*@var [integer] Payment Method*/
+	public $PaymentMethodCode;
+	/*@var [Integer] Card security code.*/
+	public $SecurityCode;
 	public $ThirdPartyMerchantKey; // Guid
-	public $TransactionReference; // string
-	public $Recurrency; // Recurrency
+	/*@var [String] Custom transaction identifier.*/
+	public $TransactionReference;
+	/*@var [Recurrency] Transaction recurrency information.*/
+	public $Recurrency;
 
 	function __construct() {
 		$this->AmountInCents = 0;

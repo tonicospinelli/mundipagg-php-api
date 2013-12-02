@@ -1,13 +1,22 @@
 <?php
 include_once "Enum.php";
+	
+
 
 class BoletoTransaction {
-	public $AmountInCents; // long
-	public $BankNumber; // string
+	/** @var [Long] Transaction amount in cents*/
+	public $AmountInCents;
+	/** @var [Integer] Bank code*/
+	public $BankNumber;
+	/** @var [Integer] How many days after the creation the boleto will be valid.
+	* @param Default: 7*/
 	public $DaysToAddInBoletoExpirationDate; // Nullable<int>
-	public $Instructions; // string
-	public $NossoNumero; // string
-	public $TransactionReference; // string
+	/** @var [String] */
+	public $Instructions; 
+	/** @var [Integer] Number used to identify the boleto */
+	public $NossoNumero; 
+	/** @var  [Long] Custom transaction identifier.*/
+	public $TransactionReference; 
 	
 	function __construct() {
 		$this->AmountInCents = 0;

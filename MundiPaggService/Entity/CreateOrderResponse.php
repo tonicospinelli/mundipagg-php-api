@@ -7,18 +7,31 @@ include_once "ErrorReport.php";
 
 
 class CreateOrderResponse {
-	public $BuyerKey; // Guid
-	public $MerchantKey; // Guid
-	public $MundiPaggTimeInMilliseconds; // long
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $OrderStatusEnum; // OrderStatusEnum
-	public $RequestKey; // Guid
-	public $Success; // bool
-	public $Version; // string
-	public $CreditCardTransactionResultCollection; // CreditCardTransactionResult[]
-	public $BoletoTransactionResultCollection; // BoletoTransactionResult[]
+	/*@var [Buyer] Buyer instance*/
+	public $BuyerKey;
+	/*@var [Guid] MundiPagg merchant identification */
+	public $MerchantKey; 
+	/*@var [long] Time to execute the operation */
+	public $MundiPaggTimeInMilliseconds;
+	/*@var [Guid] Order key */
+	public $OrderKey;
+	/*@var [String] Custom order identification.*/
+	public $OrderReference;
+	/*@var [OrderStatusEnum] Order Status */
+	public $OrderStatusEnum;  
+	/*@var [Guid] Globally Unique Identifier.*/
+	/*@param Default: 00000000-0000-0000-0000-000000000000*/
+	public $RequestKey;
+	/*@var [bool] Fail or Success*/
+	public $Success;
+	/*@var [string] Version */
+	public $Version;
+	/*@var [CreditCardTransactionResult] CreditCard Transaction Result collection*/
+	public $CreditCardTransactionResultCollection; 
+	/*@var [BoletoTransactionResult] Boleto Transaction Result collection*/
+	public $BoletoTransactionResultCollection;
 	public $MundiPaggSuggestion; // MundiPaggSuggestion
+	/*@var [ErrorReport] Error Report */
 	public $ErrorReport; // ErrorReport
 	
 	function __construct() {

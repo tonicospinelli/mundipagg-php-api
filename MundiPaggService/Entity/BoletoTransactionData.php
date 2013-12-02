@@ -2,18 +2,30 @@
 include_once "Enum.php";
 
 class BoletoTransactionData {
-	public $AmountInCents; // long
-	public $AmountPaidInCents; // long
-	public $BankNumber; // string
-	public $Barcode; // string
-	public $BoletoTransactionStatusEnum; // BoletoTransactionStatusEnum
-	public $BoletoUrl; // string
-	public $CreateDate; // DateTime
-	public $CustomStatus; // string
-	public $ExpirationDate; // DateTime
-	public $NossoNumero; // string
-	public $TransactionKey; // Guid
-	public $TransactionReference; // string
+	/*@var [long] Transaction amount in cents */
+	public $AmountInCents;
+	/*@var [long] Amount paid in cents */
+	public $AmountPaidInCents;
+	/*@var [string] Bank code*/
+	public $BankNumber;
+	/*@var [string] Barcode of boleto*/
+	public $Barcode;
+	/*@var [BoletoTransactionStatusEnum] Boleto Transaction status */
+	public $BoletoTransactionStatusEnum;
+	/*@var [string] Boleto URL */
+	public $BoletoUrl; 
+	/*@var [DateTime]  Date of Boleto creation */
+	public $CreateDate; 
+	/*@var [string] Custom Status*/
+	public $CustomStatus;
+	/*@var [DateTime]  Date of boleto Expiration*/
+	public $ExpirationDate; 
+	/*@var [string] Number used to identify the boleto */
+	public $NossoNumero;
+	/*@var [Guid] The Transaction Key*/
+	public $TransactionKey;
+	/*@var [string] The Transaction Reference*/
+	public $TransactionReference;
 	
 	function __construct() {
 		$this->AmountInCents = 0;

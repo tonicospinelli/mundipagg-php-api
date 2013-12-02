@@ -1,13 +1,17 @@
 <?php
 include_once "ISoapConverter.php";
 
+/** Converters Interface
+*
+*/
 class SoapConverter implements ISoapConverter {
-	///////////////////////////////////////////////////////
-	////// MAIN CONVERTERS ////////////////////////////////
-	///////////////////////////////////////////////////////
+	
 	public function ConvertOrderRequest(CreateOrderRequest $orderRequest) {
-		$order = array(); // Cria o pedido
-		$request = array(); // Cria a requisição
+
+		$order = array();
+		
+
+		$request = array(); 
 		
 		$order["MerchantKey"] = $orderRequest->MerchantKey; 
 		$order["OrderReference"] = $orderRequest->OrderReference;
@@ -18,13 +22,12 @@ class SoapConverter implements ISoapConverter {
 		$order["RequestKey"] = $orderRequest->RequestKey;
 		$order["Retries"] = $orderRequest->Retries;
 
-		// Copia o Buyer
+
 		if (!is_null($orderRequest->Buyer)) {
 			$order["Buyer"] = $this->ConvertBuyerFromRequest($orderRequest->Buyer);
 		}
 		
 		
-		//Dados da transação de Cartão de Crédito
 		if (is_null($orderRequest->CreditCardTransactionCollection)) {
 			$order["CreditCardTransactionCollection"] = null;
 		}
@@ -32,7 +35,7 @@ class SoapConverter implements ISoapConverter {
 			$order["CreditCardTransactionCollection"] = $this->ConvertCreditCardTransactionCollectionFromRequest($orderRequest->CreditCardTransactionCollection);
 		}
 		
-		//Dados da transação de Cartão de Crédito
+		// Data from Boleto.
 		if (is_null($orderRequest->BoletoTransactionCollection)) {
 			$order["BoletoTransactionCollection"] = null;
 		}
@@ -40,7 +43,7 @@ class SoapConverter implements ISoapConverter {
 			$order["BoletoTransactionCollection"] = $this->ConvertBoletoTransactionCollectionFromRequest($orderRequest->BoletoTransactionCollection);
 		}
 		
-		//Dados do ShoppingCart
+		// Data from Shopping Cart
 		if (!is_null($orderRequest->ShoppingCartCollection)) {
 			if (is_array($orderRequest->ShoppingCartCollection)) {
 				$order["ShoppingCartCollection"] = $this->ConvertShoppingCartCollectionFromRequest($orderRequest->ShoppingCartCollection);
@@ -51,9 +54,16 @@ class SoapConverter implements ISoapConverter {
 
 		return $request;
 	}
+	
+	/* <b>Convert Order Response</b>
+	* <ul>
+	*<li> Create Order Response </li>
+	*</ul>
+	*/
 	public function ConvertOrderResponse($orderResponse) {
 		if (is_null($orderResponse)) { throw new Exception("Null response!"); }
 		
+		//Create Order Response
 		$response = new CreateOrderResponse();
 		
 		$response->BuyerKey = $orderResponse->BuyerKey;
@@ -66,23 +76,31 @@ class SoapConverter implements ISoapConverter {
 		$response->Success = $orderResponse->Success;
 		$response->Version = $orderResponse->Version;
 		
-		//// CreditCardTransactionResultCollection
+		// CreditCard Transaction Result Collection
 		$response->CreditCardTransactionResultCollection = $this->ConvertCreditCardTransactionResultCollectionFromResponse($orderResponse->CreditCardTransactionResultCollection);
 
-		//// BoletoTransactionResultCollection
+		// Boleto Transaction Result Collection
 		$response->BoletoTransactionResultCollection = $this->ConvertBoletoTransactionResultCollectionFromResponse($orderResponse->BoletoTransactionResultCollection);
 		
-		//// MundiPaggSuggestion
+		// MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($orderResponse->MundiPaggSuggestion);
 		
-		//// ErrorReport
+		// ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($orderResponse->ErrorReport);
 		
 		return $response;
 	}
-
+	
+	/*<b>Convert Manage Order Request</b>
+	* <ul>
+	*<li> Create Order</li>
+	*<li> Create Request</li>
+	*</ul>
+	*/
 	public function ConvertManageOrderRequest(ManageOrderRequest $manageRequest) {
+		//Create Order Request
 		$request = array();
+		//Create Order
 		$order = array();
 		
 		$order["ManageOrderOperationEnum"] = $manageRequest->ManageOrderOperationEnum;
@@ -91,20 +109,24 @@ class SoapConverter implements ISoapConverter {
 		$order["OrderReference"] = $manageRequest->OrderReference;
 		$order["RequestKey"] = $manageRequest->RequestKey;
 		
-		//ManageCreditCardTransactionCollection
+		//Manage Credit Card Transaction Collection
 		if (!is_null($manageRequest->ManageCreditCardTransactionCollection)) {
 			if (is_array($manageRequest->ManageCreditCardTransactionCollection)) {
 				$order["ManageCreditCardTransactionCollection"] = $this->ConvertManageCreditCardTransactionCollection($manageRequest->ManageCreditCardTransactionCollection);
 			}
 		}
 		
-		$request["manageOrderRequest"] = $order; // Adiciona o pedido na requisição
+		// Add Order to request
+		$request["manageOrderRequest"] = $order; 
 		
 		return $request;
 	}
+	
+	//Convert Manage Order Response 
 	public function ConvertManageOrderResponse($manageResponse) {
 		if (is_null($manageResponse)) { throw new Exception("Null response!"); }
 		
+		// Create Manage Order Response 
 		$response = new ManageOrderResponse();
 		
 		$response->ManageOrderOperationEnum = $manageResponse->ManageOrderOperationEnum;
@@ -116,22 +138,24 @@ class SoapConverter implements ISoapConverter {
 		$response->Success = $manageResponse->Success;
 		$response->Version = $manageResponse->Version;
 
-		// MundiPaggSuggestion
+		// MundiPagg Suggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($manageResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// Error Report
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($manageResponse->ErrorReport);
 		
-		// CreditCardTransactionResultCollection
+		// Credit Card Transaction Result Collection
 		$response->CreditCardTransactionResultCollection = $this->ConvertCreditCardTransactionResultCollectionFromResponse($manageResponse->CreditCardTransactionResultCollection);
 		
-		// BoletoTransactionResultCollection
+		// Boleto Transaction Result Collection
 		$response->BoletoTransactionResultCollection = $this->ConvertBoletoTransactionResultCollectionFromResponse($manageResponse->BoletoTransactionResultCollection);
 
 		return $response;
 	}
-
+	
+	//Convert Retry Order Request 
 	public function ConvertRetryOrderRequest(RetryOrderRequest $retryRequest) {
+		//Create
 		$request = array();
 		$order = array();
 		

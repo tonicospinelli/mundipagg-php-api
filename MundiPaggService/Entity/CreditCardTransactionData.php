@@ -2,25 +2,45 @@
 include_once "Enum.php";
 
 class CreditCardTransactionData {
+	/*@var [string]*/
 	public $AcquirerAuthorizationCode; // string
+	/*@var [string]*/
 	public $AcquirerName; // string
+	/*@var [long]*/
 	public $AmountInCents; // long
+	/*@var [long]*/
 	public $AuthorizedAmountInCents; // Nullable<long>
+	/*@var [long]*/
 	public $CapturedAmountInCents; // Nullable<long>
+	/*@var [DateTime]*/
 	public $CreateDate; // DateTime
+	/*@var [CreditCardBrandEnum]*/
 	public $CreditCardBrandEnum; // CreditCardBrandEnum
+	/*@var [string]*/
 	public $CreditCardNumber; // string
+	/*@var [CreditCardTransactionStatusEnum]*/
 	public $CreditCardTransactionStatusEnum; // CreditCardTransactionStatusEnum
+	/*@var [string]*/
 	public $CustomStatus; // string
+	/*@var [DateTime]*/
 	public $DueDate; // Nullable<DateTime>
+	/*@var [integer]*/
 	public $InstallmentCount; // int
+	/*@var [guid]*/
 	public $InstantBuyKey; // Guid
+	/*@var [bool]*/
 	public $IsReccurrency; // bool
+	/*@var [long]*/
 	public $RefundedAmountInCents; // Nullable<long>
+	/*@var [string]*/
 	public $TransactionIdentifier; // string
+	/*@var [guid]*/
 	public $TransactionKey; // Guid
+	/*@var [string]*/
 	public $TransactionReference; // string
+	/*@var [string]*/
 	public $UniqueSequentialNumber; // string
+	/*@var [long]*/
 	public $VoidedAmountInCents; // Nullable<long>
 	
 	function __construct() {

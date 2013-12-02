@@ -2,15 +2,26 @@
 include_once "Enum.php";
 
 class BuyerAddress {
-	public $AddressTypeEnum; // AddressTypeEnum
-	public $City; // string
-	public $Complement; // string
-	public $CountryEnum; // CountryEnum
-	public $District; // string
-	public $Number; // string
-	public $State; // string
-	public $Street; // string
-	public $ZipCode; // string
+	/* @var [AddressTypeEnum] Address Type.*/
+    /*@param Default: Residential*/
+	public $AddressTypeEnum; 
+	/*@var [String] City.*/
+	public $City;
+	/*@var [String] Address complement.*/
+	public $Complement;
+	/*var [CountryEnum] Address country.*/
+	/*@param Default: Brazil*/
+	public $CountryEnum;
+	/*@var [String] District.*/
+	public $District;
+	/*@var [String] Address number.*/
+	public $Number; 
+	/*@var [String] Address state.*/
+	public $State; 
+	/*@var [String] Street*/
+	public $Street;
+	/*@var [String] Zip Code.*/
+	public $ZipCode;
 	
 	function __construct() {
 		$this->AddressTypeEnum = AddressTypeEnum::__default;

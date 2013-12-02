@@ -6,18 +6,32 @@ include_once "ShoppingCart.php";
 include_once "Enum.php";
 
 class CreateOrderRequest {
-	public $AmountInCents; // long
-	public $AmountInCentsToConsiderPaid; // long
-	public $CurrencyIsoEnum; // CurrencyIsoEnum
-	public $EmailUpdateToBuyerEnum; // Nullable<EmailUpdateToBuyerEnum>
-	public $MerchantKey; // Guid
-	public $OrderReference; // string
-	public $RequestKey; // Guid
-	public $Retries; // Nullable<int>
+	/*@var [Long] Order amount in cents*/
+	public $AmountInCents;
+	/*@var [Long] Amount (in cents) to consider the order is paid*/
+	public $AmountInCentsToConsiderPaid;
+	/*@var [CorrencyIsoEnum] Order amount currency.*/
+	/*@param Default: BRL*/
+	public $CurrencyIsoEnum;
+	/*@var [EmailUpadateToBuyerEnum] EMail Update To buyer*/
+	public $EmailUpdateToBuyerEnum; 
+	/*@var [Guid] MundiPagg merchant identification */
+	public $MerchantKey; 
+	/*@var [String] Custom order identification.*/
+	public $OrderReference; 
+	/*@var [Guid] Globally Unique Identifier.*/
+	/*@param Default: 00000000-0000-0000-0000-000000000000*/
+	public $RequestKey;
+	/*@var [int] Number of Retries*/
+	public $Retries;
+	/*@var [Buyer] Buyer instance*/
 	public $Buyer; // Buyer
-	public $ShoppingCartCollection; // ShoppingCart[]
-	public $CreditCardTransactionCollection; // CreditCardTransaction[]
-	public $BoletoTransactionCollection; // BoletoTransaction[]
+	/*@var [ShoppingCart] Shopping Cart Collection*/
+	public $ShoppingCartCollection;
+	/*@var [CreditCardTransaction] CreditCard Transaction collection*/
+	public $CreditCardTransactionCollection;
+	/*@var [BoletoTransaction] Boleto transaction collection*/
+	public $BoletoTransactionCollection; 
 	
 	function __construct() {
 		$this->AmountInCents = 0;

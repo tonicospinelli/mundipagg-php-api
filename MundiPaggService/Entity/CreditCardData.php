@@ -2,9 +2,13 @@
 include_once "Enum.php";
 
 class CreditCardData {
-	public $CreditCardBrandEnum; // CreditCardBrandEnum
-	public $CreditCardNumber; // string
-	public $InstantBuyKey; // Guid
+	/*@var [CreditCardEnum] CreditCard Brand*/
+	public $CreditCardBrandEnum;
+	/*@var [string] CreditCard Number*/
+	public $CreditCardNumber;
+	/*@var [Guid] Instant Buy Key */
+	public $InstantBuyKey;
+	/*@var [bool] creditCard Validation */
 	public $IsExpiredCreditCard; // bool
 	
 	function __construct() {

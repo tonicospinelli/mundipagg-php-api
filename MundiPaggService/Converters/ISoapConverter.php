@@ -12,10 +12,11 @@ include_once $ENTITY . "QueryOrderResponse.php";
 include_once $ENTITY . "GetInstantBuyDataRequest.php";
 include_once $ENTITY . "GetInstantBuyDataResponse.php";
 
+/** Converters Interface
+*/
 interface ISoapConverter {
-	///////////////////////////////////////////////////////
-	////// MAIN CONVERTERS ////////////////////////////////
-	///////////////////////////////////////////////////////
+	/** MAIN CONVERTERS 
+	*/
 	public function ConvertOrderRequest(CreateOrderRequest $orderRequest);
 	public function ConvertOrderResponse($orderResponse);
 
@@ -31,9 +32,9 @@ interface ISoapConverter {
 	public function ConvertGetInstantBuyDataRequest(GetInstantBuyDataRequest $instantBuyRequest);
 	public function ConvertGetInstantBuyDataResponse($instantBuyResponse);
 
-	///////////////////////////////////////////////////////
-	////// REQUEST CONVERTERS (SdkClasses to Arrays) //////
-	///////////////////////////////////////////////////////
+	
+	/* REQUEST CONVERTERS (SdkClasses to Arrays)
+	*/	
 	public function ConvertBuyerFromRequest(Buyer $buyerRequest);
 	public function ConvertCreditCardTransactionCollectionFromRequest($creditCardTransactionCollectionRequest);
 	public function ConvertBoletoTransactionCollectionFromRequest($boletoTransactionCollectionRequest);
@@ -41,9 +42,8 @@ interface ISoapConverter {
 	public function ConvertManageCreditCardTransactionCollectionFromRequest($creditCardTransactionCollectionRequest);
 	public function ConvertRetryOrderCreditCardTransactionRequestCollectionFromRequest($creditCardTransactionRequestCollection);
 
-	///////////////////////////////////////////////////////
-	////// RESPONSE CONVERTERS (stdClasses to SdkClasses) /
-	///////////////////////////////////////////////////////
+	/* RESPONSE CONVERTERS (stdClasses to SdkClasses)
+	*/	
 	public function ConvertCreditCardTransactionResultCollectionFromResponse($creditCardTransactionResultCollection);
 	public function ConvertBoletoTransactionResultCollectionFromResponse($boletoTransactionResultCollection);
 	public function ConvertMundiPaggSuggestionFromResponse($suggestionResponse);
