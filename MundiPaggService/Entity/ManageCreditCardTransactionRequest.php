@@ -1,7 +1,10 @@
 <?php
 class ManageCreditCardTransactionRequest {
-	public $AmountInCents; // long
-	public $TransactionKey; // Guid
+	/*@var [long] Amount In Cents */
+	public $AmountInCents;
+	/*@var [Guid] Transaction Key */
+	public $TransactionKey;
+	/*@var [string] Transaction Reference */
 	public $TransactionReference; // string
 	
 	function __construct() {

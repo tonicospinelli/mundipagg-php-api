@@ -3,13 +3,20 @@ include_once "Enum.php";
 include_once "CreditCardTransactionData.php";
 include_once "BoletoTransactionData.php";
 
+
 class OrderData {
-	public $CreateDate; // DateTime
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $OrderStatusEnum; // Nullable<OrderStatusEnum>
-	public $CreditCardTransactionDataCollection; // CreditCardTransactionData[]
-	public $BoletoTransactionDataCollection; // BoletoTransactionData[]
+	/*@var [DateTime] Order Creation Date*/
+	public $CreateDate;
+	/*@var [Guid] Order Key*/
+	public $OrderKey; 
+	/*@var [string] Order Reference*/
+	public $OrderReference;
+	/*@var [OrderStatusEnum] Order Status */
+	public $OrderStatusEnum;
+	/*@var [CreditCardTransactionData] CreditCard Transaction Data Collection  */
+	public $CreditCardTransactionDataCollection;
+	/*@var [BoletoTransactionData] Boleto Transaction Data Collection*/
+	public $BoletoTransactionDataCollection;
 	
 	function __construct() {
 		$this->CreateDate = null;

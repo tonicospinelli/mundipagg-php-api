@@ -2,13 +2,20 @@
 include_once "CreditCardData.php";
 
 class GetInstantBuyDataResponse {
-	public $CreditCardDataCount; // int
-	public $MundiPaggTimeInMilliseconds; // long
-	public $RequestKey; // Guid
-	public $Success; // bool
-	public $CreditCardDataCollection; // CreditCardData[]
-	public $MundiPaggSuggestion; // MundiPaggSuggestion
-	public $ErrorReport; // ErrorReport
+	/*@var [integer] CreditCard Data Count*/
+	public $CreditCardDataCount;
+	/*@var [long] Mundipagg Time In Milliseconds */	
+	public $MundiPaggTimeInMilliseconds;
+	/*@var [Guid] Request Key*/
+	public $RequestKey;
+	/*@var [bool] Fail or Success */
+	public $Success;
+	/*@var [CreditCardDate] CreditCard Data Collection */
+	public $CreditCardDataCollection;
+	/*@var [MundiPaggSuggestion] Mundipagg Suggestion */
+	public $MundiPaggSuggestion;
+	/*@var [ErrorReport] Error Report */
+	public $ErrorReport;
 	
 	function __construct() {
 		$this->CreditCardDataCount = 0;

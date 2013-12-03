@@ -2,11 +2,16 @@
 include_once "Enum.php";
 
 class Recurrency {
-	public $DateToStartBilling; // Nullable<DateTime>
-	public $FrequencyEnum; // FrequencyEnum
-	public $Interval; // int
-	public $OneDollarAuth; // Nullable<bool>
-	public $Recurrences; // Nullable<int>
+	/*@var [DateTime] Date to start billing */
+	public $DateToStartBilling; 
+	/*@var [FrequencyEnum] Frequency */
+	public $FrequencyEnum; 
+	/*@var [integer] Interval*/
+	public $Interval; 
+	/*@var [bool]  One Dollar Auth*/
+	public $OneDollarAuth;
+	/*@var [integer] Recurrences*/
+	public $Recurrences;
 	
 	function __construct() {
 		$this->DateToStartBilling = null;

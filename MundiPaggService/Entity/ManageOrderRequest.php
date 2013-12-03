@@ -3,12 +3,18 @@ include_once "Enum.php";
 include_once "ManageCreditCardTransactionRequest.php";
 
 class ManageOrderRequest {
-	public $ManageCreditCardTransactionCollection; // ManageCreditCardTransactionRequest[]
-	public $ManageOrderOperationEnum; // ManageOrderOperationEnum
-	public $MerchantKey; // Guid
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $RequestKey; // Guid
+	/*@var [ManageCreditCardTransactionRequest] CreditCard Transaction Collection */
+	public $ManageCreditCardTransactionCollection;
+	/*@var [ManageOrderOperation] Order Operation */
+	public $ManageOrderOperationEnum; 
+	/*@var [Guid] Merchant Key */
+	public $MerchantKey;
+	/*@var [Guid] Order Key */
+	public $OrderKey;
+	/*@var [string] Order Reference */
+	public $OrderReference;
+	/*@var [Guid] Request Key */
+	public $RequestKey;
 	
 	function __construct() {
 		$this->ManageCreditCardTransactionCollection = null;

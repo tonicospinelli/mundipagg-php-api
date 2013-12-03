@@ -1,9 +1,13 @@
 <?php
 class QueryOrderRequest {
-	public $MerchantKey; // Guid
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $RequestKey; // Guid
+	/*@var [Guid] Merchant key */
+	public $MerchantKey;
+	/*@var [Guid] Order key*/
+	public $OrderKey; 
+	/*@var [string] Order Reference*/
+	public $OrderReference;
+	/*@var [Guid] Request key*/
+	public $RequestKey;
 	
 	function __construct() {
 		$this->MerchantKey = null;

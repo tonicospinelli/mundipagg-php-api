@@ -3,11 +3,16 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
 include_once $ENTITY . "RetryOrderCreditCardTransactionRequest.php";
 
 class RetryOrderRequest {
-	public $MerchantKey; // Guid
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $RequestKey; // Guid
-	public $RetryOrderCreditCardTransactionRequestCollection; // RetryOrderCreditCardTransactionRequest[]
+	/*@var [Guid] Merchant key*/
+	public $MerchantKey;
+	/*@var [Guid] Order key*/
+	public $OrderKey;
+	/*@var [string] Order Reference*/
+	public $OrderReference; 
+	/*@var [Guid] Request key*/
+	public $RequestKey;
+	/*@var [RetryOrderCreditCardTransactionRequest] Retry Order CreditCard Transaction Request Collection */
+	public $RetryOrderCreditCardTransactionRequestCollection;
 	
 	function __construct() {
 		$this->MerchantKey = null;

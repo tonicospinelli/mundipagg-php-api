@@ -1,10 +1,15 @@
 <?php
 include_once "Enum.php";
 
+
 class ErrorItem {
-	public $Description; // string
-	public $ErrorCode; // int
-	public $ErrorField; // string
-	public $SeverityCodeEnum; // SeverityCodeEnum
+	/*@var [string] Description*/
+	public $Description;
+	/*@var [integer] Error code*/
+	public $ErrorCode;
+	/*@var [string] Error Field*/
+	public $ErrorField;
+	/*@var [SeverityCodeEnum] Severity code */
+	public $SeverityCodeEnum;
 }
 ?>

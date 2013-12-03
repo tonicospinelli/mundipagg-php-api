@@ -1,6 +1,7 @@
 <?php
 	const NEWLINE = "<br>";
 	
+	/*@global Currency Iso Enum*/
 	class CurrencyIsoEnum {
 		const __default = BRL;
 		
@@ -16,6 +17,7 @@
 		const PYG = 'PYG'; //600;
 	}
 	
+	/*@global Email Update To Buyer Enum*/
 	class EmailUpdateToBuyerEnum {
 		const __default = EmailUpdateToBuyerEnum::No;
 
@@ -25,6 +27,7 @@
 		const YesIfNotAuthorized = 'YesIfNotAuthorized'; //3;
 	}
 	
+	/*@global Credit Card Brand Enum*/
 	class CreditCardBrandEnum {
 		const __default = CreditCardBrandEnum::Visa;
 
@@ -40,6 +43,7 @@
 		const Havan = 'Havan'; //10;
 	}
 	
+	/*@global CreditCard Operation Enum*/
 	class CreditCardOperationEnum {
 		const __default = CreditCardOperationEnum::AuthOnly;
 
@@ -48,6 +52,7 @@
 		const AuthAndCaptureWithDelay = 'AuthAndCaptureWithDelay'; //3;
 	}
 	
+	/*@global Frequency Enum*/
 	class FrequencyEnum {
 		const __default = FrequencyEnum::Weekly;
 
@@ -57,6 +62,7 @@
 		const Daily = 'Daily'; //4;
 	}
 	
+	/*@global Gender Enum*/
 	class GenderEnum {
 		const __default = GenderEnum::M;
 
@@ -64,6 +70,7 @@
 		const F = 'F'; //2;
 	}
 	
+	/*@global Person Type Enum*/
 	class PersonTypeEnum {
 		const __default = PersonTypeEnum::Person;
 
@@ -71,6 +78,7 @@
 		const Company = 'Company'; //2;
 	}
 	
+	/*@global Tax Document Type Enum*/
 	class TaxDocumentTypeEnum {
 		const __default = TaxDocumentTypeEnum::CPF;
 
@@ -78,6 +86,7 @@
 		const CNPJ = 'CNPJ'; //2;
 	}
 	
+	/*@global Address Type Enum*/
 	class AddressTypeEnum {
 		const __default = AddressTypeEnum::Billing;
 
@@ -87,6 +96,7 @@
 		const Residential = 'Residential'; //4;
 	}
 	
+	/*@global Country Enum*/
 	class CountryEnum {
 		const __default = CountryEnum::Brazil;
 
@@ -101,6 +111,7 @@
 		const Paraguay = 'Paraguay'; //9;
 	}
 	
+	/*@global Order Status Enum */
 	class OrderStatusEnum {
 		const __default = OrderStatusEnum::Opened;
 		
@@ -113,6 +124,7 @@
 		const WithError = 'WithError'; //7;
 	}
 	
+	/*@global CreditCard Transaction Status Enum*/
 	class CreditCardTransactionStatusEnum {
 		const __default = CreditCardTransactionStatusEnum::AuthorizedPendingCapture;
 		
@@ -139,6 +151,7 @@
         const WithError = 'WithError'; //99,
 	}
 	
+	/*@global Severity Code Enum*/
 	class SeverityCodeEnum {
 		const __default = SeverityCodeEnum::Error;
 		
@@ -146,6 +159,7 @@
 		const Warning = 'Warning'; //2;
 	}
 	
+	/*@global Manage Order Operation Enum*/
 	class ManageOrderOperationEnum {
 		const __default = ManageOrderOperationEnum::Capture;
 		
@@ -153,7 +167,8 @@
 		const Void = 'Void'; //2,
 		const Authorize = 'Authorize'; //3,
 	}
-
+	
+	/*@global Boleto Transaction Status Enum*/
 	class BoletoTransactionStatusEnum {
 		const __default = BoletoTransactionStatusEnum::Generated;
 		

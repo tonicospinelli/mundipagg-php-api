@@ -1,9 +1,13 @@
 <?php
 class GetInstantBuyDataRequest {
-	public $BuyerKey; // Guid
-	public $InstantBuyKey; // Guid
-	public $MerchantKey; // Guid
-	public $RequestKey; // Guid
+	/*@var [Guid] Buyer key */
+	public $BuyerKey;
+	/*@var [Guid] Instant Buy Key */
+	public $InstantBuyKey;
+	/*@var [Guid] Merchant Key */
+	public $MerchantKey;
+	/*@var [Guid] Request key */
+	public $RequestKey;
 	
 	function __construct() {
 		$this->BuyerKey = null;

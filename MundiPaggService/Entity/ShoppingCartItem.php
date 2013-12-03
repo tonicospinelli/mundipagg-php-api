@@ -1,11 +1,18 @@
 <?php
+/*@global Shopping Cart Item */
 class ShoppingCartItem {
-	public $Description; // string
-	public $ItemReference; // string
-	public $Name; // string
-	public $Quantity; // int
-	public $TotalCostInCents; // int
-	public $UnitCostInCents; // int
+	/*@var [string] Description */
+	public $Description;
+	/*@var [string] Item Reference */
+	public $ItemReference;
+	/*@var [string] Name */
+	public $Name;
+	/*@var [integer] Quantity */
+	public $Quantity;
+	/*@var [integer] Total Cost In Cents */
+	public $TotalCostInCents;
+	/*@var [integer] Unit Cost In Cents */
+	public $UnitCostInCents;
 	
 	function __construct() {
 		$this->Description = "";

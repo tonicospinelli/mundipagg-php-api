@@ -2,45 +2,45 @@
 include_once "Enum.php";
 
 class CreditCardTransactionData {
-	/*@var [string]*/
-	public $AcquirerAuthorizationCode; // string
-	/*@var [string]*/
-	public $AcquirerName; // string
-	/*@var [long]*/
-	public $AmountInCents; // long
-	/*@var [long]*/
-	public $AuthorizedAmountInCents; // Nullable<long>
-	/*@var [long]*/
-	public $CapturedAmountInCents; // Nullable<long>
-	/*@var [DateTime]*/
-	public $CreateDate; // DateTime
-	/*@var [CreditCardBrandEnum]*/
-	public $CreditCardBrandEnum; // CreditCardBrandEnum
-	/*@var [string]*/
-	public $CreditCardNumber; // string
-	/*@var [CreditCardTransactionStatusEnum]*/
-	public $CreditCardTransactionStatusEnum; // CreditCardTransactionStatusEnum
-	/*@var [string]*/
-	public $CustomStatus; // string
-	/*@var [DateTime]*/
-	public $DueDate; // Nullable<DateTime>
-	/*@var [integer]*/
-	public $InstallmentCount; // int
-	/*@var [guid]*/
-	public $InstantBuyKey; // Guid
-	/*@var [bool]*/
-	public $IsReccurrency; // bool
-	/*@var [long]*/
-	public $RefundedAmountInCents; // Nullable<long>
-	/*@var [string]*/
-	public $TransactionIdentifier; // string
-	/*@var [guid]*/
-	public $TransactionKey; // Guid
-	/*@var [string]*/
-	public $TransactionReference; // string
-	/*@var [string]*/
-	public $UniqueSequentialNumber; // string
-	/*@var [long]*/
+	/*@var [string] Authorization Code*/
+	public $AcquirerAuthorizationCode;
+	/*@var [string] Acquirer Name*/
+	public $AcquirerName;
+	/*@var [long] Amount in Cents*/
+	public $AmountInCents;
+	/*@var [long] Authorized Amount in Cents*/
+	public $AuthorizedAmountInCents;
+	/*@var [long] Captured Amount in Cents */
+	public $CapturedAmountInCents;
+	/*@var [DateTime] Transaction Creation Date*/
+	public $CreateDate; 
+	/*@var [CreditCardBrandEnum] CreditCard Brand*/
+	public $CreditCardBrandEnum; 
+	/*@var [string] CreditCard Number*/
+	public $CreditCardNumber;
+	/*@var [CreditCardTransactionStatusEnum] CreditCard Transaction Status*/
+	public $CreditCardTransactionStatusEnum; 
+	/*@var [string] Custom Status*/
+	public $CustomStatus;
+	/*@var [DateTime] Transaction Due Date*/
+	public $DueDate;
+	/*@var [integer] Transaction Installment Count*/
+	public $InstallmentCount;
+	/*@var [guid] Transaction Instant Buy Key*/
+	public $InstantBuyKey;
+	/*@var [bool] If transaction is Reccurrency*/
+	public $IsReccurrency; 
+	/*@var [long] Refunded Amount in cents*/
+	public $RefundedAmountInCents; 
+	/*@var [string] Transaction Identifier*/
+	public $TransactionIdentifier;
+	/*@var [guid] Transaction Key*/
+	public $TransactionKey; 
+	/*@var [string] Transaction Reference */
+	public $TransactionReference;
+	/*@var [string] Unique Sequential Number*/
+	public $UniqueSequentialNumber;
+	/*@var [long] Voided Amount In Cents*/
 	public $VoidedAmountInCents; // Nullable<long>
 	
 	function __construct() {

@@ -2,27 +2,48 @@
 include_once "Enum.php";
 
 class CreditCardTransactionResult {
-	public $AcquirerMessage; // string
-	public $AcquirerReturnCode; // string
-	public $AmountInCents; // long
-	public $AuthorizationCode; // string
-	public $AuthorizedAmountInCents; // Nullable<long>
-	public $CapturedAmountInCents; // Nullable<long>
-	public $CreditCardNumber; // string
-	public $CreditCardOperationEnum; // CreditCardOperationEnum
-	public $CreditCardTransactionStatusEnum; // CreditCardTransactionStatusEnum
-	public $CustomStatus; // string
-	public $DueDate; // Nullable<DateTime>
-	public $ExternalTimeInMilliseconds; // long
-	public $InstantBuyKey; // Guid
-	public $RefundedAmountInCents; // Nullable<long>
-	public $Success; // bool
-	public $TransactionIdentifier; // string
-	public $TransactionKey; // Guid
-	public $TransactionReference; // string
-	public $UniqueSequentialNumber; // string
-	public $VoidedAmountInCents; // Nullable<long>
-	public $OriginalAcquirerReturnCollection; // OriginalAcquirerReturn (Inherits from Dictionary<string, string>)
+	/*@var [string] Message*/
+	public $AcquirerMessage;
+	/*@var [string] Return Code*/
+	public $AcquirerReturnCode;
+	/*@var [long] Amount in cents*/
+	public $AmountInCents;
+	/*@var [string] Authorization Code*/
+	public $AuthorizationCode;
+	/*@var [long] Authorized Amount In cents*/
+	public $AuthorizedAmountInCents;
+	/*@var [long] Captured Amount in cents*/
+	public $CapturedAmountInCents; 
+	/*@var [string] CreditCard Number*/
+	public $CreditCardNumber;
+	/*@var [CreditCardOperationEnum] CreditCard Operation */
+	public $CreditCardOperationEnum; 
+	/*@var [CreditCardTransactionStatusEnum] CreditCard Transaction Status*/
+	public $CreditCardTransactionStatusEnum;
+	/*@var [String] Custom Status*/
+	public $CustomStatus;
+	/*@var [DateTime] Transaction Due Date*/
+	public $DueDate;
+	/*@var [long] External Time In Milliseconds*/
+	public $ExternalTimeInMilliseconds;
+	/*@var [guid] Instant Buy Key*/
+	public $InstantBuyKey;
+	/*@var [long] Transaction Refunded Amount In Cents*/
+	public $RefundedAmountInCents;
+	/*@var [bool] Fail Or Success*/
+	public $Success;
+	/*@var [string] Transaction Identifier*/
+	public $TransactionIdentifier;
+	/*@var [guid] Transaction Key*/
+	public $TransactionKey;
+	/*@var [string] Transaction Reference*/
+	public $TransactionReference;
+	/*@var [string] Unique Sequential Number*/
+	public $UniqueSequentialNumber;
+	/*@var [long] Transaction Voided Amount In Cents*/
+	public $VoidedAmountInCents;
+	/*@var [OriginalAcquirerReturn] Original Acquirer Return collection */
+	public $OriginalAcquirerReturnCollection; 
 	
 	function __tostring() {
 		$str = "";

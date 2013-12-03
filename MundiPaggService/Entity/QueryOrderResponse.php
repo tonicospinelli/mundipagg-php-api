@@ -2,13 +2,20 @@
 include_once "OrderData.php";
 
 class QueryOrderResponse {
-	public $MundiPaggTimeInMilliseconds; // Nullable<long>
-	public $OrderDataCount; // int
-	public $RequestKey; // Guid
-	public $Success; // bool
-	public $OrderDataCollection; // OrderData[]
-	public $MundiPaggSuggestion; // MundiPaggSuggestion
-	public $ErrorReport; // ErrorReport
+	/*@var [long] MundiPagg Time In Milliseconds*/
+	public $MundiPaggTimeInMilliseconds;
+	/*@var [integer] Order Data Count*/
+	public $OrderDataCount; 
+	/*@var [Guid] Request key*/
+	public $RequestKey;
+	/*@var [bool] Fail or Success*/
+	public $Success;
+	/*@var [OrderData] Order Data Collection*/
+	public $OrderDataCollection;
+	/*@var [MundiPaggSuggestion] MundiPagg Suggestion */
+	public $MundiPaggSuggestion;
+	/*@var [ErrorReport] Error Report */
+	public $ErrorReport;
 	
 	function __construct() {
 		$this->MundiPaggTimeInMilliseconds = null;

@@ -1,16 +1,28 @@
 <?php
 class ManageOrderResponse {
+	/*@var [ManageOrderOperationEnum] Order Operation */
 	public $ManageOrderOperationEnum; // ManageOrderOperationEnum
+	/*@var [long] MundiPagg Time In Milliseconds */
 	public $MundiPaggTimeInMilliseconds; // Nullable<long>
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $OrderStatusEnum; // OrderStatusEnum
-	public $RequestKey; // Guid
-	public $Success; // bool
-	public $Version; // string
-	public $CreditCardTransactionResultCollection; // CreditCardTransactionResult[]
+	/*@var [Guid] Order Key */
+	public $OrderKey;
+	/*@var [string] Order Reference */
+	public $OrderReference;
+	/*@var [OrderStatusEnum] Order status */
+	public $OrderStatusEnum;
+	/*@var [Guid] Request Key */
+	public $RequestKey;
+	/*@var [bool] Fail Or Success */
+	public $Success;
+	/*@var [string] Version */
+	public $Version;
+	/*@var [CreditCardTransactionResult] CreditCard Transaction Result Collection */
+	public $CreditCardTransactionResultCollection;
+	/*@var [BoletoTransactionResult] Boleto Transaction Result Collection */
 	public $BoletoTransactionResultCollection; // BoletoTransactionResult[]
+	/*@var [MundiPaggSuggestion] MundiPagg Suggestion */
 	public $MundiPaggSuggestion; // MundiPaggSuggestion
+	/*@var [ErrorReport] Error Report */
 	public $ErrorReport; // ErrorReport
 	
 	function __tostring() {

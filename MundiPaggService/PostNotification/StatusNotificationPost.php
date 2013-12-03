@@ -6,6 +6,7 @@ function GetNotificationXml($xmlStatusNotification) {
 	return simplexml_load_string($xmlStatusNotification); // Retorna o objeto do Xml
 }
 
+/*@global Parse xml Status Notification */
 function ParseXmlToStatusNotification($xml) {
 	if (is_null($xml)) { return null; }
 	

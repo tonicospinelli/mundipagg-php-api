@@ -3,7 +3,9 @@ include_once "Enum.php";
 include_once "ErrorItem.php";
 
 class ErrorReport {
-	public $Category; // string
-	public $ErrorItemCollection; // ErrorItem[]
+	/*@var [string] Category*/
+	public $Category;
+	/*@var [ErrorItem] Error Item*/
+	public $ErrorItemCollection; 
 }
 ?>

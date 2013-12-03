@@ -1,9 +1,12 @@
 <?php
 include_once "ShoppingCartItem.php";
 
+/*@global Shopping Cart */
 class ShoppingCart {
-	public $FreightCostInCents; // int
-	public $ShoppingCartItemCollection; // ShoppingCartItem[]
+	/*@var [integer] Freight Cost In Cents */
+	public $FreightCostInCents;
+	/*@var [ShoppingCartItem] Shopping Cart Item Collection */
+	public $ShoppingCartItemCollection;
 
 	function __construct() {
 		$this->FreightCostInCents = 0;

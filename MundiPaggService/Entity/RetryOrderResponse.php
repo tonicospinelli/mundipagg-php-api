@@ -3,16 +3,26 @@ include_once "Enum.php";
 include_once "CreditCardTransactionResult.php";
 
 class RetryOrderResponse {
-	public $MundiPaggTimeInMilliseconds; // Nullable<long>
-	public $OrderKey; // Guid
-	public $OrderReference; // string
-	public $OrderStatusEnum; // OrderStatusEnum
-	public $RequestKey; // Guid
-	public $RetryOrderCreditCardTransactionResponse; // CreditCardTransactionResult[]
-	public $Success; // bool
-	public $Version; // string
-	public $MundiPaggSuggestion; // MundiPaggSuggestion
-	public $ErrorReport; // ErrorReport
+	/*@var [long] MundiPagg Time In Milliseconds*/
+	public $MundiPaggTimeInMilliseconds;
+	/*@var [Guid] Order key*/
+	public $OrderKey;
+	/*@var [string] Order Reference*/
+	public $OrderReference;
+	/*@var [OrderStatusEnum] Order Status Enum */
+	public $OrderStatusEnum;
+	/*@var [Guid] Request Key*/
+	public $RequestKey; 
+	/*@var [CreditCardTransactionResult] Retry Order CreditCard Transaction Response*/
+	public $RetryOrderCreditCardTransactionResponse;
+	/*@var [bool] Fail Or Success*/
+	public $Success;
+	/*@var [string] version */
+	public $Version;
+	/*@var [MundiPaggSuggestion] MundiPagg Suggestion */
+	public $MundiPaggSuggestion;
+	/*@var [ErrorReport] Error Report */
+	public $ErrorReport;
 	
 	function __construct() {
 		$this->MundiPaggTimeInMilliseconds = null;
