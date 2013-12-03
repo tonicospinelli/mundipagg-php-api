@@ -5,7 +5,7 @@ include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.
 /**
 * @author: Matheus
 * @version: 1.0
-* @last revision: 2013/11/29
+* revision: 2013/11/29
 * 
 * This client consumes the MundiPagg One Service, using Soap.
 */
@@ -64,9 +64,6 @@ class MundiPaggSoapServiceClient {
 		$this->Close();
 	}
 		
-	///////////////////////////////////////////////////////
-	////// Main Methods ///////////////////////////////////
-	///////////////////////////////////////////////////////
 	/**
 	* Closes the client.
 	*/
@@ -218,10 +215,7 @@ class MundiPaggSoapServiceClient {
 		return $this->converter->ConvertGetInstantBuyDataResponse($getInstantBuyDataResponse);
 	}
 	
-	///////////////////////////////////////////////////////
-	////// Aux Methods ////////////////////////////////////
-	///////////////////////////////////////////////////////
-	/// For tests only. Writes the xml request in a file. REMINDER: Remove after all tests are done.
+	/* For tests only. Writes the xml request in a file. REMINDER: Remove after all tests are done.*/
 	private function WriteXml($soapClient) {
 		if (!$this->showXmlData) { return; }
 		$requestLocation = 'C:\Users\mriboli\Desktop\PHP_SoapRequest.xml';
