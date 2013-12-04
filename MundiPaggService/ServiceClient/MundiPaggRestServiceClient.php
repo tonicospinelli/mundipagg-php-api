@@ -1,16 +1,17 @@
 <?php
+throw new Exception("This client is not implemented yet!<br>Use MundiPaggSoapServiceClient.<br>See the documentation for more details.");
+
 include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once "IMundiPaggServiceClient.php"; // Also includes ISoapConverter.php
-include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.php
+include_once $CONVERTERS . "RestConverter.php"; // Also includes IRestConverter.php
 
 /**
 * @author: Matheus
 * @version: 1.0
-* revision: 2013/11/29
+* revision: 2013/12/04
 * 
-* This client consumes the MundiPagg One Service, using Soap.
+* This client consumes the MundiPagg One Service, using Rest.
 */
-class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
+class MundiPaggRestServiceClient {
 	private $soapClient = null;
 	private $converter = null;
 	private $needToCloseClient = false;
@@ -19,10 +20,10 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 		
 	/**
 	* @param string $wsdlUri WSDL contract location.
-	* @param ISoapConverter $converter The object used to convert data in requests and responses.
+	* @param IRestConverter $converter The object used to convert data in requests and responses.
 	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
 	*/
-	public function __construct(string $wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = false) {
+	public function __construct(string $wsdlUri = NULL, IRestConverter $converter = NULL, $traceSoapXml = false) {
 		global $ENABLE_WSDL_CACHE; // Configuration Property
 		
 		$this->showXmlData = $traceSoapXml;
