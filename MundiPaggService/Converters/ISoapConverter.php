@@ -1,16 +1,16 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $ENTITY . "Enum.php";
-include_once $ENTITY . "CreateOrderRequest.php";
-include_once $ENTITY . "CreateOrderResponse.php";
-include_once $ENTITY . "ManageOrderRequest.php";
-include_once $ENTITY . "ManageOrderResponse.php";
-include_once $ENTITY . "RetryOrderRequest.php";
-include_once $ENTITY . "RetryOrderResponse.php";
-include_once $ENTITY . "QueryOrderRequest.php";
-include_once $ENTITY . "QueryOrderResponse.php";
-include_once $ENTITY . "GetInstantBuyDataRequest.php";
-include_once $ENTITY . "GetInstantBuyDataResponse.php";
+include_once $DATA_CONTRACTS . "Enum.php";
+include_once $DATA_CONTRACTS . "CreateOrderRequest.php";
+include_once $DATA_CONTRACTS . "CreateOrderResponse.php";
+include_once $DATA_CONTRACTS . "ManageOrderRequest.php";
+include_once $DATA_CONTRACTS . "ManageOrderResponse.php";
+include_once $DATA_CONTRACTS . "RetryOrderRequest.php";
+include_once $DATA_CONTRACTS . "RetryOrderResponse.php";
+include_once $DATA_CONTRACTS . "QueryOrderRequest.php";
+include_once $DATA_CONTRACTS . "QueryOrderResponse.php";
+include_once $DATA_CONTRACTS . "GetInstantBuyDataRequest.php";
+include_once $DATA_CONTRACTS . "GetInstantBuyDataResponse.php";
 
 /** Converters Interface
 */

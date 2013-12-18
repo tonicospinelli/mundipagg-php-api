@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\Variables.php";
-include_once $MAIN_CLASSES . "Enum.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
+include_once $DATA_CONTRACTS . "Enum.php";
 
 final class StatusNotification {
 	/*@var [long] Amount In Cents */

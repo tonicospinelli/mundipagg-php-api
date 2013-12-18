@@ -6,7 +6,7 @@
 	
 	$SDK = "$DOCUMENT_ROOT\\MundiPaggService";
 	
-	$ENTITY = "$SDK\\Entity\\";
+	$DATA_CONTRACTS = "$SDK\\DataContracts\\";
 	//$LOCAL_WSDL = "$SDK\\LocalWSDL\\";
 	$POST_NOTIFICATION = "$SDK\\PostNotification\\";
 	$CONVERTERS = "$SDK\\Converters\\";
@@ -17,5 +17,5 @@
 	$PRODUCTION_WSDL = "$SDK\\LocalWSDL\\wsdl.xml";
 	$SANDBOX_WSDL = "$SDK\\LocalWSDL\\wsdl.xml";
 	
-	$ENABLE_WSDL_CACHE = true;
+	$ENABLE_WSDL_CACHE = false;
 ?>

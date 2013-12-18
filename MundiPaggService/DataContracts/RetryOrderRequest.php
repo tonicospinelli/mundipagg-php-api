@@ -1,6 +1,6 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $ENTITY . "RetryOrderCreditCardTransactionRequest.php";
+include_once "RetryOrderCreditCardTransactionRequest.php";
 
 class RetryOrderRequest {
 	/*@var [Guid] Merchant key*/
