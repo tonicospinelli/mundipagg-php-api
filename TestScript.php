@@ -5,10 +5,11 @@ include_once $SERVICE_CLIENT . "MundiPaggSoapServiceClient.php";
 const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
 
 $client = new MundiPaggSoapServiceClient();
+//$client = new MundiPaggSoapServiceClient(null, null, true);
 
-// $orderRequest = CreateCreateOrder(); // Creates an order
-// $orderResponse = $client->CreateOrder($orderRequest);
-// var_dump($orderResponse);
+$orderRequest = CreateCreateOrder(); // Creates an order
+$orderResponse = $client->CreateOrder($orderRequest);
+var_dump($orderResponse);
 
 //TratarOrderResponse($orderResponse);
 
@@ -27,9 +28,9 @@ $client = new MundiPaggSoapServiceClient();
 // var_dump($queryResponse, $queryResponse->OrderDataCollection[0]);
 
 
-$instantBuyDataRequest = CreateGetInstantBuyData("90dbcec9-b623-4abf-95a3-df36293cdf19");
-$instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
-var_dump($instantBuyDataResponse);
+// $instantBuyDataRequest = CreateGetInstantBuyData("90dbcec9-b623-4abf-95a3-df36293cdf19");
+// $instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
+// var_dump($instantBuyDataResponse);
 
 exit();
 
@@ -97,6 +98,21 @@ function CreateCreateOrder() {
 	// Define o tipo da autorização
 	$ccTransaction1->CreditCardOperationEnum = "AuthOnly";
 	
+	//// CARTÃO 2
+	// Criação de uma transação de cartão de crédito 
+	$ccTransaction2 = new CreditCardTransaction();
+	$ccTransaction2->AmountInCents = 20;
+	$ccTransaction2->CreditCardNumber = "65444454544112";
+	// Número do cartão de crédito
+	$ccTransaction2->HolderName = "Jose Farias";
+	$ccTransaction2->SecurityCode = 546;
+	$ccTransaction2->ExpMonth = 8;
+	$ccTransaction2->ExpYear = 19;
+	$ccTransaction2->CreditCardBrandEnum = 'Mastercard';
+	$ccTransaction2->PaymentMethodCode = 1;
+	// Define o tipo da autorização
+	$ccTransaction1->CreditCardOperationEnum = "AuthOnly";
+	
 	/// BOLETO 1
 	// Criação de uma transação por boleto
 	$boletoTransaction1 = new BoletoTransaction();
@@ -105,10 +121,19 @@ function CreateCreateOrder() {
 	$boletoTransaction1->Instructions = "Nao receber apos vencimento.";
 	$boletoTransaction1->NossoNumero = 47826;
 	$boletoTransaction1->DaysToAddInBoletoExpirationDate = 5;
+	
+	/// BOLETO 2
+	// Criação de uma transação por boleto
+	$boletoTransaction2 = new BoletoTransaction();
+	$boletoTransaction2->AmountInCents = 5000;
+	$boletoTransaction2->BankNumber = 641;
+	$boletoTransaction2->Instructions = "Nao receber apos vencimento.";
+	$boletoTransaction2->NossoNumero = 55411;
+	$boletoTransaction2->DaysToAddInBoletoExpirationDate = 9;
 
 	// Adiciona as transações no OrderRequest
-	$orderRequest->CreditCardTransactionCollection = array ( $ccTransaction1 );
-	$orderRequest->BoletoTransactionCollection = array ( $boletoTransaction1 );
+	$orderRequest->CreditCardTransactionCollection = array ( $ccTransaction1, $ccTransaction2 );
+	$orderRequest->BoletoTransactionCollection = array ( $boletoTransaction1, $boletoTransaction2 );
 
 	$shopCart = new ShoppingCart();
 	$shopCart->FreighCostInCents = 1000;

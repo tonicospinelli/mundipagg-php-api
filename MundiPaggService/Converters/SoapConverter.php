@@ -435,7 +435,7 @@ class SoapConverter implements ISoapConverter {
 	///////////////////////////////////////////////////////
 	public function ConvertCreditCardTransactionResultCollectionFromResponse($creditCardTransactionResultCollection) {
 		$newccTransResultCollection = array();
-
+		
 		if (isset($creditCardTransactionResultCollection->CreditCardTransactionResult)) {
 			// If there are more than one item, it's an array.
 			if (is_array($creditCardTransactionResultCollection->CreditCardTransactionResult)) {
@@ -492,7 +492,7 @@ class SoapConverter implements ISoapConverter {
 			if (is_array($boletoTransactionResultCollection->BoletoTransactionResult)) {
 				$counter = 0;
 				
-				foreach ($boletoTransactionResultCollection as $boletoTrans) {
+				foreach ($boletoTransactionResultCollection->BoletoTransactionResult as $boletoTrans) {
 					$newBoletoTrans = $this->ConvertBoletoTransactionResult($boletoTrans);
 					
 					$newBoletoTransResultCollection[$counter] = $newBoletoTrans;
@@ -541,21 +541,34 @@ class SoapConverter implements ISoapConverter {
 			
 			$newErrorReport->ErrorItemCollection = null;
 			if (!is_null($errorReport->ErrorItemCollection)) {
+				if (is_array($errorReport->ErrorItemCollection->ErrorItem)) {
+
 				$counter = 0;
-				foreach($errorReport->ErrorItemCollection as $errorItem) {
-					$newErrorItem = new ErrorItem();
-					$newErrorItem->Description = $errorItem->Description;
-					$newErrorItem->ErrorCode = $errorItem->ErrorCode;
-					$newErrorItem->ErrorField = $errorItem->ErrorField;
-					$newErrorItem->SeverityCodeEnum = $errorItem->SeverityCodeEnum;
-					
-					$newErrorReport->ErrorItemCollection[$counter] = $newErrorItem;
-					$counter += 1;
+					foreach($errorReport->ErrorItemCollection->ErrorItem as $errorItem) {
+
+						$newErrorReport->ErrorItemCollection[$counter] = $this->ConvertErrorItem($errorItem);
+						$counter += 1;
+					}
+				}
+				// It's a stdclass.
+				else {
+
+				$newErrorReport->ErrorItemCollection[0] = $this->ConvertErrorItem($errorReport->ErrorItemCollection->ErrorItem);
 				}
 			}
 		}
 		
 		return $newErrorReport;
+	}
+	public function ConvertErrorItem($errorItem) {
+		$newErrorItem = new ErrorItem();
+		
+		$newErrorItem->Description = $errorItem->Description;
+		$newErrorItem->ErrorCode = $errorItem->ErrorCode;
+		$newErrorItem->ErrorField = $errorItem->ErrorField;
+		$newErrorItem->SeverityCodeEnum = $errorItem->SeverityCodeEnum;
+		
+		return $newErrorItem;
 	}
 	public function ConvertOrderDataCollectionFromResponse($orderDataCollection) {
 		$newOrderDataCollection = null;

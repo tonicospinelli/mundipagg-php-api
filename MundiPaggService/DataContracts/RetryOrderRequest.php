@@ -15,7 +15,8 @@ class RetryOrderRequest {
 	public $RetryOrderCreditCardTransactionRequestCollection;
 	
 	function __construct() {
-		$this->MerchantKey = null;
+		global $MERCHANT_KEY;
+		$this->MerchantKey = $MERCHANT_KEY;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
 		$this->RequestKey = null;

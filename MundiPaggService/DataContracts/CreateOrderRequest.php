@@ -38,7 +38,8 @@ class CreateOrderRequest {
 		$this->AmountInCentsToConsiderPaid = 0;
 		$this->CurrencyIsoEnum = CurrencyIsoEnum::BRL;
 		$this->EmailUpdateToBuyerEnum = EmailUpdateToBuyerEnum::__default;
-		$this->MerchantKey = null;
+		global $MERCHANT_KEY;
+		$this->MerchantKey = $MERCHANT_KEY;
 		$this->OrderReference = "";
 		$this->RequestKey = null;
 		$this->Retries = null;

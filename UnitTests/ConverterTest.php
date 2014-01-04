@@ -245,6 +245,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase {
 		$count = count($boletoTransResultCollection);
 		$convCount = count($convBoletoTransResultCollection);
 		
+		// var_dump($boletoTransResultCollection);
+		// var_dump($convBoletoTransResultCollection);
+		
 		$this->assertEquals($count, $convCount);
 		
 		for($counter = 0; $counter < $count; $counter++) {
