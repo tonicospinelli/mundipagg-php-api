@@ -13,7 +13,7 @@ include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.
 class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 	private $soapClient = null;
 	private $converter = null;
-	private $needToCloseClient = false;
+	private $isClosed = false;
 	
 	public $showXmlData = false; // For tests only. REMINDER: REMOVE THIS VARIABLE AFTER ALL TESTS ARE DONE.
 		
@@ -22,7 +22,7 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 	* @param ISoapConverter $converter The object used to convert data in requests and responses.
 	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
 	*/
-	public function __construct(string $wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = false) {
+	public function __construct($wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = false) {
 		global $ENABLE_WSDL_CACHE; // Configuration Property
 		
 		$this->showXmlData = $traceSoapXml;
@@ -157,7 +157,7 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 		$this->WriteXml($this->soapClient);
 		
 		$retryOrderResponse = $result->RetryOrderResult;
-		
+
 		// Converts and returns the response.
 		return $this->converter->ConvertRetryOrderResponse($retryOrderResponse);
 	}

@@ -41,7 +41,7 @@ class Buyer {
 	public $BuyerAddressCollection;
 	
 	function __construct() {
-		$this->BuyerKey = null;
+		$this->BuyerKey = '00000000-0000-0000-0000-000000000000';
 		$this->BuyerReference = "";
 		$this->CreateDateInMerchant = null;
 		$this->Email = "";

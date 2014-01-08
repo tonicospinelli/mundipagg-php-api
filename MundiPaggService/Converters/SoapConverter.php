@@ -442,9 +442,7 @@ class SoapConverter implements ISoapConverter {
 				$counter = 0;
 				
 				foreach ($creditCardTransactionResultCollection->CreditCardTransactionResult as $ccTrans) {
-					$newccTrans = $this->ConvertCreditCardTransactionResult($ccTrans);
-					
-					$newccTransResultCollection[$counter] = $newccTrans;
+					$newccTransResultCollection[$counter] = $this->ConvertCreditCardTransactionResult($ccTrans);
 					$counter += 1;
 				}
 			}
@@ -493,9 +491,7 @@ class SoapConverter implements ISoapConverter {
 				$counter = 0;
 				
 				foreach ($boletoTransactionResultCollection->BoletoTransactionResult as $boletoTrans) {
-					$newBoletoTrans = $this->ConvertBoletoTransactionResult($boletoTrans);
-					
-					$newBoletoTransResultCollection[$counter] = $newBoletoTrans;
+					$newBoletoTransResultCollection[$counter] = $this->ConvertBoletoTransactionResult($boletoTrans);
 					$counter += 1;
 				}
 			}
@@ -575,114 +571,169 @@ class SoapConverter implements ISoapConverter {
 
 		if (is_null($orderDataCollection) == false) {
 			$newOrderDataCollection = array();
-			$counter = 0;
-			foreach ($orderDataCollection as $orderData) {
-				$newOrderData = new OrderData();
-				
-				$newOrderData->CreateDate = $orderData->CreateDate;
-				$newOrderData->OrderKey = $orderData->OrderKey;
-				$newOrderData->OrderReference = $orderData->OrderReference;
-				$newOrderData->OrderStatusEnum = $orderData->OrderStatusEnum;
-				
-				$newOrderData->CreditCardTransactionDataCollection = $this->ConvertCreditCardTransactionDataCollectionFromResponse($orderData->CreditCardTransactionDataCollection);
-				$newOrderData->BoletoTransactionDataCollection = $this->ConvertBoletoTransactionDataCollectionFromResponse($orderData->BoletoTransactionDataCollection);
-				
-				$newOrderDataCollection[$counter] = $newOrderData;
-				$counter += 1;
+			
+			if (isset($orderDataCollection->OrderData)) {
+				// If there are more than one item, it's an array.
+				if (is_array($orderDataCollection->OrderData)) {
+					$counter = 0;
+					
+					foreach ($orderDataCollection->OrderData as $orderData) {
+						$newOrderDataCollection[$counter] = $this->ConvertOrderData($orderData);
+						$counter += 1;
+					}
+				}
+				// If there is just one item, it's a stdclass.
+				else {
+					$newOrderDataCollection[0] = $this->ConvertOrderData($orderDataCollection->OrderData);
+				}
 			}
 		}
 		
 		return $newOrderDataCollection;
 	}
+	public function ConvertOrderData($orderData) {
+		$newOrderData = new OrderData();
+				
+		$newOrderData->CreateDate = $orderData->CreateDate;
+		$newOrderData->OrderKey = $orderData->OrderKey;
+		$newOrderData->OrderReference = $orderData->OrderReference;
+		$newOrderData->OrderStatusEnum = $orderData->OrderStatusEnum;
+		
+		$newOrderData->CreditCardTransactionDataCollection = $this->ConvertCreditCardTransactionDataCollectionFromResponse($orderData->CreditCardTransactionDataCollection);
+		$newOrderData->BoletoTransactionDataCollection = $this->ConvertBoletoTransactionDataCollectionFromResponse($orderData->BoletoTransactionDataCollection);
+		
+		return $newOrderData;
+	}
 	public function ConvertCreditCardTransactionDataCollectionFromResponse($creditCardTransactionDataCollection) {
 		$newCreditCardTransactionDataCollection = array();
 		
-		$counter = 0;
-		foreach($creditCardTransactionDataCollection as $ccTransData) {
-			$newccTransData = new CreditCardTransactionData();
-			
-			$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
-			$newccTransData->AcquirerName = $ccTransData->AcquirerName;
-			$newccTransData->AmountInCents = $ccTransData->AmountInCents;
-			if (isset($ccTransData->AuthorizedAmountInCents)) {
-				$newccTransData->AuthorizedAmountInCents = $ccTransData->AuthorizedAmountInCents;
+		if (isset($creditCardTransactionDataCollection->CreditCardTransactionData)) {
+			// If there are more than one item, it's an array.
+			if (is_array($creditCardTransactionDataCollection->CreditCardTransactionData)) {
+				$counter = 0;
+				
+				foreach($creditCardTransactionDataCollection->CreditCardTransactionData as $ccTransData) {
+					$newCreditCardTransactionDataCollection[$counter] = $this->ConvertCreditCardTransactionData($ccTransData);
+					$counter += 1;
+				}
 			}
-			if (isset($ccTransData->CapturedAmountInCents)) {
-				$newccTransData->CapturedAmountInCents = $ccTransData->CapturedAmountInCents;
+			// If there is just one item, it's a stdclass.
+			else {
+				$newCreditCardTransactionDataCollection[0] = $this->ConvertCreditCardTransactionData($creditCardTransactionDataCollection->CreditCardTransactionData);
 			}
-			$newccTransData->CreateDate = $ccTransData->CreateDate;
-			$newccTransData->CreditCardBrandEnum = $ccTransData->CreditCardBrandEnum;
-			$newccTransData->CreditCardNumber = $ccTransData->CreditCardNumber;
-			$newccTransData->CreditCardTransactionStatusEnum = $ccTransData->CreditCardTransactionStatusEnum;
-			$newccTransData->CustomStatus = $ccTransData->CustomStatus;
-			if (isset($ccTransData->DueDate)) {
-				$newccTransData->DueDate = $ccTransData->DueDate;
-			}
-			$newccTransData->InstallmentCount = $ccTransData->InstallmentCount;
-			$newccTransData->InstantBuyKey = $ccTransData->InstantBuyKey;
-			if (isset($ccTransData->IsReccurrency)) {
-				$newccTransData->IsReccurrency = $ccTransData->IsReccurrency;
-			}
-			if (isset($ccTransData->RefundedAmountInCents)) {
-				$newccTransData->RefundedAmountInCents = $ccTransData->RefundedAmountInCents;
-			}
-			$newccTransData->TransactionIdentifier = $ccTransData->TransactionIdentifier;
-			$newccTransData->TransactionKey = $ccTransData->TransactionKey;
-			$newccTransData->TransactionReference = $ccTransData->TransactionReference;
-			$newccTransData->UniqueSequentialNumber = $ccTransData->UniqueSequentialNumber;
-			if (isset($ccTransData->VoidedAmountInCents)) {
-				$newccTransData->VoidedAmountInCents = $ccTransData->VoidedAmountInCents;
-			}
-			
-			$newCreditCardTransactionDataCollection[$counter] = $newccTransData;
-			$counter += 1;
 		}
 		
 		return $newCreditCardTransactionDataCollection;
 	}
+	public function ConvertCreditCardTransactionData($ccTransData) {
+		$newccTransData = new CreditCardTransactionData();
+			
+		$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
+		$newccTransData->AcquirerName = $ccTransData->AcquirerName;
+		$newccTransData->AmountInCents = $ccTransData->AmountInCents;
+		if (isset($ccTransData->AuthorizedAmountInCents)) {
+			$newccTransData->AuthorizedAmountInCents = $ccTransData->AuthorizedAmountInCents;
+		}
+		if (isset($ccTransData->CapturedAmountInCents)) {
+			$newccTransData->CapturedAmountInCents = $ccTransData->CapturedAmountInCents;
+		}
+		$newccTransData->CreateDate = $ccTransData->CreateDate;
+		$newccTransData->CreditCardBrandEnum = $ccTransData->CreditCardBrandEnum;
+		$newccTransData->CreditCardNumber = $ccTransData->CreditCardNumber;
+		$newccTransData->CreditCardTransactionStatusEnum = $ccTransData->CreditCardTransactionStatusEnum;
+		$newccTransData->CustomStatus = $ccTransData->CustomStatus;
+		if (isset($ccTransData->DueDate)) {
+			$newccTransData->DueDate = $ccTransData->DueDate;
+		}
+		$newccTransData->InstallmentCount = $ccTransData->InstallmentCount;
+		$newccTransData->InstantBuyKey = $ccTransData->InstantBuyKey;
+		if (isset($ccTransData->IsReccurrency)) {
+			$newccTransData->IsReccurrency = $ccTransData->IsReccurrency;
+		}
+		if (isset($ccTransData->RefundedAmountInCents)) {
+			$newccTransData->RefundedAmountInCents = $ccTransData->RefundedAmountInCents;
+		}
+		$newccTransData->TransactionIdentifier = $ccTransData->TransactionIdentifier;
+		$newccTransData->TransactionKey = $ccTransData->TransactionKey;
+		$newccTransData->TransactionReference = $ccTransData->TransactionReference;
+		$newccTransData->UniqueSequentialNumber = $ccTransData->UniqueSequentialNumber;
+		if (isset($ccTransData->VoidedAmountInCents)) {
+			$newccTransData->VoidedAmountInCents = $ccTransData->VoidedAmountInCents;
+		}
+		
+		return $newccTransData;
+	}
 	public function ConvertBoletoTransactionDataCollectionFromResponse($boletoTransactionDataCollection) {
 		$newBoletoTransactionDataCollection = array();
 		
-		$counter = 0;
-		foreach($boletoTransactionDataCollection as $boletoTransData) {
-			$newBoletoTransData = new BoletoTransactionData();
-			
-			$newBoletoTransData->AmountInCents = $boletoTransData->AmountInCents;
-			$newBoletoTransData->AmountPaidInCents = $boletoTransData->AmountPaidInCents;
-			$newBoletoTransData->BankNumber = $boletoTransData->BankNumber;
-			$newBoletoTransData->Barcode = $boletoTransData->Barcode;
-			$newBoletoTransData->BoletoTransactionStatusEnum = $boletoTransData->BoletoTransactionStatusEnum;
-			$newBoletoTransData->BoletoUrl = $boletoTransData->BoletoUrl;
-			$newBoletoTransData->CreateDate = $boletoTransData->CreateDate;
-			$newBoletoTransData->CustomStatus = $boletoTransData->CustomStatus;
-			$newBoletoTransData->ExpirationDate = $boletoTransData->ExpirationDate;
-			$newBoletoTransData->NossoNumero = $boletoTransData->NossoNumero;
-			$newBoletoTransData->TransactionKey = $boletoTransData->TransactionKey;
-			$newBoletoTransData->TransactionReference = $boletoTransData->TransactionReference;
-			
-			$newBoletoTransactionDataCollection[$counter] = $newBoletoTransData;
-			$counter += 1;
+		if (isset($boletoTransactionDataCollection->BoletoTransactionData)) {
+			// If there are more than one item, it's an array.
+			if (is_array($boletoTransactionDataCollection->BoletoTransactionData)) {
+				$counter = 0;
+				
+				foreach($boletoTransactionDataCollection->BoletoTransactionData as $boletoTransData) {
+					$newBoletoTransactionDataCollection[$counter] = $this->ConvertBoletoTransactionData($boletoTransData);
+					$counter += 1;
+				}
+			}
+			// If there is just one item, it's a stdclass.
+			else {
+				$newBoletoTransactionDataCollection[0] = $this->ConvertBoletoTransactionData($boletoTransactionDataCollection->BoletoTransactionData);
+			}
 		}
 		
 		return $newBoletoTransactionDataCollection;
 	}
+	public function ConvertBoletoTransactionData($boletoTransData) {
+		$newBoletoTransData = new BoletoTransactionData();
+
+		$newBoletoTransData->AmountInCents = $boletoTransData->AmountInCents;
+		$newBoletoTransData->AmountPaidInCents = $boletoTransData->AmountPaidInCents;
+		$newBoletoTransData->BankNumber = $boletoTransData->BankNumber;
+		$newBoletoTransData->Barcode = $boletoTransData->Barcode;
+		$newBoletoTransData->BoletoTransactionStatusEnum = $boletoTransData->BoletoTransactionStatusEnum;
+		$newBoletoTransData->BoletoUrl = $boletoTransData->BoletoUrl;
+		$newBoletoTransData->CreateDate = $boletoTransData->CreateDate;
+		$newBoletoTransData->CustomStatus = $boletoTransData->CustomStatus;
+		$newBoletoTransData->ExpirationDate = $boletoTransData->ExpirationDate;
+		$newBoletoTransData->NossoNumero = $boletoTransData->NossoNumero;
+		$newBoletoTransData->TransactionKey = $boletoTransData->TransactionKey;
+		$newBoletoTransData->TransactionReference = $boletoTransData->TransactionReference;
+
+		return $newBoletoTransData;
+	}
 	public function ConvertCreditCardDataCollectionFromResponse($creditCardDataCollection) {
 		$newCreditCardDataCollection = array();
-		
-		$counter = 0;
-		foreach($creditCardDataCollection as $ccData) {
-			$newccData = new CreditCardData();
-			
-			$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
-			$newccData->CreditCardNumber = $ccData->CreditCardNumber;
-			$newccData->InstantBuyKey = $ccData->InstantBuyKey;
-			$newccData->IsExpiredCreditCard = $ccData->IsExpiredCreditCard;
-			
-			$newCreditCardDataCollection[$counter] = $newccData;
-			$counter += 1;
+
+		if (is_null($creditCardDataCollection) == false) {
+			if (isset($creditCardDataCollection->CreditCardData)) {
+				// If there are more than one item, it's an array.
+				if (is_array($creditCardDataCollection->CreditCardData)) {
+					$counter = 0;
+					
+					foreach($creditCardDataCollection->CreditCardData as $ccData) {
+						$newCreditCardDataCollection[$counter] = $this->ConvertCreditCardData($ccData);
+						$counter += 1;
+					}
+				}
+				// If there is just one item, it's a stdclass.
+				else {
+					$newCreditCardDataCollection[0] = $this->ConvertCreditCardData($creditCardDataCollection->CreditCardData);
+				}
+			}
 		}
 		
 		return $newCreditCardDataCollection;
+	}
+	public function ConvertCreditCardData($ccData) {
+		$newccData = new CreditCardData();
+
+		$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
+		$newccData->CreditCardNumber = $ccData->CreditCardNumber;
+		$newccData->InstantBuyKey = $ccData->InstantBuyKey;
+		$newccData->IsExpiredCreditCard = $ccData->IsExpiredCreditCard;
+
+		return $newccData;
 	}
 }
 ?>

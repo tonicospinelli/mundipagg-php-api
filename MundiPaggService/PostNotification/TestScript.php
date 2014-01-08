@@ -1,15 +1,12 @@
 <?php
-include_once "StatusNotificationPost.php";
+include_once "StatusNotification.php";
 
-// Preparando teste...
-$_POST[NOTIF_POST_NAME] = GetXml();
+$_POST[$STATUS_NOTIF_POST] = GetXml();
+$xmlString = $_POST[$STATUS_NOTIF_POST];
 
-////////// Começando teste.
-// Captura o Xml de notificação
-$xml = GetNotificationXml($_POST[NOTIF_POST_NAME]);
 
 // Converte o Xml para um objeto do tipo StatusNotification
-$statusNotification = ParseXmlToStatusNotification($xml);
+$statusNotification = StatusNotification::ParseFromXml($xmlString);
 
 // Exibe o conteúdo
 var_dump($statusNotification);
@@ -21,7 +18,7 @@ var_dump($statusNotification);
 
 
 function GetXml() {
-	return '<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
+	return utf8_encode( utf8_encode ('<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
                     xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
                     i:schemaLocation="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract StatusNotificationXmlSchema.xsd">
   <AmountInCents>500</AmountInCents>
@@ -68,6 +65,6 @@ function GetXml() {
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>
   <OrderStatus>Paid</OrderStatus>
-</StatusNotification>';
+</StatusNotification>') );
 }
 ?>

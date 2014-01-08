@@ -10,7 +10,7 @@ class GetInstantBuyDataResponse {
 	public $RequestKey;
 	/*@var [bool] Fail or Success */
 	public $Success;
-	/*@var [CreditCardDate] CreditCard Data Collection */
+	/*@var [CreditCardData] CreditCard Data Collection */
 	public $CreditCardDataCollection;
 	/*@var [MundiPaggSuggestion] Mundipagg Suggestion */
 	public $MundiPaggSuggestion;

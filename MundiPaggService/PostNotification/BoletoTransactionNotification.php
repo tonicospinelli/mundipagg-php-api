@@ -2,7 +2,7 @@
 class BoletoTransactionNotification {
 	/*@var [long] Amount in Cents */
 	public $AmountInCents;
-	/*@var [long] Amount in Cents */
+	/*@var [long] Amount paid in Cents */
 	public $AmountPaidInCents;
 	/*@var [DateTime] Boleto Expiration Date */
 	public $BoletoExpirationDate;

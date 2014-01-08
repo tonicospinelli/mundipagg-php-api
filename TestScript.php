@@ -1,36 +1,36 @@
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
 include_once $SERVICE_CLIENT . "MundiPaggSoapServiceClient.php";
 
-const MerchantKey = "8A2DD57F-1ED9-4153-B4CE-69683EFADAD5";
+$ENABLE_WSDL_CACHE = false; // In MundiPaggServiceConfiguration.php
 
-$client = new MundiPaggSoapServiceClient();
+$client = new MundiPaggSoapServiceClient('SANDBOX');
 //$client = new MundiPaggSoapServiceClient(null, null, true);
 
-$orderRequest = CreateCreateOrder(); // Creates an order
-$orderResponse = $client->CreateOrder($orderRequest);
-var_dump($orderResponse);
+// $orderRequest = CreateCreateOrder(); // Creates an order
+// $orderResponse = $client->CreateOrder($orderRequest);
+// var_dump($orderResponse);
 
 //TratarOrderResponse($orderResponse);
 
-// $manageRequest = CreateManageOrder("e7b4534c-1b22-4491-acea-67121606b697");
+// $manageRequest = CreateManageOrder("fde8193b-583c-41b8-8479-a91ddd70ae00");
 // $manageResponse = $client->ManageOrder($manageRequest);
 // var_dump ($manageResponse);
 
-//$retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
-//$retryRequest = CreateRetryOrder($orderResponse->OrderKey);
-//$retryResponse = $client->RetryOrder($retryRequest);
-//var_dump($retryResponse);
+// $retryRequest = CreateRetryOrder($orderResponse->OrderKey);
+// $retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+// $retryResponse = $client->RetryOrder($retryRequest);
+// var_dump($retryResponse);
 
-// $queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
+// $queryRequest = CreateQueryOrder("1708090b-b345-46d1-8af6-e7292f1f4bbb");
 // //$queryRequest = CreateQueryOrder("c4759866-ccaf-4533-a959-ce7c57880881"); // Não existe.
 // $queryResponse = $client->QueryOrder($queryRequest);
 // var_dump($queryResponse, $queryResponse->OrderDataCollection[0]);
 
 
-// $instantBuyDataRequest = CreateGetInstantBuyData("90dbcec9-b623-4abf-95a3-df36293cdf19");
-// $instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
-// var_dump($instantBuyDataResponse);
+$instantBuyDataRequest = CreateGetInstantBuyData("85126373-6eb2-4b6f-851b-80bd520bccdf");
+$instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
+var_dump($instantBuyDataResponse);
 
 exit();
 
@@ -48,9 +48,6 @@ function CreateCreateOrder() {
 	$orderRequest->OrderReference = "";
 	//$orderRequest->EmailUpdateToBuyerEnum = "No";
 	
-	// Chave de loja de exemplo, informe aqui sua chave de loja 
-	$orderRequest->MerchantKey = MerchantKey;
-
 	$buyer = new Buyer();
 	$buyer->Email = "alguem@algumacoisa.com.br";
 	$buyer->GenderEnum = 'M';
@@ -113,6 +110,21 @@ function CreateCreateOrder() {
 	// Define o tipo da autorização
 	$ccTransaction1->CreditCardOperationEnum = "AuthOnly";
 	
+	//// CARTÃO 3
+	// Criação de uma transação de cartão de crédito 
+	$ccTransaction3 = new CreditCardTransaction();
+	$ccTransaction3->AmountInCents = 15;
+	$ccTransaction3->CreditCardNumber = "331211415454441";
+	// Número do cartão de crédito
+	$ccTransaction3->HolderName = "Somebody da Silva";
+	$ccTransaction3->SecurityCode = 523;
+	$ccTransaction3->ExpMonth = 11;
+	$ccTransaction3->ExpYear = 17;
+	$ccTransaction3->CreditCardBrandEnum = 'Elo';
+	$ccTransaction3->PaymentMethodCode = 1;
+	// Define o tipo da autorização
+	$ccTransaction3->CreditCardOperationEnum = "AuthAndCapture";
+	
 	/// BOLETO 1
 	// Criação de uma transação por boleto
 	$boletoTransaction1 = new BoletoTransaction();
@@ -132,8 +144,8 @@ function CreateCreateOrder() {
 	$boletoTransaction2->DaysToAddInBoletoExpirationDate = 9;
 
 	// Adiciona as transações no OrderRequest
-	$orderRequest->CreditCardTransactionCollection = array ( $ccTransaction1, $ccTransaction2 );
-	$orderRequest->BoletoTransactionCollection = array ( $boletoTransaction1, $boletoTransaction2 );
+	$orderRequest->CreditCardTransactionCollection = array ( $ccTransaction1, $ccTransaction2, $ccTransaction3 );
+	//$orderRequest->BoletoTransactionCollection = array ( $boletoTransaction1/*, $boletoTransaction2*/ );
 
 	$shopCart = new ShoppingCart();
 	$shopCart->FreighCostInCents = 1000;
@@ -195,7 +207,6 @@ function CreateManageOrder($orderKey) {
 	$manageRequest = new ManageOrderRequest();
 	
 	$manageRequest->OrderKey = $orderKey;
-	$manageRequest->MerchantKey = MerchantKey;
 	
 	//$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Capture;
 	$manageRequest->ManageOrderOperationEnum = ManageOrderOperationEnum::Void;
@@ -205,7 +216,6 @@ function CreateManageOrder($orderKey) {
 
 function CreateRetryOrder($orderKey) {
 	$retryRequest = new RetryOrderRequest();
-	$retryRequest->MerchantKey = MerchantKey;
 	$retryRequest->OrderKey = $orderKey;
 	
 	return $retryRequest;
@@ -214,7 +224,6 @@ function CreateRetryOrder($orderKey) {
 function CreateQueryOrder($orderKey) {
 	$queryRequest = new QueryOrderRequest();
 	
-	$queryRequest->MerchantKey = MerchantKey;
 	$queryRequest->OrderKey = $orderKey;
 	
 	return $queryRequest;
@@ -224,7 +233,6 @@ function CreateGetInstantBuyData($buyerKey) {
 	$instantBuyRequest = new GetInstantBuyDataRequest();
 	
 	$instantBuyRequest->BuyerKey = $buyerKey;
-	$instantBuyRequest->MerchantKey = MerchantKey;
 
 	return $instantBuyRequest;
 }
