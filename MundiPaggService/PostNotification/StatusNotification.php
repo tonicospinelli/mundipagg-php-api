@@ -53,15 +53,15 @@ final class StatusNotification {
 		if (isset($xml->BoletoTransaction)) {
 			$xmlBoleto = $xml->BoletoTransaction;
 			$boletoTrans = null;
-			if (!is_null($xmlBoleto)) {
+			if (!StatusNotification::IsNullOrEmptyXml($xmlBoleto)) {
 				$boletoTrans = new BoletoTransactionNotification();
 				
 				$boletoTrans->AmountInCents = (int)$xmlBoleto->AmountInCents;
-				if (isset($xmlBoleto->AmountPaidInCents) && ((string)$xmlBoleto->AmountPaidInCents) != '') { $boletoTrans->AmountPaidInCents = (int)$xmlBoleto->AmountPaidInCents; }
+				if (isset($xmlBoleto->AmountPaidInCents) && !StatusNotification::IsNullOrEmptyXml($xmlBoleto->AmountPaidInCents)) { $boletoTrans->AmountPaidInCents = (int)$xmlBoleto->AmountPaidInCents; }
 				$boletoTrans->BoletoExpirationDate = (string)$xmlBoleto->BoletoExpirationDate;
 				$boletoTrans->NossoNumero = (string)$xmlBoleto->NossoNumero;
 				$boletoTrans->StatusChangedDate = (string)$xmlBoleto->StatusChangedDate;
-				if (isset($xmlBoleto->TransactionKey) && ((string)$xmlBoleto->TransactionKey) != '') { $boletoTrans->TransactionKey = (string)$xmlBoleto->TransactionKey; }
+				if (isset($xmlBoleto->TransactionKey) && !StatusNotification::IsNullOrEmptyXml($xmlBoleto->TransactionKey)) { $boletoTrans->TransactionKey = (string)$xmlBoleto->TransactionKey; }
 				
 				$boletoTrans->TransactionReference = (string)$xmlBoleto->TransactionReference;
 				$boletoTrans->PreviousBoletoTransactionStatus = (string)$xmlBoleto->PreviousBoletoTransactionStatus;
@@ -74,21 +74,21 @@ final class StatusNotification {
 		if (isset($xml->CreditCardTransaction)) {
 			$xmlCC = $xml->CreditCardTransaction;
 			$ccTrans = null;
-			if (!is_null($xmlCC)) {
+			if (!StatusNotification::IsNullOrEmptyXml($xmlCC) ) {
 				$ccTrans = new CreditCardTransactionNotification();
 				
 				$ccTrans->Acquirer = (string)$xmlCC->Acquirer;
-				if (isset($xmlCC->AmountInCents) && ((string)$xmlCC->AmountInCents) != '') { $ccTrans->AmountInCents = (int)$xmlCC->AmountInCents; }
-				if (isset($xmlCC->AuthorizedAmountInCents) && ((string)$xmlCC->AuthorizedAmountInCents) != '') { $ccTrans->AuthorizedAmountInCents = (int)$xmlCC->AuthorizedAmountInCents; }
-				if (isset($xmlCC->CapturedAmountInCents) && ((string)$xmlCC->CapturedAmountInCents) != '') { $ccTrans->CapturedAmountInCents = (int)$xmlCC->CapturedAmountInCents; }
+				if (isset($xmlCC->AmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->AmountInCents)) { $ccTrans->AmountInCents = (int)$xmlCC->AmountInCents; }
+				if (isset($xmlCC->AuthorizedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->AuthorizedAmountInCents)) { $ccTrans->AuthorizedAmountInCents = (int)$xmlCC->AuthorizedAmountInCents; }
+				if (isset($xmlCC->CapturedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->CapturedAmountInCents)) { $ccTrans->CapturedAmountInCents = (int)$xmlCC->CapturedAmountInCents; }
 				$ccTrans->CreditCardBrand = (string)$xmlCC->CreditCardBrand;
-				if (isset($xmlCC->RefundedAmountInCents) && ((string)$xmlCC->RefundedAmountInCents) != '') { $ccTrans->RefundedAmountInCents = (int)$xmlCC->RefundedAmountInCents; }
+				if (isset($xmlCC->RefundedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->RefundedAmountInCents)) { $ccTrans->RefundedAmountInCents = (int)$xmlCC->RefundedAmountInCents; }
 				$ccTrans->StatusChangedDate = (string)$xmlCC->StatusChangedDate;
 				$ccTrans->TransactionIdentifier = (string)$xmlCC->TransactionIdentifier;
 				$ccTrans->TransactionKey = (string)$xmlCC->TransactionKey;
 				$ccTrans->TransactionReference = (string)$xmlCC->TransactionReference;
 				$ccTrans->UniqueSequentialNumber = (string)$xmlCC->UniqueSequentialNumber;
-				if (isset($xmlCC->VoidedAmountInCents) && ((string)$xmlCC->VoidedAmountInCents) != '') { $ccTrans->VoidedAmountInCents = (int)$xmlCC->VoidedAmountInCents; }
+				if (isset($xmlCC->VoidedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->VoidedAmountInCents)) { $ccTrans->VoidedAmountInCents = (int)$xmlCC->VoidedAmountInCents; }
 				$ccTrans->PreviousCreditCardTransactionStatus = (string)$xmlCC->PreviousCreditCardTransactionStatus;
 				$ccTrans->CreditCardTransactionStatus = (string)$xmlCC->CreditCardTransactionStatus;
 			}
@@ -99,11 +99,11 @@ final class StatusNotification {
 		if (isset($xml->OnlineDebitTransaction)) {
 			$xmlOnlineDebit = $xml->OnlineDebitTransaction;
 			$onlineDebitTrans = null;
-			if (!is_null($onlineDebitTrans)) {
+			if (!StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit)) {
 				$onlineDebitTrans = new OnlineDebitTransactionNotification();
 				
-				if (isset($xmlOnlineDebit->AmountInCents) && ((string)$xmlOnlineDebit->AmountInCents) != '') { $onlineDebitTrans->AmountInCents = (int)$xmlOnlineDebit->AmountInCents; }
-				if (isset($xmlOnlineDebit->PaidAmountInCents) && ((string)$xmlOnlineDebit->PaidAmountInCents) != '') { $onlineDebitTrans->PaidAmountInCents = (int)$xmlOnlineDebit->PaidAmountInCents; }
+				if (isset($xmlOnlineDebit->AmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit->AmountInCents)) { $onlineDebitTrans->AmountInCents = (int)$xmlOnlineDebit->AmountInCents; }
+				if (isset($xmlOnlineDebit->AmountPaidInCents) && !StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit->AmountPaidInCents)) { $onlineDebitTrans->AmountPaidInCents = (int)$xmlOnlineDebit->AmountPaidInCents; }
 				$onlineDebitTrans->StatusChangedDate = (string)$xmlOnlineDebit->StatusChangedDate;
 				$onlineDebitTrans->TransactionKey = (string)$xmlOnlineDebit->TransactionKey;
 				$onlineDebitTrans->TransactionReference = (string)$xmlOnlineDebit->TransactionReference;
@@ -111,11 +111,16 @@ final class StatusNotification {
 				$onlineDebitTrans->OnlineDebitTransactionStatus = (string)$xmlOnlineDebit->CreditCardTransactionStatus;
 			}
 			
-			$statusNotification->OnlineDebitTransaction = $ccTrans;
+			$statusNotification->OnlineDebitTransaction = $onlineDebitTrans;
 		}
 		
 		return $statusNotification;
 	}
 
+	private static function IsNullOrEmptyXml($xml) {
+		if (is_null($xml)) { return true; }
+		if ((string)$xml == '') { return true; }
+		return false;
+	}
 }
 ?>

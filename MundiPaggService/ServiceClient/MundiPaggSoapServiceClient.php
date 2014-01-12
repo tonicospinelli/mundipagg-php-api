@@ -15,35 +15,32 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 	private $converter = null;
 	private $isClosed = false;
 	
-	public $showXmlData = false; // For tests only. REMINDER: REMOVE THIS VARIABLE AFTER ALL TESTS ARE DONE.
-		
+	private $showXmlData = false;
+	
 	/**
 	* @param string $wsdlUri WSDL contract location.
 	* @param ISoapConverter $converter The object used to convert data in requests and responses.
 	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
 	*/
-	public function __construct($wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = false) {
-		global $ENABLE_WSDL_CACHE; // Configuration Property
-		
+	public function __construct($wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = NULL) {
+
+		global $TRACE_SOAP_XML, $ENABLE_WSDL_CACHE, $WSDL_URI_COLLECTION, $DEFAULT_WSDL_URI, $CONVERTERS; // Configuration Properties
+
 		$this->showXmlData = $traceSoapXml;
 		$soap_opt = array();
 		$soap_opt['encoding'] = 'UTF-8';
-		$soap_opt['trace'] = $traceSoapXml;
 		$soap_opt['exceptions'] = true;
+		
+		if (is_null($traceSoapXml)) { $traceSoapXml = $TRACE_SOAP_XML; }
+		$soap_opt['trace'] = $traceSoapXml;
+
+
 		// WSDL_CACHE_NONE, WSDL_CACHE_DISK, WSDL_CACHE_MEMORY or WSDL_CACHE_BOTH
-		if ($ENABLE_WSDL_CACHE) {
-			$soap_opt['cache_wsdl'] = WSDL_CACHE_MEMORY;
-		}
-		else {
-			$soap_opt['cache_wsdl'] = WSDL_CACHE_NONE;
-		}
-		//$soap_opt['soap_version'] = SOAP_1_1;
+		if ($ENABLE_WSDL_CACHE) { $soap_opt['cache_wsdl'] = WSDL_CACHE_MEMORY; }
+		else { $soap_opt['cache_wsdl'] = WSDL_CACHE_NONE; }
 		
-		global $PRODUCTION_WSDL, $SANDBOX_WSDL, $CONVERTERS; // Configuration Properties
-		
-		if (is_null($wsdlUri)) { $wsdlUri = $PRODUCTION_WSDL; }
-		if (strtoupper(trim($wsdlUri)) == 'SANDBOX') { $wsdlUri = $SANDBOX_WSDL; }
-		if (strtoupper(trim($wsdlUri)) == 'PRODUCTION') { $wsdlUri = $PRODUCTION_WSDL; }
+		if (is_null($wsdlUri) || trim($wsdlUri) == '') { $wsdlUri = $WSDL_URI_COLLECTION[$DEFAULT_WSDL_URI]; }
+		else if (array_key_exists($wsdlUri, $WSDL_URI_COLLECTION)) { $wsdlUri = $WSDL_URI_COLLECTION[$wsdlUri]; }
 		if (is_null($converter)) { $converter = new SoapConverter(); }
 		$this->converter = $converter;
 		
@@ -100,8 +97,6 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 			throw $fault;
 		}
 
-		$this->WriteXml($this->soapClient);
-		
 		$createOrderResponse = $result->CreateOrderResult;
 		
 		// Converts and returns the response.
@@ -127,8 +122,6 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 			throw $fault;
 		}
 
-		$this->WriteXml($this->soapClient);
-		
 		$manageOrderResponse = $result->ManageOrderResult;
 		
 		// Converts and returns the response.
@@ -154,8 +147,6 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 			throw $fault;
 		}
 
-		$this->WriteXml($this->soapClient);
-		
 		$retryOrderResponse = $result->RetryOrderResult;
 
 		// Converts and returns the response.
@@ -181,8 +172,6 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 			throw $fault;
 		}
 
-		$this->WriteXml($this->soapClient);
-		
 		$queryOrderResponse = $result->QueryOrderResult;
 		
 		// Converts and returns the response.
@@ -208,36 +197,60 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 			throw $fault;
 		}
 
-		$this->WriteXml($this->soapClient);
-		
 		$getInstantBuyDataResponse = $result->GetInstantBuyDataResult;
 		
 		// Converts and returns the response.
 		return $this->converter->ConvertGetInstantBuyDataResponse($getInstantBuyDataResponse);
 	}
 	
-	/* For tests only. Writes the xml request in a file. REMINDER: Remove after all tests are done.*/
-	private function WriteXml($soapClient) {
+	/**
+	* Gets the Request XML.
+	*/
+	public function GetRequestData() {
+		if (!$this->showXmlData) { return null; }
+		return $this->soapClient->__getLastRequest();
+	}
+	
+	/**
+	* Gets the Response XML.
+	*/
+	public function GetResponseData() {
+		if (!$this->showXmlData) { return null; }
+		return $this->soapClient->__getLastResponse();
+	}
+	
+	/**
+	* Saves the request and response.
+	* @param $directory The directory where the files must be saved.
+	*/
+	public function SaveRequestResponseData($directory) {
 		if (!$this->showXmlData) { return; }
-		$requestLocation = 'C:\Users\mriboli\Desktop\PHP_SoapRequest.xml';
-		$responseLocation = 'C:\Users\mriboli\Desktop\PHP_SoapResponse.xml';
-		$request = $soapClient->__getLastRequest();
-		$response = $soapClient->__getLastResponse();
 		
-		unlink($requestLocation);
-		$fr = fopen($requestLocation, 'w');
-		fwrite($fr, $request);
-		fclose($fr);
+		if (!$this->EndsWith($directory, '/') && !$this->EndsWith($directory, '\\')) { $directory .= '\\'; }
 		
-		unlink($responseLocation);
-		$fr = fopen($responseLocation, 'w');
-		fwrite($fr, $response);
-		fclose($fr);
+		$now = date('Y-m-d__H-i-s-') . substr((string)microtime(), 2, 4);
 		
-		echo "Request:" . NEWLINE;
-		echo html_entity_decode( $request);
-		echo NEWLINE . NEWLINE . "Response:" . NEWLINE;
-		echo html_entity_decode( $response);
+		$request = $this->GetRequestData();
+		$response = $this->GetResponseData();
+		$requestFile = null;
+		$responseFile = null;
+		
+		if (!is_null($request)) {
+			$requestFile = $directory . 'SoapRequest____' . $now . '.xml';
+			$fr = fopen($requestFile, 'w');
+			fwrite($fr, $request);
+			fclose($fr);
+		}
+		
+		if (!is_null($response)) {
+			$responseFile = $directory . 'SoapResponse____' . $now . '.xml';
+			$fr = fopen($responseFile, 'w');
+			fwrite($fr, $response);
+			fclose($fr);
+		}
+		
+		if (is_null($request) && is_null($response)) { return null; }
+		return array ( 'request' => $requestFile, 'response' => $responseFile );
 	}
 	
 	/**
@@ -245,6 +258,10 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 	*/
 	private function ThrowExceptionIfClosed() {
 		if ($this->isClosed) { throw new Exception("The client is closed!"); }
+	}
+
+	private function EndsWith($str, $find) {
+		return $find === "" || substr($str, -strlen($find)) === $find;
 	}
 }
 ?>

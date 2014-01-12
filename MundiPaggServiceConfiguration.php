@@ -11,12 +11,19 @@
 	
 	
 	// CONFIGURATION VARIABLES
-	$MERCHANT_KEY = '8A2DD57F-1ED9-4153-B4CE-69683EFADAD5';
+	$MERCHANT_KEY = '00000000-0000-0000-0000-000000000000';
 	
-	$PRODUCTION_WSDL = "https://transaction.mundipaggone.com/MundiPaggService.svc?wsdl";
-	$SANDBOX_WSDL = "$SDK\\LocalWSDL\\wsdl.xml";
+	$WSDL_URI_COLLECTION = array (
+		'PRODUCTION' => "https://transaction.mundipaggone.com/MundiPaggService.svc?wsdl"
+		//,'SANDBOX' => "" // Not implemented yet.
+		,'LOCAL' => "$SDK\\LocalWSDL\\wsdl.xml"
+	);
+	
+	$DEFAULT_WSDL_URI = 'PRODUCTION';
 	
 	$ENABLE_WSDL_CACHE = true;
+	
+	$TRACE_SOAP_XML = false;
 	
 	$STATUS_NOTIF_POST = "xmlStatusNotification";
 

@@ -4,20 +4,19 @@ include_once $SERVICE_CLIENT . "MundiPaggSoapServiceClient.php";
 
 $ENABLE_WSDL_CACHE = false; // In MundiPaggServiceConfiguration.php
 
-$client = new MundiPaggSoapServiceClient('SANDBOX');
+//$client = new MundiPaggSoapServiceClient();
+$client = new MundiPaggSoapServiceClient('LOCAL',null,true);
 //$client = new MundiPaggSoapServiceClient(null, null, true);
 
-// $orderRequest = CreateCreateOrder(); // Creates an order
-// $orderResponse = $client->CreateOrder($orderRequest);
-// var_dump($orderResponse);
-
-//TratarOrderResponse($orderResponse);
+$orderRequest = CreateCreateOrder(); // Creates an order
+$orderResponse = $client->CreateOrder($orderRequest);
+var_dump($orderResponse);
 
 // $manageRequest = CreateManageOrder("fde8193b-583c-41b8-8479-a91ddd70ae00");
 // $manageResponse = $client->ManageOrder($manageRequest);
 // var_dump ($manageResponse);
 
-// $retryRequest = CreateRetryOrder($orderResponse->OrderKey);
+// //$retryRequest = CreateRetryOrder($orderResponse->OrderKey);
 // $retryRequest = CreateRetryOrder("c4759866-ccaf-4533-a959-ce7c57880886");
 // $retryResponse = $client->RetryOrder($retryRequest);
 // var_dump($retryResponse);
@@ -28,9 +27,20 @@ $client = new MundiPaggSoapServiceClient('SANDBOX');
 // var_dump($queryResponse, $queryResponse->OrderDataCollection[0]);
 
 
-$instantBuyDataRequest = CreateGetInstantBuyData("85126373-6eb2-4b6f-851b-80bd520bccdf");
-$instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
-var_dump($instantBuyDataResponse);
+// $instantBuyDataRequest = CreateGetInstantBuyData("85126373-6eb2-4b6f-851b-80bd520bccdf");
+// $instantBuyDataResponse = $client->GetInstantBuyData($instantBuyDataRequest);
+// var_dump($instantBuyDataResponse);
+
+
+
+echo "Request:<br>";
+echo $client->GetRequestData();
+echo "<br><br><br>";
+echo "Response:<br>";
+echo $client->GetResponseData();
+
+$files = $client->SaveRequestResponseData('C:\\Users\\mriboli\\Desktop\\PHP-SDK XML\\');
+var_dump($files);
 
 exit();
 
@@ -163,46 +173,6 @@ function CreateCreateOrder() {
 	return $orderRequest;
 }
 
-function TratarOrderResponse($orderResponse) {
-	echo "BuyerKey: " . $orderResponse->BuyerKey . NEWLINE;
-	echo "Sucesso: " . $orderResponse->Success . NEWLINE;
-	echo "OrderKey: " . $orderResponse->OrderKey . NEWLINE;
-	echo "OrderStatusEnum: " . $orderResponse->OrderStatusEnum . NEWLINE;
-	echo "RequestKey: " . $orderResponse->RequestKey . NEWLINE;
-
-	echo NEWLINE . "CC:" . NEWLINE;
-	foreach ($orderResponse->CreditCardTransactionResultCollection as $ccTransResult) {
-		echo "Sucess: " . $ccTransResult->Success . NEWLINE;
-		echo "TransactionKey: " . $ccTransResult->TransactionKey . NEWLINE;
-		echo "TransactionIdentifier: " . $ccTransResult->TransactionIdentifier . NEWLINE;
-		echo "UniqueSequentialNumber: " . $ccTransResult->UniqueSequentialNumber . NEWLINE;
-		echo "AmountInCents: " . $ccTransResult->AmountInCents . NEWLINE;
-		echo "AuthorizedAmountInCents: " . $ccTransResult->AuthorizedAmountInCents . NEWLINE;
-		echo "AcquirerMessage: " . $ccTransResult->AcquirerMessage . NEWLINE;
-		echo "CreditCardNumber: " . $ccTransResult->CreditCardNumber . NEWLINE;
-		echo "CreditCardOperationEnum: " . $ccTransResult->CreditCardOperationEnum . NEWLINE;
-		echo "CapturedAmountInCents: " . $ccTransResult->CapturedAmountInCents . NEWLINE;
-		echo "RefundedAmountInCents: " . $ccTransResult->RefundedAmountInCents . NEWLINE;
-		echo "VoidedAmountInCents: " . $ccTransResult->VoidedAmountInCents . NEWLINE;
-		
-		echo NEWLINE;
-	}
-
-	echo NEWLINE . "Boleto:" . NEWLINE;
-	foreach ($orderResponse->BoletoTransactionResultCollection as $boletoTransResult) {
-		echo "Success: " . $boletoTransResult->Success . NEWLINE;
-		echo "TransactionKey: " . $boletoTransResult->TransactionKey . NEWLINE;
-		echo "TransactionReferece: " . $boletoTransResult->TransactionReference . NEWLINE;
-		echo "AmountInCents: " . $boletoTransResult->AmountInCents . NEWLINE;
-		echo "Barcode: " . $boletoTransResult->Barcode . NEWLINE;
-		echo "BoletoTransactionStatusEnum: " . $boletoTransResult->BoletoTransactionStatusEnum . NEWLINE;
-		echo "BoletoUrl: " . $boletoTransResult->BoletoUrl . NEWLINE;
-		echo "CustomStatus: " . $boletoTransResult->CustomStatus . NEWLINE;
-		echo "NossoNumero: " . $boletoTransResult->NossoNumero . NEWLINE;
-	}
-}
-
-//function CreateManageOrder(CreateOrderResponse $orderResponse) {
 function CreateManageOrder($orderKey) {
 	$manageRequest = new ManageOrderRequest();
 	
