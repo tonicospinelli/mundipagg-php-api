@@ -11,6 +11,7 @@ $client = new MundiPaggSoapServiceClient('LOCAL',null,true);
 $orderRequest = CreateCreateOrder(); // Creates an order
 $orderResponse = $client->CreateOrder($orderRequest);
 var_dump($orderResponse);
+// var_dump($orderResponse->ErrorReport);
 
 // $manageRequest = CreateManageOrder("fde8193b-583c-41b8-8479-a91ddd70ae00");
 // $manageResponse = $client->ManageOrder($manageRequest);
@@ -33,14 +34,14 @@ var_dump($orderResponse);
 
 
 
-echo "Request:<br>";
-echo $client->GetRequestData();
-echo "<br><br><br>";
-echo "Response:<br>";
-echo $client->GetResponseData();
+// echo "Request:<br>";
+// echo $client->GetRequestData();
+// echo "<br><br><br>";
+// echo "Response:<br>";
+// echo $client->GetResponseData();
 
-$files = $client->SaveRequestResponseData('C:\\Users\\mriboli\\Desktop\\PHP-SDK XML\\');
-var_dump($files);
+// $files = $client->SaveRequestResponseData('C:\\Users\\mriboli\\Desktop\\PHP-SDK XML\\');
+// var_dump($files);
 
 exit();
 

@@ -1,5 +1,6 @@
 <?php
-include_once "StatusNotification.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
+include_once $POST_NOTIFICATION . "StatusNotification.php";
 
 $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetCreditCardXml();
@@ -7,7 +8,6 @@ $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetOnlineDebitXml();
 // $_POST[$STATUS_NOTIF_POST] = GetNoTransactionsXml();
 $xmlString = $_POST[$STATUS_NOTIF_POST];
-
 
 // Converte o Xml para um objeto do tipo StatusNotification
 $statusNotification = StatusNotification::ParseFromXml($xmlString);

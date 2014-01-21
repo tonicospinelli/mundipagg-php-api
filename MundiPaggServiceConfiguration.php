@@ -24,7 +24,10 @@
 	$ENABLE_WSDL_CACHE = true;
 	
 	$TRACE_SOAP_XML = false;
+
+	$ENABLE_AUTO_SAVE_MESSAGES = false;
+	
+	$AUTO_SAVE_MESSAGES_PATH = "C:\\RequestResponseData\\";
 	
 	$STATUS_NOTIF_POST = "xmlStatusNotification";
-
 ?>

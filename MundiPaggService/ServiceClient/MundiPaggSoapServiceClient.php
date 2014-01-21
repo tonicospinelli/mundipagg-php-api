@@ -99,6 +99,8 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 
 		$createOrderResponse = $result->CreateOrderResult;
 		
+		$this->AutoSaveRequestResponseData();
+		
 		// Converts and returns the response.
 		return $this->converter->ConvertOrderResponse($createOrderResponse);
 	}
@@ -123,6 +125,8 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 		}
 
 		$manageOrderResponse = $result->ManageOrderResult;
+		
+		$this->AutoSaveRequestResponseData();
 		
 		// Converts and returns the response.
 		return $this->converter->ConvertManageOrderResponse($manageOrderResponse);
@@ -149,6 +153,8 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 
 		$retryOrderResponse = $result->RetryOrderResult;
 
+		$this->AutoSaveRequestResponseData();
+		
 		// Converts and returns the response.
 		return $this->converter->ConvertRetryOrderResponse($retryOrderResponse);
 	}
@@ -174,6 +180,8 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 
 		$queryOrderResponse = $result->QueryOrderResult;
 		
+		$this->AutoSaveRequestResponseData();
+		
 		// Converts and returns the response.
 		return $this->converter->ConvertQueryOrderResponse($queryOrderResponse);
 	}
@@ -198,6 +206,8 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 		}
 
 		$getInstantBuyDataResponse = $result->GetInstantBuyDataResult;
+		
+		$this->AutoSaveRequestResponseData();
 		
 		// Converts and returns the response.
 		return $this->converter->ConvertGetInstantBuyDataResponse($getInstantBuyDataResponse);
@@ -251,6 +261,22 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 		
 		if (is_null($request) && is_null($response)) { return null; }
 		return array ( 'request' => $requestFile, 'response' => $responseFile );
+	}
+	
+	/**
+	* Automatically saves the request and response messages.
+	*/
+	private function AutoSaveRequestResponseData() {
+	
+		global $ENABLE_AUTO_SAVE_MESSAGES, $AUTO_SAVE_MESSAGES_PATH;
+		
+		if ($this->showXmlData && $ENABLE_AUTO_SAVE_MESSAGES) {
+			
+			try {
+				$this->SaveRequestResponseData($AUTO_SAVE_MESSAGES_PATH);
+			}
+			catch(Exception $ex) { }
+		}
 	}
 	
 	/**

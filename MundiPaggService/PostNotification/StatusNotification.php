@@ -38,6 +38,8 @@ final class StatusNotification {
 		if (is_null($xmlString)) { return null; }
 		if (is_string($xmlString) == false) { return null; }
 		
+		StatusNotification::AutoSaveRequestResponseData($xmlString);
+		
 		$xml = simplexml_load_string($xmlString); // Cria o objeto do Xml
 		
 		$xml->AmountPaidInCents = null;
@@ -117,10 +119,52 @@ final class StatusNotification {
 		return $statusNotification;
 	}
 
+	/**
+	* Saves the request and response.
+	* @param $directory The directory where the files must be saved.
+	*/
+	public static function SavePostNotificationData($postData, $directory) {
+		if (!StatusNotification::EndsWith($directory, '/') && !StatusNotification::EndsWith($directory, '\\')) { $directory .= '\\'; }
+		
+		$now = date('Y-m-d__H-i-s-') . substr((string)microtime(), 2, 4);
+		
+		$postFile = null;
+		
+		if (!is_null($postData)) {
+			$postFile = $directory . 'PostNotification____' . $now . '.xml';
+			$fr = fopen($postFile, 'w');
+			fwrite($fr, $postData);
+			fclose($fr);
+		}
+		
+		if (is_null($postData)) { return null; }
+		return $postFile;
+	}
+	
+	/**
+	* Automatically saves the post notification message.
+	*/
+	private static function AutoSaveRequestResponseData($postData) {
+	
+		global $ENABLE_AUTO_SAVE_MESSAGES, $AUTO_SAVE_MESSAGES_PATH;
+		
+		if ($ENABLE_AUTO_SAVE_MESSAGES) {
+			
+			try {
+				StatusNotification::SavePostNotificationData($postData, $AUTO_SAVE_MESSAGES_PATH);
+			}
+			catch(Exception $ex) { }
+		}
+	}
+
 	private static function IsNullOrEmptyXml($xml) {
 		if (is_null($xml)) { return true; }
 		if ((string)$xml == '') { return true; }
 		return false;
+	}
+	
+	private static function EndsWith($str, $find) {
+		return $find === "" || substr($str, -strlen($find)) === $find;
 	}
 }
 ?>
