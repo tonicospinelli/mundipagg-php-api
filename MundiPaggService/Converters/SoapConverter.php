@@ -330,6 +330,7 @@ class SoapConverter implements ISoapConverter {
 			$newccTrans = array();
 			
 			$newccTrans["AmountInCents"] = $ccTrans->AmountInCents;
+			$newccTrans["CaptureDelayInMinutes"] = $ccTrans->CaptureDelayInMinutes;
 			$newccTrans["CreditCardNumber"] = $ccTrans->CreditCardNumber;
 			$newccTrans["InstallmentCount"] = $ccTrans->InstallmentCount;
 			$newccTrans["HolderName"] = $ccTrans->HolderName;
@@ -339,12 +340,30 @@ class SoapConverter implements ISoapConverter {
 			$newccTrans["CreditCardBrandEnum"] = $ccTrans->CreditCardBrandEnum;
 			$newccTrans["PaymentMethodCode"] = $ccTrans->PaymentMethodCode;
 			$newccTrans["CreditCardOperationEnum"] = $ccTrans->CreditCardOperationEnum;
+			$newccTrans["IataAmountInCents"] = $ccTrans->IataAmountInCents;
+			$newccTrans["InstantBuyKey"] = $ccTrans->InstantBuyKey;
+			$newccTrans["ThirdPartyMerchantKey"] = $ccTrans->ThirdPartyMerchantKey;
+			$newccTrans["TransactionReference"] = $ccTrans->TransactionReference;
+			if (!is_null($ccTrans->Recurrency)) {
+				$newccTrans["Recurrency"] = $this->ConvertRecurrencyFromRequest($ccTrans->Recurrency);
+			}
 			
 			$newccTransactionCollection["CreditCardTransaction"][$counter] = $newccTrans;
 			$counter += 1;
 		}
 		
 		return $newccTransactionCollection;
+	}
+	public function ConvertRecurrencyFromRequest($recurrency) {
+		$newRecurrency = array();
+		
+		$newRecurrency["DateToStartBilling"] = $recurrency->DateToStartBilling;
+		$newRecurrency["FrequencyEnum"] = $recurrency->FrequencyEnum;
+		$newRecurrency["Interval"] = $recurrency->Interval;
+		$newRecurrency["OneDollarAuth"] = $recurrency->OneDollarAuth;
+		$newRecurrency["Recurrences"] = $recurrency->Recurrences;
+		
+		return $recurrency;
 	}
 	public function ConvertBoletoTransactionCollectionFromRequest($boletoTransactionCollectionRequest) {
 		$newBoletoTransCollection = array();
