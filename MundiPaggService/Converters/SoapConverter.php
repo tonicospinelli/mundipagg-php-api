@@ -112,7 +112,7 @@ class SoapConverter implements ISoapConverter {
 		//Manage Credit Card Transaction Collection
 		if (!is_null($manageRequest->ManageCreditCardTransactionCollection)) {
 			if (is_array($manageRequest->ManageCreditCardTransactionCollection)) {
-				$order["ManageCreditCardTransactionCollection"] = $this->ConvertManageCreditCardTransactionCollection($manageRequest->ManageCreditCardTransactionCollection);
+				$order["ManageCreditCardTransactionCollection"] = $this->ConvertManageCreditCardTransactionCollectionFromRequest($manageRequest->ManageCreditCardTransactionCollection);
 			}
 		}
 		
