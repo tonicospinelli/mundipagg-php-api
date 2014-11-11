@@ -1,6 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $POST_NOTIFICATION . "StatusNotification.php";
+//include_once constant("MP_POST_NOTIFICATION") . "StatusNotification.php";
 
 $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetCreditCardXml();

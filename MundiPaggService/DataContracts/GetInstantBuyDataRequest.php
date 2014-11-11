@@ -12,8 +12,7 @@ class GetInstantBuyDataRequest {
 	function __construct() {
 		$this->BuyerKey = null;
 		$this->InstantBuyKey = null;
-		global $MERCHANT_KEY;
-		$this->MerchantKey = $MERCHANT_KEY;
+		$this->MerchantKey = constant("MP_MERCHANT_KEY");
 		$this->RequestKey = null;
 	}
 	

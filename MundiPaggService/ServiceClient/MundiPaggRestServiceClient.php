@@ -1,8 +1,8 @@
 <?php
 throw new Exception("This client is not implemented yet!<br>Use MundiPaggSoapServiceClient.<br>See the documentation for more details.");
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $CONVERTERS . "RestConverter.php"; // Also includes IRestConverter.php
+//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
+include_once constant("MP_CONVERTERS") . "RestConverter.php"; // Also includes IRestConverter.php
 
 /**
 * @author: Matheus
@@ -24,7 +24,7 @@ class MundiPaggRestServiceClient {
 	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
 	*/
 	public function __construct(string $wsdlUri = NULL, IRestConverter $converter = NULL, $traceSoapXml = false) {
-		global $ENABLE_WSDL_CACHE; // Configuration Property
+		// global $ENABLE_WSDL_CACHE; // Configuration Property
 		
 		$this->showXmlData = $traceSoapXml;
 		$soap_opt = array();
@@ -32,7 +32,7 @@ class MundiPaggRestServiceClient {
 		$soap_opt['trace'] = $traceSoapXml;
 		$soap_opt['exceptions'] = true;
 		// WSDL_CACHE_NONE, WSDL_CACHE_DISK, WSDL_CACHE_MEMORY or WSDL_CACHE_BOTH
-		if ($ENABLE_WSDL_CACHE) {
+		if (constant("MP_ENABLE_WSDL_CACHE")) {
 			$soap_opt['cache_wsdl'] = WSDL_CACHE_MEMORY;
 		}
 		else {
@@ -40,7 +40,7 @@ class MundiPaggRestServiceClient {
 		}
 		//$soap_opt['soap_version'] = SOAP_1_1;
 		
-		global $PRODUCTION_WSDL, $SANDBOX_WSDL, $CONVERTERS; // Configuration Properties
+		global $PRODUCTION_WSDL, $SANDBOX_WSDL; // Configuration Properties
 		
 		if (is_null($wsdlUri)) { $wsdlUri = $PRODUCTION_WSDL; }
 		if (strtoupper(trim($wsdlUri)) == 'SANDBOX') { $wsdlUri = $SANDBOX_WSDL; }

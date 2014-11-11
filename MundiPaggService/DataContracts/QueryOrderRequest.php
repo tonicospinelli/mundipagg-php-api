@@ -10,8 +10,7 @@ class QueryOrderRequest {
 	public $RequestKey;
 	
 	function __construct() {
-		global $MERCHANT_KEY;
-		$this->MerchantKey = $MERCHANT_KEY;
+		$this->MerchantKey = constant("MP_MERCHANT_KEY");
 		$this->OrderKey = null;
 		$this->OrderReference = "";
 		$this->RequestKey = null;

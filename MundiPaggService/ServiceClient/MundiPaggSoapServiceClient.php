@@ -1,7 +1,7 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
+//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
 include_once "IMundiPaggServiceClient.php"; // Also includes ISoapConverter.php
-include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.php
+include_once constant("MP_CONVERTERS") . "SoapConverter.php"; // Also includes ISoapConverter.php
 
 /**
 * @author: Matheus
@@ -24,7 +24,7 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 	*/
 	public function __construct($wsdlUri = NULL, ISoapConverter $converter = NULL, $traceSoapXml = NULL) {
 
-		global $TRACE_SOAP_XML, $ENABLE_WSDL_CACHE, $WSDL_URI_COLLECTION, $DEFAULT_WSDL_URI, $CONVERTERS; // Configuration Properties
+		global $TRACE_SOAP_XML, $CONVERTERS; // Configuration Properties
 
 		$this->showXmlData = $traceSoapXml;
 		$soap_opt = array();
@@ -36,11 +36,11 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 
 
 		// WSDL_CACHE_NONE, WSDL_CACHE_DISK, WSDL_CACHE_MEMORY or WSDL_CACHE_BOTH
-		if ($ENABLE_WSDL_CACHE) { $soap_opt['cache_wsdl'] = WSDL_CACHE_MEMORY; }
+		if (constant("MP_ENABLE_WSDL_CACHE")) { $soap_opt['cache_wsdl'] = WSDL_CACHE_MEMORY; }
 		else { $soap_opt['cache_wsdl'] = WSDL_CACHE_NONE; }
 		
-		if (is_null($wsdlUri) || trim($wsdlUri) == '') { $wsdlUri = $WSDL_URI_COLLECTION[$DEFAULT_WSDL_URI]; }
-		else if (array_key_exists($wsdlUri, $WSDL_URI_COLLECTION)) { $wsdlUri = $WSDL_URI_COLLECTION[$wsdlUri]; }
+		if (is_null($wsdlUri) || trim($wsdlUri) == '') { $wsdlUri = unserialize(constant("MP_WSDL_URI_COLLECTION"))[constant("MP_DEFAULT_WSDL_URI")]; }
+		else if (array_key_exists($wsdlUri, unserialize(constant("MP_WSDL_URI_COLLECTION")))) { $wsdlUri = unserialize(constant("MP_WSDL_URI_COLLECTION"))[$wsdlUri]; }
 		if (is_null($converter)) { $converter = new SoapConverter(); }
 		$this->converter = $converter;
 		
@@ -267,13 +267,11 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 	* Automatically saves the request and response messages.
 	*/
 	private function AutoSaveRequestResponseData() {
-	
-		global $ENABLE_AUTO_SAVE_MESSAGES, $AUTO_SAVE_MESSAGES_PATH;
-		
-		if ($this->showXmlData && $ENABLE_AUTO_SAVE_MESSAGES) {
+			
+		if ($this->showXmlData && constant("MP_ENABLE_AUTO_SAVE_MESSAGES")) {
 			
 			try {
-				$this->SaveRequestResponseData($AUTO_SAVE_MESSAGES_PATH);
+				$this->SaveRequestResponseData(constant("MP_AUTO_SAVE_MESSAGES_PATH"));
 			}
 			catch(Exception $ex) { }
 		}

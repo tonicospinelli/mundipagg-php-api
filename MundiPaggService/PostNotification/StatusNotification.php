@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $DATA_CONTRACTS . "Enum.php";
+//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
+include_once constant("MP_DATA_CONTRACTS") . "Enum.php";
 include_once "CreditCardTransactionNotification.php";
 include_once "BoletoTransactionNotification.php";
 include_once "OnlineDebitTransactionNotification.php";
@@ -146,12 +146,10 @@ final class StatusNotification {
 	*/
 	private static function AutoSaveRequestResponseData($postData) {
 	
-		global $ENABLE_AUTO_SAVE_MESSAGES, $AUTO_SAVE_MESSAGES_PATH;
-		
-		if ($ENABLE_AUTO_SAVE_MESSAGES) {
+		if (constant("MP_ENABLE_AUTO_SAVE_MESSAGES")) {
 			
 			try {
-				StatusNotification::SavePostNotificationData($postData, $AUTO_SAVE_MESSAGES_PATH);
+				StatusNotification::SavePostNotificationData($postData,constant("MP_AUTO_SAVE_MESSAGES_PATH"));
 			}
 			catch(Exception $ex) { }
 		}

@@ -1,18 +1,18 @@
 <?php
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $DATA_CONTRACTS_DEBIT . "Enum.php";
-include_once $DATA_CONTRACTS_DEBIT . "OnlineDebitRequest.php";
-include_once $DATA_CONTRACTS_DEBIT . "OrderRequest.php";
-include_once $DATA_CONTRACTS_DEBIT . "BuyerRequest.php";
-include_once $DATA_CONTRACTS_DEBIT . "PhoneRequest.php";
-include_once $DATA_CONTRACTS_DEBIT . "BuyerAddressRequest.php";
-include_once $DATA_CONTRACTS_DEBIT . "OnlineDebitResult.php";
-include_once $DATA_CONTRACTS_DEBIT . "ErrorReport.php";
-include_once $DATA_CONTRACTS_DEBIT . "ErrorItem.php";
-include_once $DATA_CONTRACTS_DEBIT . "QueryOrderResponse.php";
-include_once $DATA_CONTRACTS_DEBIT . "OrderData.php";
-include_once $DATA_CONTRACTS_DEBIT . "OnlineDebitTransactionData.php";
+//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "Enum.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "OnlineDebitRequest.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "OrderRequest.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "BuyerRequest.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "PhoneRequest.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "BuyerAddressRequest.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "OnlineDebitResult.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "ErrorReport.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "ErrorItem.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "QueryOrderResponse.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "OrderData.php";
+include_once constant("MP_DATA_CONTRACTS_DEBIT") . "OnlineDebitTransactionData.php";
 
 /** Debit Converters Interface
 */

@@ -39,9 +39,7 @@ class OnlineDebitRequest {
     public $OrderRequest;
 
     function __construct() {
-
-    	global $MERCHANT_KEY;
-    	$this->MerchantKey = $MERCHANT_KEY;
+    	$this->MerchantKey = constant("MP_MERCHANT_KEY");
     	$this->RequestKey = null;
     	$this->PaymentMethod = null;
     	$this->PaymentType = null;

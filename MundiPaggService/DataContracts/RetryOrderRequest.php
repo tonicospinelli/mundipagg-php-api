@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
+//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
 include_once "RetryOrderCreditCardTransactionRequest.php";
 
 class RetryOrderRequest {
@@ -15,8 +15,7 @@ class RetryOrderRequest {
 	public $RetryOrderCreditCardTransactionRequestCollection;
 	
 	function __construct() {
-		global $MERCHANT_KEY;
-		$this->MerchantKey = $MERCHANT_KEY;
+		$this->MerchantKey = constant("MP_MERCHANT_KEY");
 		$this->OrderKey = null;
 		$this->OrderReference = "";
 		$this->RequestKey = null;
