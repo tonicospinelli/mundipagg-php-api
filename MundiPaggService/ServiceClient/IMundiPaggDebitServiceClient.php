@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $CONVERTERS . "IDebitConverter.php";
+// include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
+include_once constant("MP_CONVERTERS") . "IDebitConverter.php";
 
 /**
 * @author: Matheus

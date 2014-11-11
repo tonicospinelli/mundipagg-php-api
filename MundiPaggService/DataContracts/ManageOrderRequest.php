@@ -19,8 +19,7 @@ class ManageOrderRequest {
 	function __construct() {
 		$this->ManageCreditCardTransactionCollection = null;
 		$this->ManageOrderOperationEnum = ManageOrderOperationEnum::__default;
-		global $MERCHANT_KEY;
-		$this->MerchantKey = $MERCHANT_KEY;
+		$this->MerchantKey = constant("MP_MERCHANT_KEY");
 		$this->OrderKey = null;
 		$this->OrderReference = "";
 		$this->RequestKey = null;

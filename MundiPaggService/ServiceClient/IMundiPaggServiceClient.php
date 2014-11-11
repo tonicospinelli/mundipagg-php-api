@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $CONVERTERS . "SoapConverter.php"; // Also includes ISoapConverter.php
+// include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
+include_once constant("MP_CONVERTERS") . "SoapConverter.php"; // Also includes ISoapConverter.php
 
 /**
 * @author: Matheus
