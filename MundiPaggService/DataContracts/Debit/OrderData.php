@@ -44,4 +44,3 @@ class OrderData {
         $this->MerchantKey = null;
     }
 }
-?>

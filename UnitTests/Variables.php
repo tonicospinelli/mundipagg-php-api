@@ -14,4 +14,3 @@
 	//const WSDL = 'https://transaction.mundipaggone.com/MundiPaggService.svc?wsdl';
 	$PRODUCTION_WSDL = $LOCAL_WSDL . "wsdl.xml";
 	$SANDBOX_WSDL = $LOCAL_WSDL . "wsdl.xml";
-?>

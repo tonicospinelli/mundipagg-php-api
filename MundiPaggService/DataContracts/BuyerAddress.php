@@ -35,4 +35,3 @@ class BuyerAddress {
 		$this->ZipCode = "";
 	}
 }
-?>

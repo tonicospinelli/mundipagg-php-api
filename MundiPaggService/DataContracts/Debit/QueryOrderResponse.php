@@ -24,4 +24,3 @@ class QueryOrderResponse {
 		$this->ErrorReport = null;
 	}
 }
-?>

@@ -76,4 +76,3 @@ class CreditCardTransaction {
 		return $str;
 	}
 }
-?>

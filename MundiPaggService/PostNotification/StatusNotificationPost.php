@@ -63,4 +63,3 @@ function ParseXmlToStatusNotification($xml) {
 	
 	return $statusNotification;
 }
-?>

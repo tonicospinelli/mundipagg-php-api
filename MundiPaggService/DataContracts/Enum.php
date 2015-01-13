@@ -180,4 +180,3 @@
 		const Voided = 'Voided'; //6,
 		const WithError = 'WithError'; //99,
 	}
-?>

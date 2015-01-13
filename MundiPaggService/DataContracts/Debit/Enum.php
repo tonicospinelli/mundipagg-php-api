@@ -85,4 +85,3 @@
         const Error = 'Error';
         const Warning = 'Warning';
     }
-?>

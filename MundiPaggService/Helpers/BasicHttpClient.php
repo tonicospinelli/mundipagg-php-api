@@ -170,4 +170,3 @@ class BasicHttpClient implements IHttpClient {
 		}
 	}
 }
-?>

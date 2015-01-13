@@ -23,4 +23,3 @@ class ShoppingCartItem {
 		$this->UnitCostInCents = 0;
 	}
 }
-?>

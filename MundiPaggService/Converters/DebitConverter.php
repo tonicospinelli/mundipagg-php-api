@@ -468,4 +468,3 @@ class DebitConverter implements IDebitConverter {
 		return $onlineDebitTransactionData;
 	}
 }
-?>

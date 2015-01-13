@@ -101,4 +101,3 @@ class MundiPaggReportServiceClient implements IMundiPaggReportServiceClient {
 		return $httpResponse->ResponseContent;
 	}
 }
-?>

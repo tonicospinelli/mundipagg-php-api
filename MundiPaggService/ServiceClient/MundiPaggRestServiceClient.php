@@ -248,4 +248,3 @@ class MundiPaggRestServiceClient {
 		if ($this->isClosed) { throw new Exception("The client is closed!"); }
 	}
 }
-?>

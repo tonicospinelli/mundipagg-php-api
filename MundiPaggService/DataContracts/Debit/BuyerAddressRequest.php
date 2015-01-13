@@ -41,4 +41,3 @@ class BuyerAddressRequest {
         $this->AddressTypeEnum = AddressTypeEnum::__default;
     }
 }
-?>

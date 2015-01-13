@@ -29,4 +29,3 @@ class GetInstantBuyDataRequest {
 		return $str;
 	}
 }
-?>

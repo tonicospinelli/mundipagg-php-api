@@ -80,4 +80,3 @@ class CreateOrderResponse {
 		return $str;
 	}
 }
-?>

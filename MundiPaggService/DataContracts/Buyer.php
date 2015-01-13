@@ -87,4 +87,3 @@ class Buyer {
 		return $str;
 	}
 }
-?>

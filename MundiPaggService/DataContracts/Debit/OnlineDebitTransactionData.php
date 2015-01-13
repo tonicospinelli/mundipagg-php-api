@@ -36,4 +36,3 @@ class OnlineDebitTransactionData {
 			$this->BankPaymentDate = null;
 		}
     }
-?>

@@ -638,4 +638,3 @@ class RestConverter implements IRestConverter {
 		return $newCreditCardDataCollection;
 	}
 }
-?>

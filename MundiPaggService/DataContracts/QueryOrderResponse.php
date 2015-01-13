@@ -49,4 +49,3 @@ class QueryOrderResponse {
 		return $str;
 	}
 }
-?>

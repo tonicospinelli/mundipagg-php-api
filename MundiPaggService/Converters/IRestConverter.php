@@ -53,4 +53,3 @@ interface IRestConverter {
 	public function ConvertBoletoTransactionDataCollectionFromResponse($boletoTransactionDataCollection);
 	public function ConvertCreditCardDataCollectionFromResponse($creditCardDataCollection);
 }
-?>

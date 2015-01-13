@@ -51,4 +51,3 @@ class OnlineDebitRequest {
     	$this->OrderRequest = null;
     }
 }
-?>

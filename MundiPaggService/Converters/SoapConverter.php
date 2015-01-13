@@ -755,4 +755,3 @@ class SoapConverter implements ISoapConverter {
 		return $newccData;
 	}
 }
-?>

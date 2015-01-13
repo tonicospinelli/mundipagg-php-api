@@ -57,4 +57,3 @@
 
 	define( "MP_STATUS_NOTIF_POST" , "xmlStatusNotification" );
 	
-?>

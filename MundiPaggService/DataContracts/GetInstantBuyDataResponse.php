@@ -49,4 +49,3 @@ class GetInstantBuyDataResponse {
 		return $str;
 	}
 }
-?>

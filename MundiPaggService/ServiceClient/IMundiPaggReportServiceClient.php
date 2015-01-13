@@ -28,4 +28,3 @@ interface IMundiPaggReportServiceClient {
 	*/
 	public function GetBytes(DateTime $fileDate, $merchantKey = NULL);
 }
-?>

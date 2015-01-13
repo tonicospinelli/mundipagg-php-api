@@ -165,4 +165,3 @@ final class StatusNotification {
 		return $find === "" || substr($str, -strlen($find)) === $find;
 	}
 }
-?>

@@ -61,4 +61,3 @@ class RetryOrderResponse {
 		return $str;
 	}
 }
-?>
