@@ -63,4 +63,3 @@ class BoletoTransactionData {
 		return $str;
 	}
 }
-?>

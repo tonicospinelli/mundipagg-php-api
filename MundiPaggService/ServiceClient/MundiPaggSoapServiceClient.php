@@ -288,4 +288,3 @@ class MundiPaggSoapServiceClient implements IMundiPaggServiceClient {
 		return $find === "" || substr($str, -strlen($find)) === $find;
 	}
 }
-?>

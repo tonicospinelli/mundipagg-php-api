@@ -52,4 +52,3 @@ class OrderData {
 		return $str;
 	}
 }
-?>

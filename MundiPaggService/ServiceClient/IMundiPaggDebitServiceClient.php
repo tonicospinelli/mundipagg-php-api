@@ -22,4 +22,3 @@ interface IMundiPaggDebitServiceClient {
 	*/
 	public function QueryOrder($orderIdentification, $merchantKey = NULL);
 }
-?>

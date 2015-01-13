@@ -19,4 +19,3 @@ class BoletoTransactionNotification {
 	/*@var [string] Boleto Transaction Status */
 	public $BoletoTransactionStatus;
 }
-?>

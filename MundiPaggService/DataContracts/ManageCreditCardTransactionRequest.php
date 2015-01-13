@@ -13,4 +13,3 @@ class ManageCreditCardTransactionRequest {
 		$this->TransactionReference = "";
 	}
 }
-?>

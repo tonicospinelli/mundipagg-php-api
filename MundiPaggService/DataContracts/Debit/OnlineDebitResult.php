@@ -53,4 +53,3 @@ class OnlineDebitResult {
         $this->TransactionKeyToBank = null;
     }
 }
-?>

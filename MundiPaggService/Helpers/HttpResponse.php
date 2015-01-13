@@ -11,4 +11,3 @@ class HttpResponse {
 
 	public $TotalTimeInSeconds;
 }
-?>

@@ -14,4 +14,3 @@ interface IHttpClient {
 	public function GetData($uri = null, $operationTimeout = null, $httpHeader = null, $isBinaryResponse = false);
 	public function PostData($postData, $uri = null, $operationTimeout = null, $httpHeader = null, $isBinaryResponse = false);
 }
-?>

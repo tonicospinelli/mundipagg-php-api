@@ -22,4 +22,3 @@ class BoletoTransactionResult {
 	/*@var [string] The Transaction Reference*/
 	public $TransactionReference; 
 }
-?>

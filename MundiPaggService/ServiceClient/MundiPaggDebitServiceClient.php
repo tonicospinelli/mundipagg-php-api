@@ -135,4 +135,3 @@ class MundiPaggDebitServiceClient implements IMundiPaggDebitServiceClient {
 		return $responseArray;
 	}
 }
-?>

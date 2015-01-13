@@ -29,4 +29,3 @@ class CreditCardTransactionNotification {
 	/*@var [string] CreditCard Transaction Status */
 	public $CreditCardTransactionStatus;
 }
-?>

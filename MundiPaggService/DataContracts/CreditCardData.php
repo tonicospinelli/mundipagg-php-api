@@ -31,4 +31,3 @@ class CreditCardData {
 		return $str;
 	}
 }
-?>

@@ -38,4 +38,3 @@ interface IDebitConverter {
 	public function ConvertToOnlineDebitTransactionDataCollection(array $responseArray);
 	public function ConvertToOnlineDebitTransactionData($response);
 }
-?>

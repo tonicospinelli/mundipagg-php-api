@@ -16,4 +16,3 @@ class OnlineDebitTransactionNotification {
 	/*@var [string] Online Debit Transaction Status */
 	public $OnlineDebitTransactionStatus;
 }
-?>

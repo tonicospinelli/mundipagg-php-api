@@ -21,4 +21,3 @@ class MundiPaggServiceClientTest extends PHPUnit_Framework_TestCase {
 
 
 }	
-?>

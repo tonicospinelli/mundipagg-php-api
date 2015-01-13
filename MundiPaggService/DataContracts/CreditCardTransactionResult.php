@@ -80,4 +80,3 @@ class CreditCardTransactionResult {
 		return $str;
 	}
 }
-?>

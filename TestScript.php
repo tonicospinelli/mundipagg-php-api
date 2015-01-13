@@ -207,4 +207,3 @@ function CreateGetInstantBuyData($buyerKey) {
 
 	return $instantBuyRequest;
 }
-?>

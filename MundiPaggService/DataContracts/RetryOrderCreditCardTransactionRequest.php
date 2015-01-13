@@ -21,4 +21,3 @@ class RetryOrderCreditCardTransactionRequest {
 		return $str;
 	}
 }
-?>

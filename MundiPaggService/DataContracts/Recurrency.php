@@ -21,4 +21,3 @@ class Recurrency {
 		$this->Recurrences = null;
 	}
 }
-?>

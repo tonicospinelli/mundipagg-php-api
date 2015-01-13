@@ -13,4 +13,3 @@ class OrderRequest {
     	$this->AmountInCents = 0;
     }
 }
-?>

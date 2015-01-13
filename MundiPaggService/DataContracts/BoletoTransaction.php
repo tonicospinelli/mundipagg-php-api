@@ -39,4 +39,3 @@ class BoletoTransaction {
 		return $str;
 	}
 }
-?>

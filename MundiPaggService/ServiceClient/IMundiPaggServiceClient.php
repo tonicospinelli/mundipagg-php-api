@@ -44,4 +44,3 @@ interface IMundiPaggServiceClient {
 	*/
 	public function GetInstantBuyData(GetInstantBuyDataRequest $getInstantBuyDataRequest);
 }
-?>

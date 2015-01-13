@@ -8,4 +8,3 @@ class ErrorReport {
 	/*@var [ErrorItem] Error Item*/
 	public $ErrorItemCollection; 
 }
-?>

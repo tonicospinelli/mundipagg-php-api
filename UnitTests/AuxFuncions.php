@@ -330,4 +330,3 @@ function CreateBoletoTransactionDataCollection() {
 	return $boletoTransactionDataCollection;
 
 }
-?>
