@@ -23,7 +23,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($buyer->Email, $convBuyer["Email"]);
 		$this->assertEquals($buyer->FacebookId, $convBuyer["FacebookId"]);
 		if (!is_null($buyer->GenderEnum)) {
-			$this->assertEquals($buyer->GenderEnum, $convBuyer["MundiPaggService_DataContracts_GenderEnum"]);
+			$this->assertEquals($buyer->GenderEnum, $convBuyer["GenderEnum"]);
 		}
 		$this->assertEquals($buyer->HomePhone, $convBuyer["HomePhone"]);
 		$this->assertEquals($buyer->IpAddress, $convBuyer["IpAddress"]);
@@ -33,11 +33,11 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($buyer->MobilePhone, $convBuyer["MobilePhone"]);
 		$this->assertEquals($buyer->Name, $convBuyer["Name"]);
 		if (!is_null($buyer->PersonTypeEnum)) {
-			$this->assertEquals($buyer->PersonTypeEnum, $convBuyer["MundiPaggService_DataContracts_PersonTypeEnum"]);
+			$this->assertEquals($buyer->PersonTypeEnum, $convBuyer["PersonTypeEnum"]);
 		}
 		$this->assertEquals($buyer->TaxDocumentNumber, $convBuyer["TaxDocumentNumber"]);
 		if (!is_null($buyer->TaxDocumentTypeEnum)) {
-			$this->assertEquals($buyer->TaxDocumentTypeEnum, $convBuyer["MundiPaggService_DataContracts_TaxDocumentTypeEnum"]);
+			$this->assertEquals($buyer->TaxDocumentTypeEnum, $convBuyer["TaxDocumentTypeEnum"]);
 		}
 		$this->assertEquals($buyer->TwitterId, $convBuyer["TwitterId"]);
 		$this->assertEquals($buyer->WorkPhone, $convBuyer["WorkPhone"]);
@@ -47,7 +47,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		if (!is_null($buyer->BuyerAddressCollection)) {
 			for($counter = 0; $counter < count($buyer->BuyerAddressCollection); $counter++) {
 				$buyAddress = $buyer->BuyerAddressCollection[$counter];
-				$convBuyAddress = $convBuyer["BuyerAddressCollection"]["MundiPaggService_DataContracts_BuyerAddress"][$counter];
+				$convBuyAddress = $convBuyer["BuyerAddressCollection"]["BuyerAddress"][$counter];
 
 				$this->assertEquals($buyAddress->AddressTypeEnum, $convBuyAddress->AddressTypeEnum);
 				$this->assertEquals($buyAddress->City, $convBuyAddress->City);
@@ -74,7 +74,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 
 		for($counter = 0; $counter < $count; $counter++) {
 			$ccTrans = $ccTransCollection[$counter];
-			$convccTrans = $convccTransCollection["MundiPaggService_DataContracts_CreditCardTransaction"][$counter];
+			$convccTrans = $convccTransCollection["CreditCardTransaction"][$counter];
 
 			$this->assertEquals($ccTrans->AmountInCents, $convccTrans["AmountInCents"]);
 			$this->assertEquals($ccTrans->CreditCardNumber, $convccTrans["CreditCardNumber"]);
@@ -83,9 +83,9 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($ccTrans->SecurityCode, $convccTrans["SecurityCode"]);
 			$this->assertEquals($ccTrans->ExpMonth, $convccTrans["ExpMonth"]);
 			$this->assertEquals($ccTrans->ExpYear, $convccTrans["ExpYear"]);
-			$this->assertEquals($ccTrans->CreditCardBrandEnum, $convccTrans["MundiPaggService_DataContracts_CreditCardBrandEnum"]);
+			$this->assertEquals($ccTrans->CreditCardBrandEnum, $convccTrans["CreditCardBrandEnum"]);
 			$this->assertEquals($ccTrans->PaymentMethodCode, $convccTrans["PaymentMethodCode"]);
-			$this->assertEquals($ccTrans->CreditCardOperationEnum, $convccTrans["MundiPaggService_DataContracts_CreditCardOperationEnum"]);
+			$this->assertEquals($ccTrans->CreditCardOperationEnum, $convccTrans["CreditCardOperationEnum"]);
 		}
 	}
 
@@ -101,7 +101,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 
 		for($counter = 0; $counter < $count; $counter++) {
 			$boletoTrans = $boletoTransCollection[$counter];
-			$convBoletoTrans = $convBoletoTransCollection["MundiPaggService_DataContracts_BoletoTransaction"][$counter];
+			$convBoletoTrans = $convBoletoTransCollection["BoletoTransaction"][$counter];
 
 			$this->assertEquals($boletoTrans->AmountInCents, $convBoletoTrans["AmountInCents"]);
 			$this->assertEquals($boletoTrans->BankNumber, $convBoletoTrans["BankNumber"]);
@@ -123,7 +123,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 
 		for($counter = 0; $counter < $count; $counter++) {
 			$shopCart = $shopCartCollection[$counter];
-			$convShopCart = $convShopCartCollection["MundiPaggService_DataContracts_ShoppingCart"][$counter];
+			$convShopCart = $convShopCartCollection["ShoppingCart"][$counter];
 
 			$this->assertEquals($shopCart->FreightCostInCents, $convShopCart["FreightCostInCents"]);
 
@@ -138,7 +138,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 
 			for($itemCounter = 0; $itemCounter < $itemCount; $itemCounter++) {
 				$item = $shopCart->ShoppingCartItemCollection[$itemCounter];
-				$convItem = $convShopCart["ShoppingCartItemCollection"]["MundiPaggService_DataContracts_ShoppingCartItem"][$itemCounter];
+				$convItem = $convShopCart["ShoppingCartItemCollection"]["ShoppingCartItem"][$itemCounter];
 
 				$this->assertEquals($item->Description, $convItem["Description"]);
 				$this->assertEquals($item->ItemReference, $convItem["ItemReference"]);
@@ -185,7 +185,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 
 		for($counter = 0; $counter < $count; $counter++) {
 			$ccTrans  = $ccTransCollection[$counter];
-			$convccTrans = $convccTransCollection["MundiPaggService_DataContracts_RetryOrderCreditCardTransactionRequest"][$counter];
+			$convccTrans = $convccTransCollection["RetryOrderCreditCardTransactionRequest"][$counter];
 
 			$this->assertEquals($ccTrans->SecurityCode, $convccTrans["SecurityCode"]);
 			$this->assertEquals($ccTrans->TransactionKey, $convccTrans["TransactionKey"]);
@@ -201,13 +201,13 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$ccTransResultCollection = CreateCreditCardTransactionResultCollection();
 		$convccTransResultCollection = $converter->ConvertCreditCardTransactionResultCollectionFromResponse($ccTransResultCollection);
 
-		$count = count($ccTransResultCollection);
+		$count = count($ccTransResultCollection->CreditCardTransactionResult);
 		$convCount = count($convccTransResultCollection);
 
 		$this->assertEquals($count, $convCount);
 
 		for($counter = 0; $counter < $count; $counter++) {
-			$ccTransResult = $ccTransResultCollection[$counter];
+			$ccTransResult = $ccTransResultCollection->CreditCardTransactionResult[$counter];
 			$convccTransResult = $convccTransResultCollection[$counter];
 
 			$this->assertEquals($ccTransResult->AcquirerMessage, $convccTransResult->AcquirerMessage);
@@ -239,7 +239,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$boletoTransResultCollection = CreateBoletoTransactionResultCollection();
 		$convBoletoTransResultCollection = $converter->ConvertBoletoTransactionResultCollectionFromResponse($boletoTransResultCollection);
 
-		$count = count($boletoTransResultCollection);
+		$count = count($boletoTransResultCollection->BoletoTransactionResult);
 		$convCount = count($convBoletoTransResultCollection);
 
 		// var_dump($boletoTransResultCollection);
@@ -248,7 +248,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($count, $convCount);
 
 		for($counter = 0; $counter < $count; $counter++) {
-			$boletoTransResult = $boletoTransResultCollection[$counter];
+			$boletoTransResult = $boletoTransResultCollection->BoletoTransactionResult[$counter];
 			$convBoletoTransResult = $convBoletoTransResultCollection[$counter];
 
 			$this->assertEquals($boletoTransResult->AmountInCents, $convBoletoTransResult->AmountInCents);
@@ -300,13 +300,13 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$orderDataCollection = CreateOrderDataCollection();
 		$convOrderDataCollection = $converter->ConvertOrderDataCollectionFromResponse($orderDataCollection);
 
-		$count = count($orderDataCollection);
+		$count = count($orderDataCollection->OrderData);
 		$convCount = count($convOrderDataCollection);
 
 		$this->assertEquals($count, $convCount);
 
 		for($counter = 0; $counter < $count; $counter++) {
-			$orderData = $orderDataCollection[$counter];
+			$orderData = $orderDataCollection->OrderData[$counter];
 			$convOrderData = $convOrderDataCollection[$counter];
 
 			$this->assertEquals($orderData->CreateDate, $convOrderData->CreateDate);
@@ -336,7 +336,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConvertCreditCardDataCollectionFromResponse() {
-		throw new Exception("Not implemented method.");
+		$this->markTestSkipped("Not implemented method.");
 	}
 
 	////// AUX METHODS //////////
@@ -347,7 +347,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($count, $convCount);
 
 		for($counter = 0; $counter < $count; $counter++) {
-			$creditCardTransactionData = $creditCardTransactionDataCollection[$counter];
+			$creditCardTransactionData = $creditCardTransactionDataCollection->CreditCardTransactionData[$counter];
 			$convCreditCardTransactionData = $convCreditCardTransactionDataCollection[$counter];
 
 			$this->assertEquals($creditCardTransactionData->AcquirerAuthorizationCode, $convCreditCardTransactionData->AcquirerAuthorizationCode);
@@ -380,7 +380,7 @@ class MundiPagg_Tests_ConverterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($count, $convCount);
 
 		for($counter = 0; $counter < $count; $counter++) {
-			$boletoTransactionData = $boletoTransactionDataCollection[$counter];
+			$boletoTransactionData = $boletoTransactionDataCollection->BoletoTransactionData[$counter];
 			$convBoletoTransactionData = $convBoletoTransactionDataCollection[$counter];
 
 			$this->assertEquals($boletoTransactionData->AmountInCents, $convBoletoTransactionData->AmountInCents);

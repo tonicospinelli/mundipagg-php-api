@@ -555,10 +555,10 @@ class MundiPaggService_Converters_SoapConverter implements MundiPaggService_Conv
 			
 			$newErrorReport->ErrorItemCollection = null;
 			if (!is_null($errorReport->ErrorItemCollection)) {
-				if (is_array($errorReport->ErrorItemCollection->ErrorItem)) {
+				if (is_array($errorReport->ErrorItemCollection)) {
 
 				$counter = 0;
-					foreach($errorReport->ErrorItemCollection->ErrorItem as $errorItem) {
+					foreach($errorReport->ErrorItemCollection as $errorItem) {
 
 						$newErrorReport->ErrorItemCollection[$counter] = $this->ConvertErrorItem($errorItem);
 						$counter += 1;

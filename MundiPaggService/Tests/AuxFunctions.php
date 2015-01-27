@@ -28,7 +28,7 @@ function CreateOrder() {
 	$orderRequest->BoletoTransactionCollection = array ( CreateBoletoTransaction() );
 	
 	// SHOPPING CART
-	$orderRequest->ShoppingCartCollection = array ( CreateShoppingCart );
+	$orderRequest->ShoppingCartCollection = array ( CreateShoppingCart() );
 	
 	return $orderRequest;
 }
@@ -302,31 +302,36 @@ function CreateBoletoTransactionData() {
 ///////////////////////////////////////////////////////
 function CreateCreditCardTransactionResultCollection() {
 	$ccTrans1 = CreateCreditCardTransactionResult();
-	$ccTransCollection = array ( $ccTrans1 );
+	$ccTransCollection = new stdClass();
+    $ccTransCollection->CreditCardTransactionResult = array ( $ccTrans1 );
 	return $ccTransCollection;
 }
 
 function CreateBoletoTransactionResultCollection() {
 	$boletoTrans1 = CreateBoletoTransactionResult();
-	$boletoTransCollection = array ( $boletoTrans1 );
+	$boletoTransCollection = new stdClass();
+	$boletoTransCollection->BoletoTransactionResult = array ( $boletoTrans1 );
 	return $boletoTransCollection;
 }
 
 function CreateOrderDataCollection() {
 	$orderData = CreateOrderData();
-	$orderDataCollection = array ( $orderData );
+    $orderDataCollection = new stdClass();
+	$orderDataCollection->OrderData = array ( $orderData );
 	return $orderDataCollection;
 }
 
 function CreateCreditCardTransactionDataCollection() {
 	$creditCardTransactionData = CreateCreditCardTransactionData();
-	$creditCardTransactionDataCollection = array ( $creditCardTransactionData );
+    $creditCardTransactionDataCollection = new stdClass();
+    $creditCardTransactionDataCollection->CreditCardTransactionData = array ( $creditCardTransactionData );
 	return $creditCardTransactionDataCollection;
 }
 
 function CreateBoletoTransactionDataCollection() {
 	$boletoTransactionData = CreateBoletoTransactionData();
-	$boletoTransactionDataCollection = array ( $boletoTransactionData );
+    $boletoTransactionDataCollection = new stdClass();
+    $boletoTransactionDataCollection->BoletoTransactionData = array ( $boletoTransactionData );
 	return $boletoTransactionDataCollection;
 
 }
