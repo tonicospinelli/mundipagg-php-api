@@ -5,7 +5,7 @@
 * @version: 1.0
 * revision: 2014/09/09
 */
-class MundiPaggDebitServiceClient implements IMundiPaggDebitServiceClient {
+class MundiPaggService_ServiceClient_DebitClient implements MundiPaggService_ServiceClient_IDebitClient {
 
 	const CREATE_ORDER_RESOURCE = "/Order/OnlineDebit/";
 	const QUERY_ORDER_RESOURCE = "/Order/OnlineDebit/Query/";
@@ -33,19 +33,19 @@ class MundiPaggDebitServiceClient implements IMundiPaggDebitServiceClient {
 	private $converter = NULL;
 	public function GetDebitConverter() {
 
-		if (is_null($this->converter) == true) { $this->converter = new DebitConverter(); }
+		if (is_null($this->converter) == true) { $this->converter = new MundiPaggService_Converters_DebitConverter(); }
 		return $this->converter;
 	}
 
 	private $httpClient = NULL;
 	public function GetHttpClient() {
 
-		if (is_null($this->httpClient) == true) { $this->httpClient = new BasicHttpClient(); }
+		if (is_null($this->httpClient) == true) { $this->httpClient = new MundiPaggService_Helpers_BasicHttpClient(); }
 		return $this->httpClient;
 	}
 
 
-	function __construct($serviceUri = NULL, $operationTimeout = NULL, IDebitConverter $converter = NULL, IHttpClient $httpClient = NULL) {
+	function __construct($serviceUri = NULL, $operationTimeout = NULL, MundiPaggService_Converters_IDebitConverter $converter = NULL, MundiPaggService_Helpers_IHttpClient $httpClient = NULL) {
 
 		$this->serviceUri = $serviceUri;
 		$this->converter = $converter;
@@ -55,15 +55,15 @@ class MundiPaggDebitServiceClient implements IMundiPaggDebitServiceClient {
 
 	/**
 	* Creates an order.
-	* @param OnlineDebitRequest $onlineDebitRequest The order to be created.
+	* @param MundiPaggService_DataContracts_Debit_OnlineDebitRequest $onlineDebitRequest The order to be created.
 	*/
-	public function CreateOrder(OnlineDebitRequest $onlineDebitRequest) {
+	public function CreateOrder(MundiPaggService_DataContracts_Debit_OnlineDebitRequest $onlineDebitRequest) {
 
 		$converter = $this->GetDebitConverter();
 
 		$requestArray = $converter->ConvertFromOnlineDebitRequest($onlineDebitRequest);
 
-		$serviceUri = $this->GetServiceUri() . MundiPaggDebitServiceClient::CREATE_ORDER_RESOURCE;
+		$serviceUri = $this->GetServiceUri() . MundiPaggService_ServiceClient_DebitClient::CREATE_ORDER_RESOURCE;
 
 		$responseArray = $this->SendPostRequest($serviceUri, $requestArray);
 
@@ -84,7 +84,7 @@ class MundiPaggDebitServiceClient implements IMundiPaggDebitServiceClient {
 			$merchantKey = constant("MP_MERCHANT_KEY");
 		}
 
-		$serviceUri = $this->GetServiceUri() . MundiPaggDebitServiceClient::QUERY_ORDER_RESOURCE . urlencode($orderIdentification);
+		$serviceUri = $this->GetServiceUri() . MundiPaggService_ServiceClient_DebitClient::QUERY_ORDER_RESOURCE . urlencode($orderIdentification);
 
 		$responseArray = $this->SendGetRequest($serviceUri, $merchantKey);
 

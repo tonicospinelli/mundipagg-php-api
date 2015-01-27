@@ -3,17 +3,17 @@
 ////// REQUESTS ENTITIES //////////////////////////////
 ///////////////////////////////////////////////////////
 function CreateOrder() {
-	$orderRequest = new CreateOrderRequest();
+	$orderRequest = new MundiPaggService_DataContracts_CreateOrderRequest();
 	//$orderRequest = new stdClass();
 
-	// Campos principais do objeto CreateOrderRequest
+	// Campos principais do objeto MundiPaggService_DataContracts_CreateOrderRequest
     $orderRequest->CurrencyIsoEnum = "BRL";
 	$orderRequest->AmountInCents = 9;
 	$orderRequest->AmountInCentsToConsiderPaid = 9;
 	$orderRequest->Retries = 0;
 	//$orderRequest->OrderReference = "SDK-PHP - Teste de Integracao - Matheus AR " . rand(0, 100000) ;
 	$orderRequest->OrderReference = "";
-	//$orderRequest->EmailUpdateToBuyerEnum = "No";
+	//$orderRequest->MundiPaggService_DataContracts_EmailUpdateToBuyerEnum = "No";
 	
 	// Chave de loja de exemplo, informe aqui sua chave de loja 
 	$orderRequest->MerchantKey = MerchantKey;
@@ -33,7 +33,7 @@ function CreateOrder() {
 	return $orderRequest;
 }
 function CreateBuyer() {
-	$buyer = new Buyer();
+	$buyer = new MundiPaggService_DataContracts_Buyer();
 	$buyer->Email = "alguem@algumacoisa.com.br";
 	$buyer->GenderEnum = 'M';
 	$buyer->MobilePhone = '2122465273';
@@ -42,21 +42,21 @@ function CreateBuyer() {
 	$buyer->TaxDocumentNumber = '21645798514';
 	$buyer->TaxDocumentTypeEnum = 'CPF';
 	
-	$addr1 = new BuyerAddress();
-	$addr1->AddressTypeEnum = AddressTypeEnum::Residential;
+	$addr1 = new MundiPaggService_DataContracts_BuyerAddress();
+	$addr1->AddressTypeEnum = MundiPaggService_DataContracts_AddressTypeEnum::Residential;
 	$addr1->City = 'Rio de Janeiro';
 	$addr1->Complement = 'Apto 203';
-	$addr1->CountryEnum = CountryEnum::Brazil;
+	$addr1->CountryEnum = MundiPaggService_DataContracts_CountryEnum::Brazil;
 	$addr1->Number = 223;
 	$addr1->State = 'RJ';
 	$addr1->Street = 'Rua da Quitanda';
 	$addr1->ZipCode = '14345709';
 	
-	$addr2 = new BuyerAddress();
-	$addr2->AddressTypeEnum = AddressTypeEnum::Residential;
+	$addr2 = new MundiPaggService_DataContracts_BuyerAddress();
+	$addr2->AddressTypeEnum = MundiPaggService_DataContracts_AddressTypeEnum::Residential;
 	$addr2->City = 'Sao Paulo';
 	$addr2->Complement = 'Apto 501';
-	$addr2->CountryEnum = CountryEnum::Brazil;
+	$addr2->CountryEnum = MundiPaggService_DataContracts_CountryEnum::Brazil;
 	$addr2->Number = 348;
 	$addr2->State = 'SP';
 	$addr2->Street = 'Rua da Qualquer Coisa';
@@ -67,7 +67,7 @@ function CreateBuyer() {
 }
 function CreateCreditCardTransaction() {
 	// Criação de uma transação de cartão de crédito 
-	$ccTransaction1 = new CreditCardTransaction();
+	$ccTransaction1 = new MundiPaggService_DataContracts_CreditCardTransaction();
 	$ccTransaction1->AmountInCents = 9;
 	$ccTransaction1->CreditCardNumber = "518294741544019";
 	// Número do cartão de crédito
@@ -84,7 +84,7 @@ function CreateCreditCardTransaction() {
 }
 function CreateBoletoTransaction() {
 	// Criação de uma transação por boleto
-	$boletoTransaction1 = new BoletoTransaction();
+	$boletoTransaction1 = new MundiPaggService_DataContracts_BoletoTransaction();
 	$boletoTransaction1->AmountInCents = 3000;
 	$boletoTransaction1->BankNumber = 789;
 	$boletoTransaction1->Instructions = "Nao receber apos vencimento.";
@@ -94,9 +94,9 @@ function CreateBoletoTransaction() {
 	return $boletoTransaction1;
 }
 function CreateShoppingCart() {
-	$shopCart = new ShoppingCart();
+	$shopCart = new MundiPaggService_DataContracts_ShoppingCart();
 	$shopCart->FreighCostInCents = 1000;
-	$shopCartItem = new ShoppingCartItem();
+	$shopCartItem = new MundiPaggService_DataContracts_ShoppingCartItem();
 	$shopCartItem->Description = "Teste";
 	$shopCartItem->Name = "Teste";
 	$shopCartItem->Quantity = 3;
@@ -110,7 +110,7 @@ function CreateShoppingCart() {
 }
 
 function CreateManageCreditCardTransactionRequest() {
-	$ccTrans = new ManageCreditCardTransactionRequest();
+	$ccTrans = new MundiPaggService_DataContracts_ManageCreditCardTransactionRequest();
 	
 	$ccTrans->AmountInCents = 100;
 	$ccTrans->TransactionKey = "c4759866-ccaf-4533-a959-ce7c57880886";
@@ -120,7 +120,7 @@ function CreateManageCreditCardTransactionRequest() {
 }
 
 function CreateRetryOrderCreditCardTransactionRequest() {
-	$ccTrans1 = new RetryOrderCreditCardTransactionRequest();
+	$ccTrans1 = new MundiPaggService_DataContracts_RetryOrderCreditCardTransactionRequest();
 	$ccTrans1->SecurityCode = 123;
 	$ccTrans1->TransactionKey = "c4759866-ccaf-4533-a959-ce7c57880886";
 	

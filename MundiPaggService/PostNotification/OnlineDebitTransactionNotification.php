@@ -1,6 +1,6 @@
 <?php
 
-class OnlineDebitTransactionNotification {
+class MundiPaggService_PostNotification_OnlineDebitTransactionNotification {
 	/*@var [long] Amount in Cents */
 	public $AmountInCents;
 	/*@var [long] Amount in Cents */

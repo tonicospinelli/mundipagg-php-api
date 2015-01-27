@@ -3,9 +3,9 @@
 /** Converters Interface
 *
 */
-class RestConverter implements IRestConverter {
+class MundiPaggService_Converters_RestConverter implements MundiPaggService_Converters_IRestConverter {
 	
-	public function ConvertOrderRequest(CreateOrderRequest $orderRequest) {
+	public function ConvertOrderRequest(MundiPaggService_DataContracts_CreateOrderRequest $orderRequest) {
 
 		$order = array();
 		
@@ -63,7 +63,7 @@ class RestConverter implements IRestConverter {
 		if (is_null($orderResponse)) { throw new Exception("Null response!"); }
 		
 		//Create Order Response
-		$response = new CreateOrderResponse();
+		$response = new MundiPaggService_DataContracts_CreateOrderResponse();
 		
 		$response->BuyerKey = $orderResponse->BuyerKey;
 		$response->MerchantKey = $orderResponse->MerchantKey;
@@ -81,10 +81,10 @@ class RestConverter implements IRestConverter {
 		// Boleto Transaction Result Collection
 		$response->BoletoTransactionResultCollection = $this->ConvertBoletoTransactionResultCollectionFromResponse($orderResponse->BoletoTransactionResultCollection);
 		
-		// MundiPaggSuggestion
+		// MundiPaggService_DataContracts_MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($orderResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// MundiPaggService_DataContracts_ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($orderResponse->ErrorReport);
 		
 		return $response;
@@ -96,7 +96,7 @@ class RestConverter implements IRestConverter {
 	*<li> Create Request</li>
 	*</ul>
 	*/
-	public function ConvertManageOrderRequest(ManageOrderRequest $manageRequest) {
+	public function ConvertManageOrderRequest(MundiPaggService_DataContracts_ManageOrderRequest $manageRequest) {
 		//Create Order Request
 		$request = array();
 		//Create Order
@@ -126,7 +126,7 @@ class RestConverter implements IRestConverter {
 		if (is_null($manageResponse)) { throw new Exception("Null response!"); }
 		
 		// Create Manage Order Response 
-		$response = new ManageOrderResponse();
+		$response = new MundiPaggService_DataContracts_ManageOrderResponse();
 		
 		$response->ManageOrderOperationEnum = $manageResponse->ManageOrderOperationEnum;
 		$response->MundiPaggTimeInMilliseconds = $manageResponse->MundiPaggTimeInMilliseconds;
@@ -153,7 +153,7 @@ class RestConverter implements IRestConverter {
 	}
 	
 	//Convert Retry Order Request 
-	public function ConvertRetryOrderRequest(RetryOrderRequest $retryRequest) {
+	public function ConvertRetryOrderRequest(MundiPaggService_DataContracts_RetryOrderRequest $retryRequest) {
 		//Create
 		$request = array();
 		$order = array();
@@ -174,7 +174,7 @@ class RestConverter implements IRestConverter {
 		return $request;
 	}
 	public function ConvertRetryOrderResponse($retryResponse) {
-		$response = new RetryOrderResponse();
+		$response = new MundiPaggService_DataContracts_RetryOrderResponse();
 		
 		$response->MundiPaggTimeInMilliseconds = $retryResponse->MundiPaggTimeInMilliseconds;
 		$response->OrderKey = $retryResponse->OrderKey;
@@ -197,7 +197,7 @@ class RestConverter implements IRestConverter {
 		return $response;
 	}
 
-	public function ConvertQueryOrderRequest(QueryOrderRequest $queryRequest) {
+	public function ConvertQueryOrderRequest(MundiPaggService_DataContracts_QueryOrderRequest $queryRequest) {
 		$request = array();
 		$order = array();
 		
@@ -211,7 +211,7 @@ class RestConverter implements IRestConverter {
 		return $request;
 	}
 	public function ConvertQueryOrderResponse($queryResponse) {
-		$response = new QueryOrderResponse();
+		$response = new MundiPaggService_DataContracts_QueryOrderResponse();
 		
 		$response->MundiPaggTimeInMilliseconds = $queryResponse->MundiPaggTimeInMilliseconds;
 		$response->OrderDataCount = $queryResponse->OrderDataCount;
@@ -221,16 +221,16 @@ class RestConverter implements IRestConverter {
 		// OrderDataCollection
 		$response->OrderDataCollection = $this->ConvertOrderDataCollectionFromResponse($queryResponse->OrderDataCollection);
 
-		// MundiPaggSuggestion
+		// MundiPaggService_DataContracts_MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($queryResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// MundiPaggService_DataContracts_ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($queryResponse->ErrorReport);
 		
 		return $response;
 	}
 
-	public function ConvertGetInstantBuyDataRequest(GetInstantBuyDataRequest $instantBuyRequest) {
+	public function ConvertGetInstantBuyDataRequest(MundiPaggService_DataContracts_GetInstantBuyDataRequest $instantBuyRequest) {
 		$request = array();
 		$order = array();
 		
@@ -244,7 +244,7 @@ class RestConverter implements IRestConverter {
 		return $request;
 	}
 	public function ConvertGetInstantBuyDataResponse($instantBuyResponse) {
-		$response = new GetInstantBuyDataResponse();
+		$response = new MundiPaggService_DataContracts_GetInstantBuyDataResponse();
 		
 		$response->CreditCardDataCount = $instantBuyResponse->CreditCardDataCount;
 		$response->MundiPaggTimeInMilliseconds = $instantBuyResponse->MundiPaggTimeInMilliseconds;
@@ -254,10 +254,10 @@ class RestConverter implements IRestConverter {
 		// CreditCardDataCollection
 		$response->CreditCardDataCollection = $this->ConvertCreditCardDataCollectionFromResponse($instantBuyResponse->CreditCardDataCollection);
 		
-		// MundiPaggSuggestion
+		// MundiPaggService_DataContracts_MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($instantBuyResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// MundiPaggService_DataContracts_ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($instantBuyResponse->ErrorReport);
 		
 		return $response;
@@ -266,7 +266,7 @@ class RestConverter implements IRestConverter {
 	///////////////////////////////////////////////////////
 	////// REQUEST CONVERTERS (Entities to Arrays) ////////
 	///////////////////////////////////////////////////////
-	public function ConvertBuyerFromRequest(Buyer $buyerRequest) {
+	public function ConvertBuyerFromRequest(MundiPaggService_DataContracts_Buyer $buyerRequest) {
 		$newBuyer = array();
 		$newBuyer["BuyerKey"] = $buyerRequest->BuyerKey;
 		$newBuyer["BuyerReference"] = $buyerRequest->BuyerReference;
@@ -294,7 +294,7 @@ class RestConverter implements IRestConverter {
 		}
 		$newBuyer["TwitterId"] = $buyerRequest->TwitterId;
 		$newBuyer["WorkPhone"] = $buyerRequest->WorkPhone;
-		// Copia os objetos BuyerAddress
+		// Copia os objetos MundiPaggService_DataContracts_BuyerAddress
 		if (!is_null($buyerRequest->BuyerAddressCollection)) {
 			if (count($buyerRequest->BuyerAddressCollection) > 0) {
 				$newAddrCollection = array(); // buyer address collection
@@ -366,7 +366,7 @@ class RestConverter implements IRestConverter {
 		$newShoppingCartCollection = array();
 		$counter = 0;
 
-		// Copia cada objeto ShoppingCart
+		// Copia cada objeto MundiPaggService_DataContracts_ShoppingCart
 		foreach ($shoppingCartCollectionRequest as $shopCart) {
 			$newShopCart = array();
 			$newShopCart["FreightCostInCents"] = $shopCart->FreightCostInCents;
@@ -375,7 +375,7 @@ class RestConverter implements IRestConverter {
 				if (is_array($shopCart->ShoppingCartItemCollection)) {
 					$newShopCartItemCollection = array();
 					$itemCounter = 0;
-					// Copia cada objeto ShoppingCartItem
+					// Copia cada objeto MundiPaggService_DataContracts_ShoppingCartItem
 					foreach ($shopCart->ShoppingCartItemCollection as $shopCartItem) {
 						$newShopCartItem["Description"] = $shopCartItem->Description;
 						$newShopCartItem["ItemReference"] = $shopCartItem->ItemReference;
@@ -436,7 +436,7 @@ class RestConverter implements IRestConverter {
 		$newccTransResultCollection = array();
 		$counter = 0;
 		foreach ($creditCardTransactionResultCollection as $ccTrans) {
-			$newccTrans = new CreditCardTransactionResult;
+			$newccTrans = new MundiPaggService_DataContracts_CreditCardTransactionResult;
 			
 			$newccTrans->AcquirerMessage = $ccTrans->AcquirerMessage;
 			$newccTrans->AcquirerReturnCode = $ccTrans->AcquirerReturnCode;
@@ -470,7 +470,7 @@ class RestConverter implements IRestConverter {
 		$boletoTransCollection = array();
 		$counter = 0;
 		foreach ($boletoTransactionResultCollection as $boletoTrans) {
-			$newBoletoTrans = new BoletoTransactionResult();
+			$newBoletoTrans = new MundiPaggService_DataContracts_BoletoTransactionResult();
 			
 			$newBoletoTrans->AmountInCents = $boletoTrans->AmountInCents;
 			$newBoletoTrans->Barcode = $boletoTrans->Barcode;
@@ -491,7 +491,7 @@ class RestConverter implements IRestConverter {
 	public function ConvertMundiPaggSuggestionFromResponse($suggestionResponse) {
 		$newSuggestion = null;
 		if (is_null($suggestionResponse) == false) {
-			$newSuggestion = new MundiPaggSuggestion();
+			$newSuggestion = new MundiPaggService_DataContracts_MundiPaggSuggestion();
 			$newSuggestion->Code = $suggestionResponse->Code;
 			$newSuggestion->Message = $suggestionResponse->Message;
 		}
@@ -501,14 +501,14 @@ class RestConverter implements IRestConverter {
 	public function ConvertErrorReportFromResponse($errorReport) {
 		$newErrorReport = null;
 		if (!is_null($errorReport)) {
-			$newErrorReport = new ErrorReport();
+			$newErrorReport = new MundiPaggService_DataContracts_ErrorReport();
 			$newErrorReport->Category = $errorReport->Category;
 			
 			$newErrorReport->ErrorItemCollection = null;
 			if (!is_null($errorReport->ErrorItemCollection)) {
 				$counter = 0;
 				foreach($errorReport->ErrorItemCollection as $errorItem) {
-					$newErrorItem = new ErrorItem();
+					$newErrorItem = new MundiPaggService_DataContracts_ErrorItem();
 					$newErrorItem->Description = $errorItem->Description;
 					$newErrorItem->ErrorCode = $errorItem->ErrorCode;
 					$newErrorItem->ErrorField = $errorItem->ErrorField;
@@ -529,7 +529,7 @@ class RestConverter implements IRestConverter {
 			$newOrderDataCollection = array();
 			$counter = 0;
 			foreach ($orderDataCollection as $orderData) {
-				$newOrderData = new OrderData();
+				$newOrderData = new MundiPaggService_DataContracts_OrderData();
 				
 				$newOrderData->CreateDate = $orderData->CreateDate;
 				$newOrderData->OrderKey = $orderData->OrderKey;
@@ -551,7 +551,7 @@ class RestConverter implements IRestConverter {
 		
 		$counter = 0;
 		foreach($creditCardTransactionDataCollection as $ccTransData) {
-			$newccTransData = new CreditCardTransactionData();
+			$newccTransData = new MundiPaggService_DataContracts_CreditCardTransactionData();
 			
 			$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
 			$newccTransData->AcquirerName = $ccTransData->AcquirerName;
@@ -597,7 +597,7 @@ class RestConverter implements IRestConverter {
 		
 		$counter = 0;
 		foreach($boletoTransactionDataCollection as $boletoTransData) {
-			$newBoletoTransData = new BoletoTransactionData();
+			$newBoletoTransData = new MundiPaggService_DataContracts_BoletoTransactionData();
 			
 			$newBoletoTransData->AmountInCents = $boletoTransData->AmountInCents;
 			$newBoletoTransData->AmountPaidInCents = $boletoTransData->AmountPaidInCents;
@@ -623,7 +623,7 @@ class RestConverter implements IRestConverter {
 		
 		$counter = 0;
 		foreach($creditCardDataCollection as $ccData) {
-			$newccData = new CreditCardData();
+			$newccData = new MundiPaggService_DataContracts_CreditCardData();
 			
 			$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
 			$newccData->CreditCardNumber = $ccData->CreditCardNumber;

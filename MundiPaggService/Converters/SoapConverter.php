@@ -3,9 +3,9 @@
 /** Converters Interface
 *
 */
-class SoapConverter implements ISoapConverter {
+class MundiPaggService_Converters_SoapConverter implements MundiPaggService_Converters_ISoapConverter {
 	
-	public function ConvertOrderRequest(CreateOrderRequest $orderRequest) {
+	public function ConvertOrderRequest(MundiPaggService_DataContracts_CreateOrderRequest $orderRequest) {
 
 		$order = array();
 		
@@ -63,7 +63,7 @@ class SoapConverter implements ISoapConverter {
 		if (is_null($orderResponse)) { throw new Exception("Null response!"); }
 		
 		//Create Order Response
-		$response = new CreateOrderResponse();
+		$response = new MundiPaggService_DataContracts_CreateOrderResponse();
 		
 		$response->BuyerKey = $orderResponse->BuyerKey;
 		$response->MerchantKey = $orderResponse->MerchantKey;
@@ -81,10 +81,10 @@ class SoapConverter implements ISoapConverter {
 		// Boleto Transaction Result Collection
 		$response->BoletoTransactionResultCollection = $this->ConvertBoletoTransactionResultCollectionFromResponse($orderResponse->BoletoTransactionResultCollection);
 		
-		// MundiPaggSuggestion
+		// MundiPaggService_DataContracts_MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($orderResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// MundiPaggService_DataContracts_ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($orderResponse->ErrorReport);
 		
 		return $response;
@@ -96,7 +96,7 @@ class SoapConverter implements ISoapConverter {
 	*<li> Create Request</li>
 	*</ul>
 	*/
-	public function ConvertManageOrderRequest(ManageOrderRequest $manageRequest) {
+	public function ConvertManageOrderRequest(MundiPaggService_DataContracts_ManageOrderRequest $manageRequest) {
 		//Create Order Request
 		$request = array();
 		//Create Order
@@ -126,7 +126,7 @@ class SoapConverter implements ISoapConverter {
 		if (is_null($manageResponse)) { throw new Exception("Null response!"); }
 		
 		// Create Manage Order Response 
-		$response = new ManageOrderResponse();
+		$response = new MundiPaggService_DataContracts_ManageOrderResponse();
 		
 		$response->ManageOrderOperationEnum = $manageResponse->ManageOrderOperationEnum;
 		$response->MundiPaggTimeInMilliseconds = $manageResponse->MundiPaggTimeInMilliseconds;
@@ -153,7 +153,7 @@ class SoapConverter implements ISoapConverter {
 	}
 	
 	//Convert Retry Order Request 
-	public function ConvertRetryOrderRequest(RetryOrderRequest $retryRequest) {
+	public function ConvertRetryOrderRequest(MundiPaggService_DataContracts_RetryOrderRequest $retryRequest) {
 		//Create
 		$request = array();
 		$order = array();
@@ -174,7 +174,7 @@ class SoapConverter implements ISoapConverter {
 		return $request;
 	}
 	public function ConvertRetryOrderResponse($retryResponse) {
-		$response = new RetryOrderResponse();
+		$response = new MundiPaggService_DataContracts_RetryOrderResponse();
 		
 		$response->MundiPaggTimeInMilliseconds = $retryResponse->MundiPaggTimeInMilliseconds;
 		$response->OrderKey = $retryResponse->OrderKey;
@@ -197,7 +197,7 @@ class SoapConverter implements ISoapConverter {
 		return $response;
 	}
 
-	public function ConvertQueryOrderRequest(QueryOrderRequest $queryRequest) {
+	public function ConvertQueryOrderRequest(MundiPaggService_DataContracts_QueryOrderRequest $queryRequest) {
 		$request = array();
 		$order = array();
 		
@@ -211,7 +211,7 @@ class SoapConverter implements ISoapConverter {
 		return $request;
 	}
 	public function ConvertQueryOrderResponse($queryResponse) {
-		$response = new QueryOrderResponse();
+		$response = new MundiPaggService_DataContracts_QueryOrderResponse();
 		
 		$response->MundiPaggTimeInMilliseconds = $queryResponse->MundiPaggTimeInMilliseconds;
 		$response->OrderDataCount = $queryResponse->OrderDataCount;
@@ -221,16 +221,16 @@ class SoapConverter implements ISoapConverter {
 		// OrderDataCollection
 		$response->OrderDataCollection = $this->ConvertOrderDataCollectionFromResponse($queryResponse->OrderDataCollection);
 
-		// MundiPaggSuggestion
+		// MundiPaggService_DataContracts_MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($queryResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// MundiPaggService_DataContracts_ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($queryResponse->ErrorReport);
 		
 		return $response;
 	}
 
-	public function ConvertGetInstantBuyDataRequest(GetInstantBuyDataRequest $instantBuyRequest) {
+	public function ConvertGetInstantBuyDataRequest(MundiPaggService_DataContracts_GetInstantBuyDataRequest $instantBuyRequest) {
 		$request = array();
 		$order = array();
 		
@@ -244,7 +244,7 @@ class SoapConverter implements ISoapConverter {
 		return $request;
 	}
 	public function ConvertGetInstantBuyDataResponse($instantBuyResponse) {
-		$response = new GetInstantBuyDataResponse();
+		$response = new MundiPaggService_DataContracts_GetInstantBuyDataResponse();
 		
 		$response->CreditCardDataCount = $instantBuyResponse->CreditCardDataCount;
 		$response->MundiPaggTimeInMilliseconds = $instantBuyResponse->MundiPaggTimeInMilliseconds;
@@ -254,10 +254,10 @@ class SoapConverter implements ISoapConverter {
 		// CreditCardDataCollection
 		$response->CreditCardDataCollection = $this->ConvertCreditCardDataCollectionFromResponse($instantBuyResponse->CreditCardDataCollection);
 		
-		// MundiPaggSuggestion
+		// MundiPaggService_DataContracts_MundiPaggSuggestion
 		$response->MundiPaggSuggestion = $this->ConvertMundiPaggSuggestionFromResponse($instantBuyResponse->MundiPaggSuggestion);
 		
-		// ErrorReport
+		// MundiPaggService_DataContracts_ErrorReport
 		$response->ErrorReport = $this->ConvertErrorReportFromResponse($instantBuyResponse->ErrorReport);
 		
 		return $response;
@@ -266,7 +266,7 @@ class SoapConverter implements ISoapConverter {
 	///////////////////////////////////////////////////////
 	////// REQUEST CONVERTERS (Entities to Arrays) ////////
 	///////////////////////////////////////////////////////
-	public function ConvertBuyerFromRequest(Buyer $buyerRequest) {
+	public function ConvertBuyerFromRequest(MundiPaggService_DataContracts_Buyer $buyerRequest) {
 		$newBuyer = array();
 		$newBuyer["BuyerKey"] = $buyerRequest->BuyerKey;
 		$newBuyer["BuyerReference"] = $buyerRequest->BuyerReference;
@@ -294,18 +294,18 @@ class SoapConverter implements ISoapConverter {
 		}
 		$newBuyer["TwitterId"] = $buyerRequest->TwitterId;
 		$newBuyer["WorkPhone"] = $buyerRequest->WorkPhone;
-		// Copia os objetos BuyerAddress
+		// Copia os objetos MundiPaggService_DataContracts_BuyerAddress
 		if (!is_null($buyerRequest->BuyerAddressCollection)) {
 			if (count($buyerRequest->BuyerAddressCollection) > 0) {
-				$newAddrCollection = array(); // Cole��o com os endere�os do comprador
+                $newAddressCollection = array(); // Coleção com os endereços do comprador
 
 				$counter = 0;
 				foreach($buyerRequest->BuyerAddressCollection as $buyAddress) {
-					$newBuyAddress = array(); // Endere�o do comprador
-					$newBuyAddress["AddressTypeEnum"] = $buyAddress->AddressTypeEnum;
+					$newBuyAddress = array(); // Endereço do comprador
+					$newBuyAddress["MundiPaggService_DataContracts_AddressTypeEnum"] = $buyAddress->AddressTypeEnum;
 					$newBuyAddress["City"] = $buyAddress->City;
 					$newBuyAddress["Complement"] = $buyAddress->Complement;
-					$newBuyAddress["CountryEnum"] = $buyAddress->CountryEnum;
+					$newBuyAddress["MundiPaggService_DataContracts_CountryEnum"] = $buyAddress->CountryEnum;
 					$newBuyAddress["District"] = $buyAddress->District;
 					$newBuyAddress["Number"] = $buyAddress->Number;
 					$newBuyAddress["State"] = $buyAddress->State;
@@ -382,10 +382,10 @@ class SoapConverter implements ISoapConverter {
 		return $newBoletoTransCollection;
 	}
 	public function ConvertShoppingCartCollectionFromRequest($shoppingCartCollectionRequest) {
-		$newShoppingCartCollection = array();
+		$newShopCartCollection = array();
 		$counter = 0;
 
-		// Copia cada objeto ShoppingCart
+		// Copia cada objeto MundiPaggService_DataContracts_ShoppingCart
 		foreach ($shoppingCartCollectionRequest as $shopCart) {
 			$newShopCart = array();
 			$newShopCart["FreightCostInCents"] = $shopCart->FreightCostInCents;
@@ -394,7 +394,7 @@ class SoapConverter implements ISoapConverter {
 				if (is_array($shopCart->ShoppingCartItemCollection)) {
 					$newShopCartItemCollection = array();
 					$itemCounter = 0;
-					// Copia cada objeto ShoppingCartItem
+					// Copia cada objeto MundiPaggService_DataContracts_ShoppingCartItem
 					foreach ($shopCart->ShoppingCartItemCollection as $shopCartItem) {
 						$newShopCartItem["Description"] = $shopCartItem->Description;
 						$newShopCartItem["ItemReference"] = $shopCartItem->ItemReference;
@@ -474,7 +474,7 @@ class SoapConverter implements ISoapConverter {
 	}
 	public function ConvertCreditCardTransactionResult($creditCardTransactionResult) {
 	
-		$newccTrans = new CreditCardTransactionResult;
+		$newccTrans = new MundiPaggService_DataContracts_CreditCardTransactionResult;
 
 		$newccTrans->AcquirerMessage = $creditCardTransactionResult->AcquirerMessage;
 		$newccTrans->AcquirerReturnCode = $creditCardTransactionResult->AcquirerReturnCode;
@@ -523,7 +523,7 @@ class SoapConverter implements ISoapConverter {
 	}
 	public function ConvertBoletoTransactionResult($boletoTransactionResult) {
 	
-		$newBoletoTrans = new BoletoTransactionResult();
+		$newBoletoTrans = new MundiPaggService_DataContracts_BoletoTransactionResult();
 			
 		$newBoletoTrans->AmountInCents = $boletoTransactionResult->AmountInCents;
 		$newBoletoTrans->Barcode = $boletoTransactionResult->Barcode;
@@ -540,7 +540,7 @@ class SoapConverter implements ISoapConverter {
 	public function ConvertMundiPaggSuggestionFromResponse($suggestionResponse) {
 		$newSuggestion = null;
 		if (is_null($suggestionResponse) == false) {
-			$newSuggestion = new MundiPaggSuggestion();
+			$newSuggestion = new MundiPaggService_DataContracts_MundiPaggSuggestion();
 			$newSuggestion->Code = $suggestionResponse->Code;
 			$newSuggestion->Message = $suggestionResponse->Message;
 		}
@@ -550,7 +550,7 @@ class SoapConverter implements ISoapConverter {
 	public function ConvertErrorReportFromResponse($errorReport) {
 		$newErrorReport = null;
 		if (!is_null($errorReport)) {
-			$newErrorReport = new ErrorReport();
+			$newErrorReport = new MundiPaggService_DataContracts_ErrorReport();
 			$newErrorReport->Category = $errorReport->Category;
 			
 			$newErrorReport->ErrorItemCollection = null;
@@ -575,7 +575,7 @@ class SoapConverter implements ISoapConverter {
 		return $newErrorReport;
 	}
 	public function ConvertErrorItem($errorItem) {
-		$newErrorItem = new ErrorItem();
+		$newErrorItem = new MundiPaggService_DataContracts_ErrorItem();
 		
 		$newErrorItem->Description = $errorItem->Description;
 		$newErrorItem->ErrorCode = $errorItem->ErrorCode;
@@ -610,7 +610,7 @@ class SoapConverter implements ISoapConverter {
 		return $newOrderDataCollection;
 	}
 	public function ConvertOrderData($orderData) {
-		$newOrderData = new OrderData();
+		$newOrderData = new MundiPaggService_DataContracts_OrderData();
 				
 		$newOrderData->CreateDate = $orderData->CreateDate;
 		$newOrderData->OrderKey = $orderData->OrderKey;
@@ -644,7 +644,7 @@ class SoapConverter implements ISoapConverter {
 		return $newCreditCardTransactionDataCollection;
 	}
 	public function ConvertCreditCardTransactionData($ccTransData) {
-		$newccTransData = new CreditCardTransactionData();
+		$newccTransData = new MundiPaggService_DataContracts_CreditCardTransactionData();
 			
 		$newccTransData->AcquirerAuthorizationCode = $ccTransData->AcquirerAuthorizationCode;
 		$newccTransData->AcquirerName = $ccTransData->AcquirerName;
@@ -703,7 +703,7 @@ class SoapConverter implements ISoapConverter {
 		return $newBoletoTransactionDataCollection;
 	}
 	public function ConvertBoletoTransactionData($boletoTransData) {
-		$newBoletoTransData = new BoletoTransactionData();
+		$newBoletoTransData = new MundiPaggService_DataContracts_BoletoTransactionData();
 
 		$newBoletoTransData->AmountInCents = $boletoTransData->AmountInCents;
 		$newBoletoTransData->AmountPaidInCents = $boletoTransData->AmountPaidInCents;
@@ -744,7 +744,7 @@ class SoapConverter implements ISoapConverter {
 		return $newCreditCardDataCollection;
 	}
 	public function ConvertCreditCardData($ccData) {
-		$newccData = new CreditCardData();
+		$newccData = new MundiPaggService_DataContracts_CreditCardData();
 
 		$newccData->CreditCardBrandEnum = $ccData->CreditCardBrandEnum;
 		$newccData->CreditCardNumber = $ccData->CreditCardNumber;

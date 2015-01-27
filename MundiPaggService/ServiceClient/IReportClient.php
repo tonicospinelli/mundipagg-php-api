@@ -5,11 +5,11 @@
 * @version: 1.0
 * revision: 2014/09/09
 */
-interface IMundiPaggReportServiceClient {
+interface MundiPaggService_ServiceClient_IReportClient {
 
 	/**
 	* Gets and saves a report file with the given date.
-	* @param OnlineDebitRequest $onlineDebitRequest The order to be created.
+	* @param MundiPaggService_DataContracts_Debit_OnlineDebitRequest $onlineDebitRequest The order to be created.
 	*/
 	public function SaveReportFile(DateTime $fileDate, $filename, $merchantKey = NULL);
 

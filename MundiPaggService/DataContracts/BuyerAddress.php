@@ -1,14 +1,14 @@
 <?php
 
-class BuyerAddress {
-	/* @var [AddressTypeEnum] Address Type.*/
+class MundiPaggService_DataContracts_BuyerAddress {
+	/* @var [MundiPaggService_DataContracts_AddressTypeEnum] Address Type.*/
     /*@param Default: Residential*/
 	public $AddressTypeEnum; 
 	/*@var [String] City.*/
 	public $City;
 	/*@var [String] Address complement.*/
 	public $Complement;
-	/*var [CountryEnum] Address country.*/
+	/*var [MundiPaggService_DataContracts_CountryEnum] Address country.*/
 	/*@param Default: Brazil*/
 	public $CountryEnum;
 	/*@var [String] District.*/
@@ -23,10 +23,10 @@ class BuyerAddress {
 	public $ZipCode;
 	
 	function __construct() {
-		$this->AddressTypeEnum = AddressTypeEnum::__default;
+		$this->AddressTypeEnum = MundiPaggService_DataContracts_AddressTypeEnum::__default;
 		$this->City = "";
 		$this->Complement = "";
-		$this->CountryEnum = CountryEnum::__default;
+		$this->CountryEnum = MundiPaggService_DataContracts_CountryEnum::__default;
 		$this->District = "";
 		$this->Number = "";
 		$this->State = "";

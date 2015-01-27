@@ -1,6 +1,6 @@
 <?php
 
-class BasicHttpClient implements IHttpClient {
+class MundiPaggService_Helpers_BasicHttpClient implements MundiPaggService_Helpers_IHttpClient {
 
 	private $serviceUri = null;
 	public function GetUri() {
@@ -79,7 +79,7 @@ class BasicHttpClient implements IHttpClient {
 
 		curl_close($client);
 
-		$httpResponse = new HttpResponse();
+		$httpResponse = new MundiPaggService_Helpers_HttpResponse();
 		$httpResponse->HttpStatusCode = $httpStatusCode;
 		$httpResponse->ResponseContent = $clientResponse;
 		$httpResponse->RequestUri = $uri;
@@ -135,7 +135,7 @@ class BasicHttpClient implements IHttpClient {
 
 		curl_close($client);
 
-		$httpResponse = new HttpResponse();
+		$httpResponse = new MundiPaggService_Helpers_HttpResponse();
 		$httpResponse->HttpStatusCode = $httpStatusCode;
 		$httpResponse->ResponseContent = $clientResponse;
 		$httpResponse->RequestUri = $uri;

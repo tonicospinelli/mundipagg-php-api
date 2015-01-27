@@ -1,0 +1,23 @@
+{
+    "name": "mundipagg/mundipagg-php-api",
+    "description": "PHP API for integration with MundiPagg payment web services.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "minimum-stability": "dev",
+    "authors": [],
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.4"
+    },
+    "autoload": {
+        "classmap": [
+            "MundiPaggService/DataContracts/Enum.php",
+            "MundiPaggService/DataContracts/Debit/Enum.php"
+        ],
+        "psr-0": {
+            "": "./"
+        }
+    }
+}

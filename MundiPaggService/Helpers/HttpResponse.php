@@ -1,5 +1,5 @@
 <?php
-class HttpResponse {
+class MundiPaggService_Helpers_HttpResponse {
 
 	public $HttpStatusCode;
 

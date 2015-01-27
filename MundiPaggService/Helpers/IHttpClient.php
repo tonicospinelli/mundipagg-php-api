@@ -1,6 +1,6 @@
 <?php
 
-interface IHttpClient {
+interface MundiPaggService_Helpers_IHttpClient {
 
 	public function GetUri();
 	public function SetUri($uri);

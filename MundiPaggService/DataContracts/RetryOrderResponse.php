@@ -1,32 +1,32 @@
 <?php
 
-class RetryOrderResponse {
+class MundiPaggService_DataContracts_RetryOrderResponse {
 	/*@var [long] MundiPagg Time In Milliseconds*/
 	public $MundiPaggTimeInMilliseconds;
 	/*@var [Guid] Order key*/
 	public $OrderKey;
 	/*@var [string] Order Reference*/
 	public $OrderReference;
-	/*@var [OrderStatusEnum] Order Status Enum */
+	/*@var [MundiPaggService_DataContracts_OrderStatusEnum] Order Status Enum */
 	public $OrderStatusEnum;
 	/*@var [Guid] Request Key*/
 	public $RequestKey; 
-	/*@var [CreditCardTransactionResult] Retry Order CreditCard Transaction Response*/
+	/*@var [MundiPaggService_DataContracts_CreditCardTransactionResult] Retry Order CreditCard Transaction Response*/
 	public $RetryOrderCreditCardTransactionResponse;
 	/*@var [bool] Fail Or Success*/
 	public $Success;
 	/*@var [string] version */
 	public $Version;
-	/*@var [MundiPaggSuggestion] MundiPagg Suggestion */
+	/*@var [MundiPaggService_DataContracts_MundiPaggSuggestion] MundiPagg Suggestion */
 	public $MundiPaggSuggestion;
-	/*@var [ErrorReport] Error Report */
+	/*@var [MundiPaggService_DataContracts_ErrorReport] Error Report */
 	public $ErrorReport;
 	
 	function __construct() {
 		$this->MundiPaggTimeInMilliseconds = null;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
-		$this->OrderStatusEnum = OrderStatusEnum::__default;
+		$this->OrderStatusEnum = MundiPaggService_DataContracts_OrderStatusEnum::__default;
 		$this->RequestKey = null;
 		$this->RetryOrderCreditCardTransactionResponse = null;
 		$this->Success = false;

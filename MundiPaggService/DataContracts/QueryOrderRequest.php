@@ -1,5 +1,5 @@
 <?php
-class QueryOrderRequest {
+class MundiPaggService_DataContracts_QueryOrderRequest {
 	/*@var [Guid] Merchant key */
 	public $MerchantKey;
 	/*@var [Guid] Order key*/

@@ -1,5 +1,5 @@
 <?php
-class PhoneRequest {
+class MundiPaggService_DataContracts_Debit_PhoneRequest {
 
     /*@var [String] Country code*/
     public $CountryCode;
@@ -13,7 +13,7 @@ class PhoneRequest {
     /*@var [String] Phone extension*/
     public $Extension;
 
-    /*@var [PhoneTypeEnum] Phone type*/
+    /*@var [MundiPaggService_DataContracts_Debit_PhoneTypeEnum] Phone type*/
     public $PhoneTypeEnum;
 
     function __construct() {
@@ -22,6 +22,6 @@ class PhoneRequest {
         $this->AreaCode = null;
         $this->PhoneNumber = null;
         $this->Extension = null;
-        $this->PhoneTypeEnum = PhoneTypeEnum::__default;
+        $this->PhoneTypeEnum = MundiPaggService_DataContracts_Debit_PhoneTypeEnum::__default;
     }
 }

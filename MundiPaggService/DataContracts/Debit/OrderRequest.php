@@ -1,5 +1,5 @@
 <?php
-class OrderRequest {
+class MundiPaggService_DataContracts_Debit_OrderRequest {
 
 	/** @var [String] Order Reference*/
     public $OrderReference;

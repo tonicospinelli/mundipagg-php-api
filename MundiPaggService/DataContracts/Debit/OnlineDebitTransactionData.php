@@ -1,5 +1,5 @@
 <?php
-class OnlineDebitTransactionData {
+class MundiPaggService_DataContracts_Debit_OnlineDebitTransactionData {
 
 		/*@var [Guid] Order creation date*/
 		public $OnlineDebitTransactionKey;

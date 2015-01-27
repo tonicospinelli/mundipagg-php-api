@@ -1,15 +1,15 @@
 <?php
 
-final class StatusNotification {
+final class MundiPaggService_PostNotification_StatusNotification {
 	/*@var [long] Amount In Cents */
 	public $AmountInCents;
 	/*@var [long] Amount Paid In Cents */
 	public $AmountPaidInCents;
-	/*@var [BoletoTransactionNotification] Boleto Transaction */
+	/*@var [MundiPaggService_PostNotification_BoletoTransactionNotification] Boleto Transaction */
 	public $BoletoTransaction;
-	/*@var [CreditCardTransactionNotification] Credit Card Transaction */
+	/*@var [MundiPaggService_PostNotification_CreditCardTransactionNotification] Credit Card Transaction */
 	public $CreditCardTransaction;
-	/*@var [OnlineDebitTransactionNotification] Online Debit Transaction */
+	/*@var [MundiPaggService_PostNotification_OnlineDebitTransactionNotification] Online Debit Transaction */
 	public $OnlineDebitTransaction;
 	/*@var [string] Order Key */
 	public $OrderKey;
@@ -25,7 +25,7 @@ final class StatusNotification {
 		$this->CreditCardTransaction = null;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
-		$this->OrderStatus = OrderStatusEnum::__default;
+		$this->OrderStatus = MundiPaggService_DataContracts_OrderStatusEnum::__default;
 	}
 
 	/*@global Parse Xml to Status Notification */
@@ -33,13 +33,13 @@ final class StatusNotification {
 		if (is_null($xmlString)) { return null; }
 		if (is_string($xmlString) == false) { return null; }
 		
-		StatusNotification::AutoSaveRequestResponseData($xmlString);
+		MundiPaggService_PostNotification_StatusNotification::AutoSaveRequestResponseData($xmlString);
 		
 		$xml = simplexml_load_string($xmlString); // Cria o objeto do Xml
 		
 		$xml->AmountPaidInCents = null;
 		
-		$statusNotification = new StatusNotification();
+		$statusNotification = new MundiPaggService_PostNotification_StatusNotification();
 		
 		$statusNotification->AmountInCents = (int)$xml->AmountInCents;
 		if (isset($xml->AmountPaidInCents) && ((string)$xml->AmountPaidInCents) != '') { $statusNotification->AmountPaidInCents = (int)$xml->AmountPaidInCents; }
@@ -50,15 +50,15 @@ final class StatusNotification {
 		if (isset($xml->BoletoTransaction)) {
 			$xmlBoleto = $xml->BoletoTransaction;
 			$boletoTrans = null;
-			if (!StatusNotification::IsNullOrEmptyXml($xmlBoleto)) {
-				$boletoTrans = new BoletoTransactionNotification();
+			if (!MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlBoleto)) {
+				$boletoTrans = new MundiPaggService_PostNotification_BoletoTransactionNotification();
 				
 				$boletoTrans->AmountInCents = (int)$xmlBoleto->AmountInCents;
-				if (isset($xmlBoleto->AmountPaidInCents) && !StatusNotification::IsNullOrEmptyXml($xmlBoleto->AmountPaidInCents)) { $boletoTrans->AmountPaidInCents = (int)$xmlBoleto->AmountPaidInCents; }
+				if (isset($xmlBoleto->AmountPaidInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlBoleto->AmountPaidInCents)) { $boletoTrans->AmountPaidInCents = (int)$xmlBoleto->AmountPaidInCents; }
 				$boletoTrans->BoletoExpirationDate = (string)$xmlBoleto->BoletoExpirationDate;
 				$boletoTrans->NossoNumero = (string)$xmlBoleto->NossoNumero;
 				$boletoTrans->StatusChangedDate = (string)$xmlBoleto->StatusChangedDate;
-				if (isset($xmlBoleto->TransactionKey) && !StatusNotification::IsNullOrEmptyXml($xmlBoleto->TransactionKey)) { $boletoTrans->TransactionKey = (string)$xmlBoleto->TransactionKey; }
+				if (isset($xmlBoleto->TransactionKey) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlBoleto->TransactionKey)) { $boletoTrans->TransactionKey = (string)$xmlBoleto->TransactionKey; }
 				
 				$boletoTrans->TransactionReference = (string)$xmlBoleto->TransactionReference;
 				$boletoTrans->PreviousBoletoTransactionStatus = (string)$xmlBoleto->PreviousBoletoTransactionStatus;
@@ -71,21 +71,21 @@ final class StatusNotification {
 		if (isset($xml->CreditCardTransaction)) {
 			$xmlCC = $xml->CreditCardTransaction;
 			$ccTrans = null;
-			if (!StatusNotification::IsNullOrEmptyXml($xmlCC) ) {
-				$ccTrans = new CreditCardTransactionNotification();
+			if (!MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlCC) ) {
+				$ccTrans = new MundiPaggService_PostNotification_CreditCardTransactionNotification();
 				
 				$ccTrans->Acquirer = (string)$xmlCC->Acquirer;
-				if (isset($xmlCC->AmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->AmountInCents)) { $ccTrans->AmountInCents = (int)$xmlCC->AmountInCents; }
-				if (isset($xmlCC->AuthorizedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->AuthorizedAmountInCents)) { $ccTrans->AuthorizedAmountInCents = (int)$xmlCC->AuthorizedAmountInCents; }
-				if (isset($xmlCC->CapturedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->CapturedAmountInCents)) { $ccTrans->CapturedAmountInCents = (int)$xmlCC->CapturedAmountInCents; }
+				if (isset($xmlCC->AmountInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlCC->AmountInCents)) { $ccTrans->AmountInCents = (int)$xmlCC->AmountInCents; }
+				if (isset($xmlCC->AuthorizedAmountInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlCC->AuthorizedAmountInCents)) { $ccTrans->AuthorizedAmountInCents = (int)$xmlCC->AuthorizedAmountInCents; }
+				if (isset($xmlCC->CapturedAmountInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlCC->CapturedAmountInCents)) { $ccTrans->CapturedAmountInCents = (int)$xmlCC->CapturedAmountInCents; }
 				$ccTrans->CreditCardBrand = (string)$xmlCC->CreditCardBrand;
-				if (isset($xmlCC->RefundedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->RefundedAmountInCents)) { $ccTrans->RefundedAmountInCents = (int)$xmlCC->RefundedAmountInCents; }
+				if (isset($xmlCC->RefundedAmountInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlCC->RefundedAmountInCents)) { $ccTrans->RefundedAmountInCents = (int)$xmlCC->RefundedAmountInCents; }
 				$ccTrans->StatusChangedDate = (string)$xmlCC->StatusChangedDate;
 				$ccTrans->TransactionIdentifier = (string)$xmlCC->TransactionIdentifier;
 				$ccTrans->TransactionKey = (string)$xmlCC->TransactionKey;
 				$ccTrans->TransactionReference = (string)$xmlCC->TransactionReference;
 				$ccTrans->UniqueSequentialNumber = (string)$xmlCC->UniqueSequentialNumber;
-				if (isset($xmlCC->VoidedAmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlCC->VoidedAmountInCents)) { $ccTrans->VoidedAmountInCents = (int)$xmlCC->VoidedAmountInCents; }
+				if (isset($xmlCC->VoidedAmountInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlCC->VoidedAmountInCents)) { $ccTrans->VoidedAmountInCents = (int)$xmlCC->VoidedAmountInCents; }
 				$ccTrans->PreviousCreditCardTransactionStatus = (string)$xmlCC->PreviousCreditCardTransactionStatus;
 				$ccTrans->CreditCardTransactionStatus = (string)$xmlCC->CreditCardTransactionStatus;
 			}
@@ -96,11 +96,11 @@ final class StatusNotification {
 		if (isset($xml->OnlineDebitTransaction)) {
 			$xmlOnlineDebit = $xml->OnlineDebitTransaction;
 			$onlineDebitTrans = null;
-			if (!StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit)) {
-				$onlineDebitTrans = new OnlineDebitTransactionNotification();
+			if (!MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit)) {
+				$onlineDebitTrans = new MundiPaggService_PostNotification_OnlineDebitTransactionNotification();
 				
-				if (isset($xmlOnlineDebit->AmountInCents) && !StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit->AmountInCents)) { $onlineDebitTrans->AmountInCents = (int)$xmlOnlineDebit->AmountInCents; }
-				if (isset($xmlOnlineDebit->AmountPaidInCents) && !StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit->AmountPaidInCents)) { $onlineDebitTrans->AmountPaidInCents = (int)$xmlOnlineDebit->AmountPaidInCents; }
+				if (isset($xmlOnlineDebit->AmountInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit->AmountInCents)) { $onlineDebitTrans->AmountInCents = (int)$xmlOnlineDebit->AmountInCents; }
+				if (isset($xmlOnlineDebit->AmountPaidInCents) && !MundiPaggService_PostNotification_StatusNotification::IsNullOrEmptyXml($xmlOnlineDebit->AmountPaidInCents)) { $onlineDebitTrans->AmountPaidInCents = (int)$xmlOnlineDebit->AmountPaidInCents; }
 				$onlineDebitTrans->StatusChangedDate = (string)$xmlOnlineDebit->StatusChangedDate;
 				$onlineDebitTrans->TransactionKey = (string)$xmlOnlineDebit->TransactionKey;
 				$onlineDebitTrans->TransactionReference = (string)$xmlOnlineDebit->TransactionReference;
@@ -119,7 +119,7 @@ final class StatusNotification {
 	* @param $directory The directory where the files must be saved.
 	*/
 	public static function SavePostNotificationData($postData, $directory) {
-		if (!StatusNotification::EndsWith($directory, '/') && !StatusNotification::EndsWith($directory, '\\')) { $directory .= '\\'; }
+		if (!MundiPaggService_PostNotification_StatusNotification::EndsWith($directory, '/') && !MundiPaggService_PostNotification_StatusNotification::EndsWith($directory, '\\')) { $directory .= '\\'; }
 		
 		$now = date('Y-m-d__H-i-s-') . substr((string)microtime(), 2, 4);
 		
@@ -144,7 +144,7 @@ final class StatusNotification {
 		if (constant("MP_ENABLE_AUTO_SAVE_MESSAGES")) {
 			
 			try {
-				StatusNotification::SavePostNotificationData($postData,constant("MP_AUTO_SAVE_MESSAGES_PATH"));
+				MundiPaggService_PostNotification_StatusNotification::SavePostNotificationData($postData,constant("MP_AUTO_SAVE_MESSAGES_PATH"));
 			}
 			catch(Exception $ex) { }
 		}

@@ -2,7 +2,7 @@
 
 
 
-class BoletoTransaction {
+class MundiPaggService_DataContracts_BoletoTransaction {
 	/** @var [Long] Transaction amount in cents*/
 	public $AmountInCents;
 	/** @var [Integer] Bank code*/

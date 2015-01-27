@@ -1,6 +1,6 @@
 <?php
 
-class BoletoTransactionData {
+class MundiPaggService_DataContracts_BoletoTransactionData {
 	/*@var [long] Transaction amount in cents */
 	public $AmountInCents;
 	/*@var [long] Amount paid in cents */
@@ -9,7 +9,7 @@ class BoletoTransactionData {
 	public $BankNumber;
 	/*@var [string] Barcode of boleto*/
 	public $Barcode;
-	/*@var [BoletoTransactionStatusEnum] Boleto Transaction status */
+	/*@var [MundiPaggService_DataContracts_BoletoTransactionStatusEnum] Boleto Transaction status */
 	public $BoletoTransactionStatusEnum;
 	/*@var [string] Boleto URL */
 	public $BoletoUrl; 
@@ -31,7 +31,7 @@ class BoletoTransactionData {
 		$this->AmountPaidInCents = 0;
 		$this->BankNumber = "";
 		$this->Barcode = "";
-		$this->BoletoTransactionStatusEnum = BoletoTransactionStatusEnum::__default;
+		$this->BoletoTransactionStatusEnum = MundiPaggService_DataContracts_BoletoTransactionStatusEnum::__default;
 		$this->BoletoUrl = "";
 		$this->CreateDate = null;
 		$this->CustomStatus = "";
@@ -45,7 +45,7 @@ class BoletoTransactionData {
 		$str = "";
 		$ts = '<font color="#0000FF">';
 		$te = '</font>';
-		
+
 		$str .=  "AmountInCents: " . $this->AmountInCents . NEWLINE;
 		$str .=  "AmountPaidInCents: " . $this->AmountPaidInCents . NEWLINE;
 		$str .=  "BankNumber: " . $this->BankNumber . NEWLINE;

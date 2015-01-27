@@ -1,6 +1,6 @@
 <?php
 
-class CreditCardTransactionData {
+class MundiPaggService_DataContracts_CreditCardTransactionData {
 	/*@var [string] Authorization Code*/
 	public $AcquirerAuthorizationCode;
 	/*@var [string] Acquirer Name*/
@@ -13,11 +13,11 @@ class CreditCardTransactionData {
 	public $CapturedAmountInCents;
 	/*@var [DateTime] Transaction Creation Date*/
 	public $CreateDate; 
-	/*@var [CreditCardBrandEnum] CreditCard Brand*/
+	/*@var [MundiPaggService_DataContracts_CreditCardBrandEnum] CreditCard Brand*/
 	public $CreditCardBrandEnum; 
 	/*@var [string] CreditCard Number*/
 	public $CreditCardNumber;
-	/*@var [CreditCardTransactionStatusEnum] CreditCard Transaction Status*/
+	/*@var [MundiPaggService_DataContracts_CreditCardTransactionStatusEnum] CreditCard Transaction Status*/
 	public $CreditCardTransactionStatusEnum; 
 	/*@var [string] Custom Status*/
 	public $CustomStatus;
@@ -49,9 +49,9 @@ class CreditCardTransactionData {
 		$this->AuthorizedAmountInCents = null;
 		$this->CapturedAmountInCents = null;
 		$this->CreateDate = null;
-		$this->CreditCardBrandEnum = CreditCardBrandEnum::__default;
+		$this->CreditCardBrandEnum = MundiPaggService_DataContracts_CreditCardBrandEnum::__default;
 		$this->CreditCardNumber = "";
-		$this->CreditCardTransactionStatusEnum = CreditCardTransactionStatusEnum::__default;
+		$this->CreditCardTransactionStatusEnum = MundiPaggService_DataContracts_CreditCardTransactionStatusEnum::__default;
 		$this->CustomStatus = "";
 		$this->DueDate = null;
 		$this->InstallmentCount = 0;

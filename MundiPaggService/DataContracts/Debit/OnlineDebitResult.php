@@ -1,6 +1,6 @@
 <?php
 
-class OnlineDebitResult {
+class MundiPaggService_DataContracts_Debit_OnlineDebitResult {
 
     /** @var [String] Online debit transaction status*/
     public $OnlineDebitStatus;
@@ -26,7 +26,7 @@ class OnlineDebitResult {
     /** @var [Long] Process time*/
     public $ProcessTimeInMilliseconds;
 
-    /** @var [ErrorReport] Error*/
+    /** @var [MundiPaggService_DataContracts_ErrorReport] Error*/
     public $ErrorReport;
 
     /** @var [Bool] Success*/

@@ -1,6 +1,6 @@
 <?php
 
-class CreditCardTransaction {
+class MundiPaggService_DataContracts_CreditCardTransaction {
 	/*@var [Long] Transaction amount in cents*/
 	public $AmountInCents; //long
 	/*@var [int] capture delay in minutes */
@@ -30,15 +30,15 @@ class CreditCardTransaction {
 	public $ThirdPartyMerchantKey; // Guid
 	/*@var [String] Custom transaction identifier.*/
 	public $TransactionReference;
-	/*@var [Recurrency] Transaction recurrency information.*/
+	/*@var [MundiPaggService_DataContracts_Recurrency] Transaction recurrency information.*/
 	public $Recurrency;
 
 	function __construct() {
 		$this->AmountInCents = 0;
 		$this->CaptureDelayInMinutes = 0;
-		$this->CreditCardBrandEnum = CreditCardBrandEnum::__default;
+		$this->CreditCardBrandEnum = MundiPaggService_DataContracts_CreditCardBrandEnum::__default;
 		$this->CreditCardNumber = "";
-		$this->CreditCardOperationEnum = CreditCardOperationEnum::__default;
+		$this->CreditCardOperationEnum = MundiPaggService_DataContracts_CreditCardOperationEnum::__default;
 		$this->ExpMonth = 0;
 		$this->ExpYear = 0;
 		$this->HolderName = "";

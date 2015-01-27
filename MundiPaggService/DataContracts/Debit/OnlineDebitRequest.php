@@ -1,7 +1,7 @@
 <?php
 
 
-class OnlineDebitRequest {
+class MundiPaggService_DataContracts_Debit_OnlineDebitRequest {
 
 	/** @var [Guid] Merchant key*/
     public $MerchantKey;
@@ -27,10 +27,10 @@ class OnlineDebitRequest {
 	/** @var [Guid] Order key*/
     public $OrderKey;
 
-	/** @var [BuyerRequest] Buyer data*/
+	/** @var [MundiPaggService_DataContracts_Debit_BuyerRequest] MundiPaggService_DataContracts_Buyer data*/
     public $Buyer;
 
-	/** @var [OrderRequest] Order data*/
+	/** @var [MundiPaggService_DataContracts_Debit_OrderRequest] Order data*/
     public $OrderRequest;
 
     function __construct() {

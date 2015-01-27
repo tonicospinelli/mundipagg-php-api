@@ -3,16 +3,16 @@
 
 /** Debit Converters Interface
 */
-interface IDebitConverter {
+interface MundiPaggService_Converters_IDebitConverter {
 
 	// Request Converters
-	public function ConvertFromOnlineDebitRequest(OnlineDebitRequest $onlineDebitRequest);
-	public function ConvertFromOrderRequest(OrderRequest $orderRequest);
-	public function ConvertFromBuyerRequest(BuyerRequest $buyerRequest);
+	public function ConvertFromOnlineDebitRequest(MundiPaggService_DataContracts_Debit_OnlineDebitRequest $onlineDebitRequest);
+	public function ConvertFromOrderRequest(MundiPaggService_DataContracts_Debit_OrderRequest $orderRequest);
+	public function ConvertFromBuyerRequest(MundiPaggService_DataContracts_Debit_BuyerRequest $buyerRequest);
 	public function ConvertFromPhoneRequestCollection(array $phoneRequestCollection);
-	public function ConvertFromPhoneRequest(PhoneRequest $phoneRequest);
+	public function ConvertFromPhoneRequest(MundiPaggService_DataContracts_Debit_PhoneRequest $phoneRequest);
 	public function ConvertFromBuyerAddressRequestCollection(array $buyerAddressCollection);
-	public function ConvertFromBuyerAddressRequest(BuyerAddressRequest $buyerAddressRequest);
+	public function ConvertFromBuyerAddressRequest(MundiPaggService_DataContracts_Debit_BuyerAddressRequest $buyerAddressRequest);
 
 	// Response Converters
 	public function ConvertToOnlineDebitResult($response);

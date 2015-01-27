@@ -1,5 +1,5 @@
 <?php
-class RetryOrderCreditCardTransactionRequest {
+class MundiPaggService_DataContracts_RetryOrderCreditCardTransactionRequest {
 	/*@var [string] Security Code */
 	public $SecurityCode;
 	/*@var [Guid] Transaction key*/

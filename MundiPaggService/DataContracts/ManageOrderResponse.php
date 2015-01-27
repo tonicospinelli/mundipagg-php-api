@@ -1,6 +1,6 @@
 <?php
-class ManageOrderResponse {
-	/*@var [ManageOrderOperationEnum] Order Operation */
+class MundiPaggService_DataContracts_ManageOrderResponse {
+	/*@var [MundiPaggService_DataContracts_ManageOrderOperationEnum] Order Operation */
 	public $ManageOrderOperationEnum; // ManageOrderOperationEnum
 	/*@var [long] MundiPagg Time In Milliseconds */
 	public $MundiPaggTimeInMilliseconds; // Nullable<long>
@@ -8,7 +8,7 @@ class ManageOrderResponse {
 	public $OrderKey;
 	/*@var [string] Order Reference */
 	public $OrderReference;
-	/*@var [OrderStatusEnum] Order status */
+	/*@var [MundiPaggService_DataContracts_OrderStatusEnum] Order status */
 	public $OrderStatusEnum;
 	/*@var [Guid] Request Key */
 	public $RequestKey;
@@ -16,13 +16,13 @@ class ManageOrderResponse {
 	public $Success;
 	/*@var [string] Version */
 	public $Version;
-	/*@var [CreditCardTransactionResult] CreditCard Transaction Result Collection */
+	/*@var [MundiPaggService_DataContracts_CreditCardTransactionResult] CreditCard Transaction Result Collection */
 	public $CreditCardTransactionResultCollection;
-	/*@var [BoletoTransactionResult] Boleto Transaction Result Collection */
+	/*@var [MundiPaggService_DataContracts_BoletoTransactionResult] Boleto Transaction Result Collection */
 	public $BoletoTransactionResultCollection; // BoletoTransactionResult[]
-	/*@var [MundiPaggSuggestion] MundiPagg Suggestion */
+	/*@var [MundiPaggService_DataContracts_MundiPaggSuggestion] MundiPagg Suggestion */
 	public $MundiPaggSuggestion; // MundiPaggSuggestion
-	/*@var [ErrorReport] Error Report */
+	/*@var [MundiPaggService_DataContracts_ErrorReport] Error Report */
 	public $ErrorReport; // ErrorReport
 	
 	function __tostring() {

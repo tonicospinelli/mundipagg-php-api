@@ -1,8 +1,8 @@
 <?php
 
-class ErrorReport {
+class MundiPaggService_DataContracts_ErrorReport {
 	/*@var [string] Category*/
 	public $Category;
-	/*@var [ErrorItem] Error Item*/
+	/*@var [MundiPaggService_DataContracts_ErrorItem] Error Item*/
 	public $ErrorItemCollection; 
 }

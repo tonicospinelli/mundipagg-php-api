@@ -1,5 +1,5 @@
 <?php
-class ManageCreditCardTransactionRequest {
+class MundiPaggService_DataContracts_ManageCreditCardTransactionRequest {
 	/*@var [long] Amount In Cents */
 	public $AmountInCents;
 	/*@var [Guid] Transaction Key */

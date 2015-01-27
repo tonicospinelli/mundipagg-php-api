@@ -1,6 +1,6 @@
 <?php
 
-class RetryOrderRequest {
+class MundiPaggService_DataContracts_RetryOrderRequest {
 	/*@var [Guid] Merchant key*/
 	public $MerchantKey;
 	/*@var [Guid] Order key*/
@@ -9,7 +9,7 @@ class RetryOrderRequest {
 	public $OrderReference; 
 	/*@var [Guid] Request key*/
 	public $RequestKey;
-	/*@var [RetryOrderCreditCardTransactionRequest] Retry Order CreditCard Transaction Request Collection */
+	/*@var [MundiPaggService_DataContracts_RetryOrderCreditCardTransactionRequest] Retry Order CreditCard Transaction Request Collection */
 	public $RetryOrderCreditCardTransactionRequestCollection;
 	
 	function __construct() {

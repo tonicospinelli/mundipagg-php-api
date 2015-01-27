@@ -1,25 +1,25 @@
 <?php
 
 
-class OrderData {
+class MundiPaggService_DataContracts_OrderData {
 	/*@var [DateTime] Order Creation Date*/
 	public $CreateDate;
 	/*@var [Guid] Order Key*/
 	public $OrderKey; 
 	/*@var [string] Order Reference*/
 	public $OrderReference;
-	/*@var [OrderStatusEnum] Order Status */
+	/*@var [MundiPaggService_DataContracts_OrderStatusEnum] Order Status */
 	public $OrderStatusEnum;
-	/*@var [CreditCardTransactionData] CreditCard Transaction Data Collection  */
+	/*@var [MundiPaggService_DataContracts_CreditCardTransactionData] CreditCard Transaction Data Collection  */
 	public $CreditCardTransactionDataCollection;
-	/*@var [BoletoTransactionData] Boleto Transaction Data Collection*/
+	/*@var [MundiPaggService_DataContracts_BoletoTransactionData] Boleto Transaction Data Collection*/
 	public $BoletoTransactionDataCollection;
 	
 	function __construct() {
 		$this->CreateDate = null;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
-		$this->OrderStatusEnum = OrderStatusEnum::__default;
+		$this->OrderStatusEnum = MundiPaggService_DataContracts_OrderStatusEnum::__default;
 		$this->CreditCardTransactionDataCollection = null;
 		$this->BoletoTransactionDataCollection = null;
 	}

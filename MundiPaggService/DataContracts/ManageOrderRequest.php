@@ -1,7 +1,7 @@
 <?php
 
-class ManageOrderRequest {
-	/*@var [ManageCreditCardTransactionRequest] CreditCard Transaction Collection */
+class MundiPaggService_DataContracts_ManageOrderRequest {
+	/*@var [MundiPaggService_DataContracts_ManageCreditCardTransactionRequest] CreditCard Transaction Collection */
 	public $ManageCreditCardTransactionCollection;
 	/*@var [ManageOrderOperation] Order Operation */
 	public $ManageOrderOperationEnum; 
@@ -16,7 +16,7 @@ class ManageOrderRequest {
 	
 	function __construct() {
 		$this->ManageCreditCardTransactionCollection = null;
-		$this->ManageOrderOperationEnum = ManageOrderOperationEnum::__default;
+		$this->ManageOrderOperationEnum = MundiPaggService_DataContracts_ManageOrderOperationEnum::__default;
 		$this->MerchantKey = constant("MP_MERCHANT_KEY");
 		$this->OrderKey = null;
 		$this->OrderReference = "";

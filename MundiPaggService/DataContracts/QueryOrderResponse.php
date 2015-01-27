@@ -1,6 +1,6 @@
 <?php
 
-class QueryOrderResponse {
+class MundiPaggService_DataContracts_QueryOrderResponse {
 	/*@var [long] MundiPagg Time In Milliseconds*/
 	public $MundiPaggTimeInMilliseconds;
 	/*@var [integer] Order Data Count*/
@@ -9,11 +9,11 @@ class QueryOrderResponse {
 	public $RequestKey;
 	/*@var [bool] Fail or Success*/
 	public $Success;
-	/*@var [OrderData] Order Data Collection*/
+	/*@var [MundiPaggService_DataContracts_OrderData] Order Data Collection*/
 	public $OrderDataCollection;
-	/*@var [MundiPaggSuggestion] MundiPagg Suggestion */
+	/*@var [MundiPaggService_DataContracts_MundiPaggSuggestion] MundiPagg Suggestion */
 	public $MundiPaggSuggestion;
-	/*@var [ErrorReport] Error Report */
+	/*@var [MundiPaggService_DataContracts_ErrorReport] Error Report */
 	public $ErrorReport;
 	
 	function __construct() {

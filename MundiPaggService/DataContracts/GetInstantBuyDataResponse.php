@@ -1,6 +1,6 @@
 <?php
 
-class GetInstantBuyDataResponse {
+class MundiPaggService_DataContracts_GetInstantBuyDataResponse {
 	/*@var [integer] CreditCard Data Count*/
 	public $CreditCardDataCount;
 	/*@var [long] Mundipagg Time In Milliseconds */	
@@ -9,11 +9,11 @@ class GetInstantBuyDataResponse {
 	public $RequestKey;
 	/*@var [bool] Fail or Success */
 	public $Success;
-	/*@var [CreditCardData] CreditCard Data Collection */
+	/*@var [MundiPaggService_DataContracts_CreditCardData] CreditCard Data Collection */
 	public $CreditCardDataCollection;
-	/*@var [MundiPaggSuggestion] Mundipagg Suggestion */
+	/*@var [MundiPaggService_DataContracts_MundiPaggSuggestion] Mundipagg Suggestion */
 	public $MundiPaggSuggestion;
-	/*@var [ErrorReport] Error Report */
+	/*@var [MundiPaggService_DataContracts_ErrorReport] Error Report */
 	public $ErrorReport;
 	
 	function __construct() {

@@ -5,7 +5,7 @@
 * @version: 1.0
 * revision: 2014/09/09
 */
-class MundiPaggReportServiceClient implements IMundiPaggReportServiceClient {
+class MundiPaggService_ServiceClient_ReportClient implements MundiPaggService_ServiceClient_IReportClient {
 
 	const GET_STREAM_RESOURCE = "/TransactionReportFile/GetStream?fileDate=";
 	const GET_BYTES_RESOURCE = "/TransactionReportFile/GetBytes?fileDate=";
@@ -34,12 +34,12 @@ class MundiPaggReportServiceClient implements IMundiPaggReportServiceClient {
 	private $httpClient = NULL;
 	public function GetHttpClient() {
 
-		if (is_null($this->httpClient) == true) { $this->httpClient = new BasicHttpClient(); }
+		if (is_null($this->httpClient) == true) { $this->httpClient = new MundiPaggService_Helpers_BasicHttpClient(); }
 		return $this->httpClient;
 	}
 
 
-	function __construct($serviceUri = NULL, $operationTimeout = NULL, IHttpClient $httpClient = NULL) {
+	function __construct($serviceUri = NULL, $operationTimeout = NULL, MundiPaggService_Helpers_IHttpClient $httpClient = NULL) {
 
 		$this->serviceUri = $serviceUri;
 		$this->operationTimeout = $operationTimeout;

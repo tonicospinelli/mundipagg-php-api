@@ -1,9 +1,9 @@
 <?php
 
 
-class QueryOrderResponse {
+class MundiPaggService_DataContracts_Debit_QueryOrderResponse {
 
-	/*@var [List<OrderData>] Order data collection*/
+	/*@var [List<MundiPaggService_DataContracts_OrderData>] Order data collection*/
 	public $OrderDataCollection;
 
 	/*@var [Nullable<Long>] MundiPagg Process time*/
@@ -12,7 +12,7 @@ class QueryOrderResponse {
 	/*@var [Bool] Success*/
 	public $Success;
 
-	/*@var [ErrorReport] Errors*/
+	/*@var [MundiPaggService_DataContracts_ErrorReport] Errors*/
 	public $ErrorReport;
 
 	function __construct() {

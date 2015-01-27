@@ -7,7 +7,7 @@
 * 
 * This client consumes the MundiPagg One Service, using Rest.
 */
-class MundiPaggRestServiceClient {
+class MundiPaggService_ServiceClient_RestClient {
 	private $soapClient = null;
 	private $converter = null;
 	private $needToCloseClient = false;
@@ -16,11 +16,11 @@ class MundiPaggRestServiceClient {
 		
 	/**
 	* @param string $wsdlUri WSDL contract location.
-	* @param IRestConverter $converter The object used to convert data in requests and responses.
+	* @param MundiPaggService_Converters_IRestConverter $converter The object used to convert data in requests and responses.
 	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
 	*/
-	public function __construct(string $wsdlUri = NULL, IRestConverter $converter = NULL, $traceSoapXml = false) {
-        throw new Exception("This client is not implemented yet!<br>Use MundiPaggSoapServiceClient.<br>See the documentation for more details.");
+	public function __construct($wsdlUri = NULL, MundiPaggService_Converters_IRestConverter $converter = NULL, $traceSoapXml = false) {
+        throw new Exception("This client is not implemented yet!<br>Use MundiPaggService_ServiceClient_SoapClient.<br>See the documentation for more details.");
 		// global $ENABLE_WSDL_CACHE; // Configuration Property
 		
 		$this->showXmlData = $traceSoapXml;
@@ -42,7 +42,7 @@ class MundiPaggRestServiceClient {
 		if (is_null($wsdlUri)) { $wsdlUri = $PRODUCTION_WSDL; }
 		if (strtoupper(trim($wsdlUri)) == 'SANDBOX') { $wsdlUri = $SANDBOX_WSDL; }
 		if (strtoupper(trim($wsdlUri)) == 'PRODUCTION') { $wsdlUri = $PRODUCTION_WSDL; }
-		if (is_null($converter)) { $converter = new SoapConverter(); }
+		if (is_null($converter)) { $converter = new MundiPaggService_Converters_SoapConverter(); }
 		$this->converter = $converter;
 		
 		try {
@@ -81,9 +81,9 @@ class MundiPaggRestServiceClient {
 	
 	/**
 	* Creates an order in MundiPagg One.
-	* @param CreateOrderRequest $createOrderRequest The order to be created.
+	* @param MundiPaggService_DataContracts_CreateOrderRequest $createOrderRequest The order to be created.
 	*/
-	public function CreateOrder(CreateOrderRequest $createOrderRequest) {
+	public function CreateOrder(MundiPaggService_DataContracts_CreateOrderRequest $createOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 		
 		if (is_null($createOrderRequest)) { return null; }
@@ -108,9 +108,9 @@ class MundiPaggRestServiceClient {
 
 	/**
 	* Manages an order in MundiPagg One.
-	* @param ManageOrderRequest $manageOrderRequest The order to be managed.
+	* @param MundiPaggService_DataContracts_ManageOrderRequest $manageOrderRequest The order to be managed.
 	*/
-	public function ManageOrder(ManageOrderRequest $manageOrderRequest) {
+	public function ManageOrder(MundiPaggService_DataContracts_ManageOrderRequest $manageOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 
 		if (is_null($manageOrderRequest)) { return null; }
@@ -135,9 +135,9 @@ class MundiPaggRestServiceClient {
 	
 	/**
 	* Retries an order in MundiPagg One.
-	* @param RetryOrderRequest $retryOrderRequest The order to be retried.
+	* @param MundiPaggService_DataContracts_RetryOrderRequest $retryOrderRequest The order to be retried.
 	*/
-	public function RetryOrder(RetryOrderRequest $retryOrderRequest) {
+	public function RetryOrder(MundiPaggService_DataContracts_RetryOrderRequest $retryOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 		
 		if (is_null($retryOrderRequest)) { return null; }
@@ -162,9 +162,9 @@ class MundiPaggRestServiceClient {
 	
 	/**
 	* Returns all information about an order in MundiPagg One.
-	* @param QueryOrderRequest $queryOrderRequest The order to be returned.
+	* @param MundiPaggService_DataContracts_QueryOrderRequest $queryOrderRequest The order to be returned.
 	*/
-	public function QueryOrder(QueryOrderRequest $queryOrderRequest) {
+	public function QueryOrder(MundiPaggService_DataContracts_QueryOrderRequest $queryOrderRequest) {
 		$this->ThrowExceptionIfClosed();
 		
 		if (is_null($queryOrderRequest)) { return null; }
@@ -189,9 +189,9 @@ class MundiPaggRestServiceClient {
 
 	/**
 	* Returns information about a buyer's credit cards.
-	* @param GetInstantBuyDataRequest $getInstantBuyDataRequest The order to be created.
+	* @param MundiPaggService_DataContracts_GetInstantBuyDataRequest $getInstantBuyDataRequest The order to be created.
 	*/
-	public function GetInstantBuyData(GetInstantBuyDataRequest $getInstantBuyDataRequest) {
+	public function GetInstantBuyData(MundiPaggService_DataContracts_GetInstantBuyDataRequest $getInstantBuyDataRequest) {
 		$this->ThrowExceptionIfClosed();
 		
 		if (is_null($getInstantBuyDataRequest)) { return null; }

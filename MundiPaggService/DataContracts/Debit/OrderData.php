@@ -1,9 +1,9 @@
 <?php
 
 
-class OrderData {
+class MundiPaggService_DataContracts_Debit_OrderData {
     
-    /*@var [List<OnlineDebitTransactionData>] Transaction collection*/
+    /*@var [List<MundiPaggService_DataContracts_Debit_OnlineDebitTransactionData>] Transaction collection*/
     public $OnlineDebitTransactionDataCollection;
 
     /*@var [String] Order creation date*/

@@ -1,5 +1,5 @@
 <?php
-class CreditCardTransactionNotification {
+class MundiPaggService_PostNotification_CreditCardTransactionNotification {
 	/*@var [string] Acquirer name */
 	public $Acquirer;
 	/*@var [long] Amount In Cents */

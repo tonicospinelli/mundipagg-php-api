@@ -1,6 +1,6 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "\\MundiPaggServiceConfiguration.php";
-include_once $POST_NOTIFICATION . "StatusNotification.php";
+include_once $POST_NOTIFICATION . "MundiPaggService_PostNotification_StatusNotification.php";
 
 $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetCreditCardXml();
@@ -9,10 +9,10 @@ $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetNoTransactionsXml();
 $xmlString = $_POST[$STATUS_NOTIF_POST];
 
-// Converte o Xml para um objeto do tipo StatusNotification
-$statusNotification = StatusNotification::ParseFromXml($xmlString);
+// Converte o Xml para um objeto do tipo MundiPaggService_PostNotification_StatusNotification
+$statusNotification = MundiPaggService_PostNotification_StatusNotification::ParseFromXml($xmlString);
 
-// Exibe o conteúdo
+// Exibe o conteÃºdo
 var_dump($statusNotification);
 
 
@@ -22,12 +22,12 @@ var_dump($statusNotification);
 
 
 function GetXml() {
-	return utf8_encode( utf8_encode ('<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
+	return utf8_encode( utf8_encode ('<MundiPaggService_PostNotification_StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
                     xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
                     i:schemaLocation="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract StatusNotificationXmlSchema.xsd">
   <AmountInCents>500</AmountInCents>
   <AmountPaidInCents>0</AmountPaidInCents>
-  <BoletoTransaction>
+  <MundiPaggService_DataContracts_BoletoTransaction>
     <AmountInCents>500</AmountInCents>
     <AmountPaidInCents>0</AmountPaidInCents>
     <BoletoExpirationDate>2013-02-08T00:00:00</BoletoExpirationDate>
@@ -37,8 +37,8 @@ function GetXml() {
     <TransactionReference>B2E32108</TransactionReference>
     <PreviousBoletoTransactionStatus>Generated</PreviousBoletoTransactionStatus>
     <BoletoTransactionStatus>Paid</BoletoTransactionStatus>
-  </BoletoTransaction>
-  <CreditCardTransaction>
+  </MundiPaggService_DataContracts_BoletoTransaction>
+  <MundiPaggService_DataContracts_CreditCardTransaction>
     <Acquirer>Simulator</Acquirer>
     <AmountInCents>2000</AmountInCents>
     <AuthorizedAmountInCents>2000</AuthorizedAmountInCents>
@@ -53,8 +53,8 @@ function GetXml() {
     <VoidedAmountInCents i:nil="true"/>
     <PreviousCreditCardTransactionStatus>AuthorizedPendingCapture</PreviousCreditCardTransactionStatus>
     <CreditCardTransactionStatus>Captured</CreditCardTransactionStatus>
-  </CreditCardTransaction>
-  <!--O nó OnlineDebitTransaction só é enviado caso uma transação de débito esteja sendo notificada-->
+  </MundiPaggService_DataContracts_CreditCardTransaction>
+  <!--O nï¿½ OnlineDebitTransaction sï¿½ ï¿½ enviado caso uma transaï¿½ï¿½o de dï¿½bito esteja sendo notificada-->
   <OnlineDebitTransaction>
     <AmountInCents>100</AmountInCents>
     <AmountPaidInCents>0</AmountPaidInCents>
@@ -64,21 +64,21 @@ function GetXml() {
     <PreviousOnlineDebitTransactionStatus>OpenedPendingPayment</PreviousOnlineDebitTransactionStatus>
     <OnlineDebitTransactionStatus>NotPaid</OnlineDebitTransactionStatus>
   </OnlineDebitTransaction>
-  <!--O nó OnlineDebitTransaction só é enviado caso uma transação de débito esteja sendo notificada-->  
+  <!--O nï¿½ OnlineDebitTransaction sï¿½ ï¿½ enviado caso uma transaï¿½ï¿½o de dï¿½bito esteja sendo notificada-->  
   <MerchantKey>B1B1092C-8681-40C2-A734-500F22683D9B</MerchantKey>
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>
   <OrderStatus>Paid</OrderStatus>
-</StatusNotification>') );
+</MundiPaggService_PostNotification_StatusNotification>') );
 }
 
 function GetCreditCardXml() {
-	return utf8_encode( utf8_encode ('<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
+	return utf8_encode( utf8_encode ('<MundiPaggService_PostNotification_StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
                     xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
                     i:schemaLocation="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract StatusNotificationXmlSchema.xsd">
   <AmountInCents>500</AmountInCents>
   <AmountPaidInCents>0</AmountPaidInCents>
-  <CreditCardTransaction>
+  <MundiPaggService_DataContracts_CreditCardTransaction>
     <Acquirer>Simulator</Acquirer>
     <AmountInCents>2000</AmountInCents>
     <AuthorizedAmountInCents>2000</AuthorizedAmountInCents>
@@ -93,21 +93,21 @@ function GetCreditCardXml() {
     <VoidedAmountInCents i:nil="true"/>
     <PreviousCreditCardTransactionStatus>AuthorizedPendingCapture</PreviousCreditCardTransactionStatus>
     <CreditCardTransactionStatus>Captured</CreditCardTransactionStatus>
-  </CreditCardTransaction>
+  </MundiPaggService_DataContracts_CreditCardTransaction>
   <MerchantKey>B1B1092C-8681-40C2-A734-500F22683D9B</MerchantKey>
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>
   <OrderStatus>Paid</OrderStatus>
-</StatusNotification>') );
+</MundiPaggService_PostNotification_StatusNotification>') );
 }
 
 function GetBoletoXml() {
-	return utf8_encode( utf8_encode ('<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
+	return utf8_encode( utf8_encode ('<MundiPaggService_PostNotification_StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
                     xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
                     i:schemaLocation="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract StatusNotificationXmlSchema.xsd">
   <AmountInCents>500</AmountInCents>
   <AmountPaidInCents>0</AmountPaidInCents>
-  <BoletoTransaction>
+  <MundiPaggService_DataContracts_BoletoTransaction>
     <AmountInCents>500</AmountInCents>
     <AmountPaidInCents>0</AmountPaidInCents>
     <BoletoExpirationDate>2013-02-08T00:00:00</BoletoExpirationDate>
@@ -117,16 +117,16 @@ function GetBoletoXml() {
     <TransactionReference>B2E32108</TransactionReference>
     <PreviousBoletoTransactionStatus>Generated</PreviousBoletoTransactionStatus>
     <BoletoTransactionStatus>Paid</BoletoTransactionStatus>
-  </BoletoTransaction>
+  </MundiPaggService_DataContracts_BoletoTransaction>
   <MerchantKey>B1B1092C-8681-40C2-A734-500F22683D9B</MerchantKey>
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>
   <OrderStatus>Paid</OrderStatus>
-</StatusNotification>') );
+</MundiPaggService_PostNotification_StatusNotification>') );
 }
 
 function GetOnlineDebitXml() {
-	return utf8_encode( utf8_encode ('<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
+	return utf8_encode( utf8_encode ('<MundiPaggService_PostNotification_StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
                     xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
                     i:schemaLocation="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract StatusNotificationXmlSchema.xsd">
   <AmountInCents>500</AmountInCents>
@@ -144,21 +144,21 @@ function GetOnlineDebitXml() {
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>
   <OrderStatus>Paid</OrderStatus>
-</StatusNotification>') );
+</MundiPaggService_PostNotification_StatusNotification>') );
 }
 
 function GetNoTransactionsXml() {
-	return utf8_encode( utf8_encode ('<StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
+	return utf8_encode( utf8_encode ('<MundiPaggService_PostNotification_StatusNotification xmlns="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract"
                     xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
                     i:schemaLocation="http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract StatusNotificationXmlSchema.xsd">
   <AmountInCents>500</AmountInCents>
   <AmountPaidInCents>0</AmountPaidInCents>
-  <BoletoTransaction />
-  <CreditCardTransaction></CreditCardTransaction>
+  <MundiPaggService_DataContracts_BoletoTransaction />
+  <MundiPaggService_DataContracts_CreditCardTransaction></MundiPaggService_DataContracts_CreditCardTransaction>
   <MerchantKey>B1B1092C-8681-40C2-A734-500F22683D9B</MerchantKey>
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>
   <OrderStatus>Paid</OrderStatus>
-</StatusNotification>') );
+</MundiPaggService_PostNotification_StatusNotification>') );
 }
 

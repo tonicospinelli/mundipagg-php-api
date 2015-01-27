@@ -1,6 +1,6 @@
 <?php
-class GetInstantBuyDataRequest {
-	/*@var [Guid] Buyer key */
+class MundiPaggService_DataContracts_GetInstantBuyDataRequest {
+	/*@var [Guid] MundiPaggService_DataContracts_Buyer key */
 	public $BuyerKey;
 	/*@var [Guid] Instant Buy Key */
 	public $InstantBuyKey;

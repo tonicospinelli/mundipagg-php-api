@@ -2,8 +2,8 @@
 	const NEWLINE = "<br>";
 	
 	/*@global Currency Iso Enum*/
-	class CurrencyIsoEnum {
-		const __default = BRL;
+	class MundiPaggService_DataContracts_CurrencyIsoEnum {
+		const __default = self::BRL;
 		
 		const BRL = 'BRL'; //986;
 		const EUR = 'EUR'; //978;
@@ -17,9 +17,9 @@
 		const PYG = 'PYG'; //600;
 	}
 	
-	/*@global Email Update To Buyer Enum*/
-	class EmailUpdateToBuyerEnum {
-		const __default = EmailUpdateToBuyerEnum::No;
+	/*@global Email Update To MundiPaggService_DataContracts_Buyer Enum*/
+	class MundiPaggService_DataContracts_EmailUpdateToBuyerEnum {
+		const __default = self::No;
 
 		const Yes = 'Yes'; //1;
 		const No = 'No'; //0;
@@ -28,8 +28,8 @@
 	}
 	
 	/*@global Credit Card Brand Enum*/
-	class CreditCardBrandEnum {
-		const __default = CreditCardBrandEnum::Visa;
+	class MundiPaggService_DataContracts_CreditCardBrandEnum {
+		const __default = self::Visa;
 
 		const Visa = 'Visa'; //1;
 		const Mastercard = 'Mastercard'; //2;
@@ -44,8 +44,8 @@
 	}
 	
 	/*@global CreditCard Operation Enum*/
-	class CreditCardOperationEnum {
-		const __default = CreditCardOperationEnum::AuthOnly;
+	class MundiPaggService_DataContracts_CreditCardOperationEnum {
+		const __default = self::AuthOnly;
 
 		const AuthOnly = 'AuthOnly'; //1;
 		const AuthAndCapture = 'AuthAndCapture'; //2;
@@ -53,8 +53,8 @@
 	}
 	
 	/*@global Frequency Enum*/
-	class FrequencyEnum {
-		const __default = FrequencyEnum::Weekly;
+	class MundiPaggService_DataContracts_FrequencyEnum {
+		const __default = self::Weekly;
 
 		const Weekly = 'Weekly'; //1;
 		const Monthly = 'Monthly'; //2;
@@ -63,32 +63,32 @@
 	}
 	
 	/*@global Gender Enum*/
-	class GenderEnum {
-		const __default = GenderEnum::M;
+	class MundiPaggService_DataContracts_GenderEnum {
+		const __default = self::M;
 
 		const M = 'M'; //1;
 		const F = 'F'; //2;
 	}
 	
 	/*@global Person Type Enum*/
-	class PersonTypeEnum {
-		const __default = PersonTypeEnum::Person;
+	class MundiPaggService_DataContracts_PersonTypeEnum {
+		const __default = self::Person;
 
 		const Person = 'Person'; //1;
 		const Company = 'Company'; //2;
 	}
 	
 	/*@global Tax Document Type Enum*/
-	class TaxDocumentTypeEnum {
-		const __default = TaxDocumentTypeEnum::CPF;
+	class MundiPaggService_DataContracts_TaxDocumentTypeEnum {
+		const __default = self::CPF;
 
 		const CPF = 'CPF'; //1;
 		const CNPJ = 'CNPJ'; //2;
 	}
 	
 	/*@global Address Type Enum*/
-	class AddressTypeEnum {
-		const __default = AddressTypeEnum::Billing;
+	class MundiPaggService_DataContracts_AddressTypeEnum {
+		const __default = self::Billing;
 
 		const Billing = 'Billing'; //1;
 		const Shipping = 'Shipping'; //2;
@@ -97,8 +97,8 @@
 	}
 	
 	/*@global Country Enum*/
-	class CountryEnum {
-		const __default = CountryEnum::Brazil;
+	class MundiPaggService_DataContracts_CountryEnum {
+		const __default = self::Brazil;
 
 		const Brazil = 'Brazil'; //1;
 		const USA = 'USA'; //2;
@@ -112,8 +112,8 @@
 	}
 	
 	/*@global Order Status Enum */
-	class OrderStatusEnum {
-		const __default = OrderStatusEnum::Opened;
+	class MundiPaggService_DataContracts_OrderStatusEnum {
+		const __default = self::Opened;
 		
 		const Opened = "Opened"; //1;
 		const Closed = 'Closed'; //2;
@@ -125,8 +125,8 @@
 	}
 	
 	/*@global CreditCard Transaction Status Enum*/
-	class CreditCardTransactionStatusEnum {
-		const __default = CreditCardTransactionStatusEnum::AuthorizedPendingCapture;
+	class MundiPaggService_DataContracts_CreditCardTransactionStatusEnum {
+		const __default = self::AuthorizedPendingCapture;
 		
 		const AuthorizedPendingCapture = 'AuthorizedPendingCapture'; //1,
         const NotAuthorized = 'NotAuthorized'; //2,
@@ -152,16 +152,16 @@
 	}
 	
 	/*@global Severity Code Enum*/
-	class SeverityCodeEnum {
-		const __default = SeverityCodeEnum::Error;
+	class MundiPaggService_DataContracts_SeverityCodeEnum {
+		const __default = self::Error;
 		
 		const Error = 'Error'; //1;
 		const Warning = 'Warning'; //2;
 	}
 	
 	/*@global Manage Order Operation Enum*/
-	class ManageOrderOperationEnum {
-		const __default = ManageOrderOperationEnum::Capture;
+	class MundiPaggService_DataContracts_ManageOrderOperationEnum {
+		const __default = self::Capture;
 		
 		const Capture = 'Capture'; //1,
 		const Void = 'Void'; //2,
@@ -169,8 +169,8 @@
 	}
 	
 	/*@global Boleto Transaction Status Enum*/
-	class BoletoTransactionStatusEnum {
-		const __default = BoletoTransactionStatusEnum::Generated;
+	class MundiPaggService_DataContracts_BoletoTransactionStatusEnum {
+		const __default = self::Generated;
 		
 		const Generated = 'Generated'; //1,
 		const Viewed = 'Viewed'; //2,

@@ -1,6 +1,6 @@
 <?php
 
-class CreditCardData {
+class MundiPaggService_DataContracts_CreditCardData {
 	/*@var [CreditCardEnum] CreditCard Brand*/
 	public $CreditCardBrandEnum;
 	/*@var [string] CreditCard Number*/
@@ -11,7 +11,7 @@ class CreditCardData {
 	public $IsExpiredCreditCard; // bool
 	
 	function __construct() {
-		$this->CreditCardBrandEnum = CreditCardBrandEnum::__default;
+		$this->CreditCardBrandEnum = MundiPaggService_DataContracts_CreditCardBrandEnum::__default;
 		$this->CreditCardNumber = "";
 		$this->InstantBuyKey = null;
 		$this->IsExpiredCreditCard = false;

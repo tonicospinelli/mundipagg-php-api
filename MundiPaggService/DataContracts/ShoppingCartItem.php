@@ -1,6 +1,6 @@
 <?php
 /*@global Shopping Cart Item */
-class ShoppingCartItem {
+class MundiPaggService_DataContracts_ShoppingCartItem {
 	/*@var [string] Description */
 	public $Description;
 	/*@var [string] Item Reference */

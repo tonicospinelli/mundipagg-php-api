@@ -1,12 +1,12 @@
 <?php
 
-class BoletoTransactionResult {
+class MundiPaggService_DataContracts_BoletoTransactionResult {
 
 	/*@var [long] Transaction amount in cents */
 	public $AmountInCents; // long
 	/*@var [string] Barcode of boleto*/
 	public $Barcode; 
-	/*@var [BoletoTransactionStatusEnum] Boleto Transaction status */
+	/*@var [MundiPaggService_DataContracts_BoletoTransactionStatusEnum] Boleto Transaction status */
 	public $BoletoTransactionStatusEnum; 
 	/*@var [string] Boleto URL */
 	public $BoletoUrl; 

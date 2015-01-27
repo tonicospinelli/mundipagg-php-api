@@ -1,8 +1,8 @@
 <?php
 
 
-class CreateOrderResponse {
-	/*@var [Buyer] Buyer instance*/
+class MundiPaggService_DataContracts_CreateOrderResponse {
+	/*@var [MundiPaggService_DataContracts_Buyer] Buyer instance*/
 	public $BuyerKey;
 	/*@var [Guid] MundiPagg merchant identification */
 	public $MerchantKey; 
@@ -12,7 +12,7 @@ class CreateOrderResponse {
 	public $OrderKey;
 	/*@var [String] Custom order identification.*/
 	public $OrderReference;
-	/*@var [OrderStatusEnum] Order Status */
+	/*@var [MundiPaggService_DataContracts_OrderStatusEnum] Order Status */
 	public $OrderStatusEnum;  
 	/*@var [Guid] Globally Unique Identifier.*/
 	/*@param Default: 00000000-0000-0000-0000-000000000000*/
@@ -21,13 +21,13 @@ class CreateOrderResponse {
 	public $Success;
 	/*@var [string] Version */
 	public $Version;
-	/*@var [CreditCardTransactionResult] CreditCard Transaction Result collection*/
+	/*@var [MundiPaggService_DataContracts_CreditCardTransactionResult] CreditCard Transaction Result collection*/
 	public $CreditCardTransactionResultCollection; 
-	/*@var [BoletoTransactionResult] Boleto Transaction Result collection*/
+	/*@var [MundiPaggService_DataContracts_BoletoTransactionResult] Boleto Transaction Result collection*/
 	public $BoletoTransactionResultCollection;
-	public $MundiPaggSuggestion; // MundiPaggSuggestion
-	/*@var [ErrorReport] Error Report */
-	public $ErrorReport; // ErrorReport
+	public $MundiPaggSuggestion; // MundiPaggService_DataContracts_MundiPaggSuggestion
+	/*@var [MundiPaggService_DataContracts_ErrorReport] Error Report */
+	public $ErrorReport; // MundiPaggService_DataContracts_ErrorReport
 	
 	function __construct() {
 		$this->BuyerKey = null;
@@ -35,7 +35,7 @@ class CreateOrderResponse {
 		$this->MundiPaggTimeInMilliseconds = 0;
 		$this->OrderKey = null;
 		$this->OrderReference = "";
-		$this->OrderStatusEnum = OrderStatusEnum::__default;
+		$this->OrderStatusEnum = MundiPaggService_DataContracts_OrderStatusEnum::__default;
 		$this->RequestKey = null;
 		$this->Success = false;
 		$this->Version = "";

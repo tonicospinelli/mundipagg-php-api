@@ -1,7 +1,7 @@
 <?php
 	const NEWLINE = '<br>';
 
-	class AddressTypeEnum {
+	class MundiPaggService_DataContracts_Debit_AddressTypeEnum {
 		const __default = self::Billing;
 
         const Billing = 'Billing';
@@ -10,7 +10,7 @@
         const Residential = 'Residential';
     }
 
-    class CountryEnum {
+    class MundiPaggService_DataContracts_Debit_CountryEnum {
     	const __default = self::Brazil;
 
         const Brazil = 'Brazil';
@@ -24,14 +24,14 @@
         const Paraguay = 'Paraguay';
     }
 
-	class GenderEnum {
+	class MundiPaggService_DataContracts_Debit_GenderEnum {
 		const __default = self::M;
 
         const M = 'M';
         const F = 'F';
     }
 
-	class PaymentMethodEnum {
+	class MundiPaggService_DataContracts_Debit_PaymentMethodEnum {
 		const __default = self::Bradesco;
 
         const Bradesco = 'Bradesco';
@@ -42,7 +42,7 @@
     }
 
 
-	class OnlineDebitTransactionStatusEnum {
+	class MundiPaggService_DataContracts_Debit_OnlineDebitTransactionStatusEnum {
 		const __default = self::OpenedPendingPayment;
 
         const OpenedPendingPayment = 'OpenedPendingPayment';
@@ -55,7 +55,7 @@
 
     }
 
-	class PersonTypeEnum {
+	class MundiPaggService_DataContracts_Debit_PersonTypeEnum {
 		const __default = self::Person;
 
         const Person = 'Person';
@@ -64,7 +64,7 @@
     }
 
 
-	class PhoneTypeEnum {
+	class MundiPaggService_DataContracts_Debit_PhoneTypeEnum {
 		const __default = self::Mobile;
 
         const Mobile = 'Mobile';
@@ -72,14 +72,14 @@
         const Comercial = 'Comercial';
     }
 
-    class TaxDocumentTypeEnum {
+    class MundiPaggService_DataContracts_Debit_TaxDocumentTypeEnum {
     	const __default = self::CPF;
 
         const CPF = 'CPF';
         const CNPJ = 'CNPJ';
     }
 
-    class SeverityCodeEnum {
+    class MundiPaggService_DataContracts_Debit_SeverityCodeEnum {
         const __default = self::Error;
 
         const Error = 'Error';

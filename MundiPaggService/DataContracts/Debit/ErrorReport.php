@@ -1,10 +1,10 @@
 <?php
-class ErrorReport {
+class MundiPaggService_DataContracts_Debit_ErrorReport {
 
 	/** @var [String] Error category*/
 	public $Category;
 
-	/** @var [List<ErrorItem>] Error collection*/
+	/** @var [List<MundiPaggService_DataContracts_ErrorItem>] Error collection*/
 	public $ErrorItemCollection;
 
 	function __construct() {

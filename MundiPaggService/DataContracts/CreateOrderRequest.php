@@ -1,6 +1,6 @@
 <?php
 
-class CreateOrderRequest {
+class MundiPaggService_DataContracts_CreateOrderRequest {
 	/*@var [Long] Order amount in cents*/
 	public $AmountInCents;
 	/*@var [Long] Amount (in cents) to consider the order is paid*/
@@ -19,20 +19,20 @@ class CreateOrderRequest {
 	public $RequestKey;
 	/*@var [int] Number of Retries*/
 	public $Retries;
-	/*@var [Buyer] Buyer instance*/
-	public $Buyer; // Buyer
-	/*@var [ShoppingCart] Shopping Cart Collection*/
+	/*@var [MundiPaggService_DataContracts_Buyer] MundiPaggService_DataContracts_Buyer instance*/
+	public $Buyer; // MundiPaggService_DataContracts_Buyer
+	/*@var [MundiPaggService_DataContracts_ShoppingCart] Shopping Cart Collection*/
 	public $ShoppingCartCollection;
-	/*@var [CreditCardTransaction] CreditCard Transaction collection*/
+	/*@var [MundiPaggService_DataContracts_CreditCardTransaction] CreditCard Transaction collection*/
 	public $CreditCardTransactionCollection;
-	/*@var [BoletoTransaction] Boleto transaction collection*/
+	/*@var [MundiPaggService_DataContracts_BoletoTransaction] Boleto transaction collection*/
 	public $BoletoTransactionCollection; 
 	
 	function __construct() {
 		$this->AmountInCents = 0;
 		$this->AmountInCentsToConsiderPaid = 0;
-		$this->CurrencyIsoEnum = CurrencyIsoEnum::BRL;
-		$this->EmailUpdateToBuyerEnum = EmailUpdateToBuyerEnum::__default;
+		$this->CurrencyIsoEnum = MundiPaggService_DataContracts_CurrencyIsoEnum::BRL;
+		$this->EmailUpdateToBuyerEnum = MundiPaggService_DataContracts_EmailUpdateToBuyerEnum::__default;
 		$this->MerchantKey = constant("MP_MERCHANT_KEY");
 		$this->OrderReference = "";
 		$this->RequestKey = null;

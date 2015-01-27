@@ -1,5 +1,5 @@
 <?php
-class ErrorItem {
+class MundiPaggService_DataContracts_Debit_ErrorItem {
 
 	/** @var [Int] Error code*/
 	public $ErrorCode;
@@ -18,7 +18,7 @@ class ErrorItem {
 		$this->ErrorCode = 0;
 		$this->ErrorField = null;
 		$this->Description = null;
-		$this->SeverityCode = SeverityCodeEnum::__default;
+		$this->SeverityCode = MundiPaggService_DataContracts_SeverityCodeEnum::__default;
 	}
 }
 

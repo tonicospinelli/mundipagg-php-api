@@ -2,28 +2,28 @@
 
 /** Converters Interface
 */
-interface IRestConverter {
+interface MundiPaggService_Converters_IRestConverter {
 	/** MAIN CONVERTERS 
 	*/
-	public function ConvertOrderRequest(CreateOrderRequest $orderRequest);
+	public function ConvertOrderRequest(MundiPaggService_DataContracts_CreateOrderRequest $orderRequest);
 	public function ConvertOrderResponse($orderResponse);
 
-	public function ConvertManageOrderRequest(ManageOrderRequest $manageRequest);
+	public function ConvertManageOrderRequest(MundiPaggService_DataContracts_ManageOrderRequest $manageRequest);
 	public function ConvertManageOrderResponse($manageResponse);
 
-	public function ConvertRetryOrderRequest(RetryOrderRequest $retryRequest);
+	public function ConvertRetryOrderRequest(MundiPaggService_DataContracts_RetryOrderRequest $retryRequest);
 	public function ConvertRetryOrderResponse($retryResponse);
 
-	public function ConvertQueryOrderRequest(QueryOrderRequest $queryRequest);
+	public function ConvertQueryOrderRequest(MundiPaggService_DataContracts_QueryOrderRequest $queryRequest);
 	public function ConvertQueryOrderResponse($queryResponse);
 
-	public function ConvertGetInstantBuyDataRequest(GetInstantBuyDataRequest $instantBuyRequest);
+	public function ConvertGetInstantBuyDataRequest(MundiPaggService_DataContracts_GetInstantBuyDataRequest $instantBuyRequest);
 	public function ConvertGetInstantBuyDataResponse($instantBuyResponse);
 
 	
 	/* REQUEST CONVERTERS (SdkClasses to Arrays)
 	*/	
-	public function ConvertBuyerFromRequest(Buyer $buyerRequest);
+	public function ConvertBuyerFromRequest(MundiPaggService_DataContracts_Buyer $buyerRequest);
 	public function ConvertCreditCardTransactionCollectionFromRequest($creditCardTransactionCollectionRequest);
 	public function ConvertBoletoTransactionCollectionFromRequest($boletoTransactionCollectionRequest);
 	public function ConvertShoppingCartCollectionFromRequest($shoppingCartCollectionRequest);

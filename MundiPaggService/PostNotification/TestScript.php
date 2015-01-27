@@ -7,8 +7,8 @@ $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetNoTransactionsXml();
 $xmlString = $_POST[$STATUS_NOTIF_POST];
 
-// Converte o Xml para um objeto do tipo StatusNotification
-$statusNotification = StatusNotification::ParseFromXml($xmlString);
+// Converte o Xml para um objeto do tipo MundiPaggService_PostNotification_StatusNotification
+$statusNotification = MundiPaggService_PostNotification_StatusNotification::ParseFromXml($xmlString);
 
 // dump content
 var_dump($statusNotification);

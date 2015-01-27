@@ -1,10 +1,10 @@
 <?php
 
 
-class DebitConverter implements IDebitConverter {
+class MundiPaggService_Converters_DebitConverter implements MundiPaggService_Converters_IDebitConverter {
 
 	// Request Converters
-	public function ConvertFromOnlineDebitRequest(OnlineDebitRequest $onlineDebitRequest) {
+	public function ConvertFromOnlineDebitRequest(MundiPaggService_DataContracts_Debit_OnlineDebitRequest $onlineDebitRequest) {
 
 		$requestArray = array();
 		$requestArray["MerchantKey"] = $onlineDebitRequest->MerchantKey;
@@ -29,7 +29,7 @@ class DebitConverter implements IDebitConverter {
 		return $requestArray;
 	}
 
-	public function ConvertFromOrderRequest(OrderRequest $orderRequest) {
+	public function ConvertFromOrderRequest(MundiPaggService_DataContracts_Debit_OrderRequest $orderRequest) {
 
 		$requestArray = array();
 		if(is_null($orderRequest->AmountInCents) == false) {
@@ -42,7 +42,7 @@ class DebitConverter implements IDebitConverter {
 		return $requestArray;
 	}
 
-	public function ConvertFromBuyerRequest(BuyerRequest $buyerRequest) {
+	public function ConvertFromBuyerRequest(MundiPaggService_DataContracts_Debit_BuyerRequest $buyerRequest) {
 
 		$requestArray = array();
 		$requestArray["TaxDocumentNumber"] = $buyerRequest->TaxDocumentNumber;
@@ -92,7 +92,7 @@ class DebitConverter implements IDebitConverter {
 
 		foreach($phoneRequestCollection as $key => $value) {
 
-			if (is_a($value, 'PhoneRequest') == false) { throw new InvalidArgumentException("The collection can only contain objects of type PhoneRequest."); }
+			if (is_a($value, 'MundiPaggService_DataContracts_Debit_PhoneRequest') == false) { throw new InvalidArgumentException("The collection can only contain objects of type MundiPaggService_DataContracts_Debit_PhoneRequest."); }
 
 			$phoneRequest = $this->ConvertFromPhoneRequest($value);
 			$requestArray[$counter] = $phoneRequest;
@@ -103,7 +103,7 @@ class DebitConverter implements IDebitConverter {
 		return $requestArray;
 	}
 
-	public function ConvertFromPhoneRequest(PhoneRequest $phoneRequest) {
+	public function ConvertFromPhoneRequest(MundiPaggService_DataContracts_Debit_PhoneRequest $phoneRequest) {
 
 		$requestArray = array();
 		$requestArray["CountryCode"] = $phoneRequest->CountryCode;
@@ -127,7 +127,7 @@ class DebitConverter implements IDebitConverter {
 
 		foreach($buyerAddressCollection as $key => $value) {
 
-			if (is_a($value, 'BuyerAddressRequest') == false) { throw new InvalidArgumentException("The collection can only contain objects of type BuyerAddressRequest."); }
+			if (is_a($value, 'MundiPaggService_DataContracts_Debit_BuyerAddressRequest') == false) { throw new InvalidArgumentException("The collection can only contain objects of type MundiPaggService_DataContracts_Debit_BuyerAddressRequest."); }
 
 			$buyerAddressRequest = $this->ConvertFromBuyerAddressRequest($value);
 			$requestArray[$counter] = $buyerAddressRequest;
@@ -138,7 +138,7 @@ class DebitConverter implements IDebitConverter {
 		return $requestArray;
 	}
 
-	public function ConvertFromBuyerAddressRequest(BuyerAddressRequest $buyerAddressRequest) {
+	public function ConvertFromBuyerAddressRequest(MundiPaggService_DataContracts_Debit_BuyerAddressRequest $buyerAddressRequest) {
 
 		$requestArray = array();
 
@@ -167,7 +167,7 @@ class DebitConverter implements IDebitConverter {
 	// Response Converters
 	public function ConvertToOnlineDebitResult($response) {
 
-		$onlineDebitResult = new OnlineDebitResult();
+		$onlineDebitResult = new MundiPaggService_DataContracts_Debit_OnlineDebitResult();
 
 		if (isset($response->OnlineDebitStatus) == true) {
 
@@ -229,7 +229,7 @@ class DebitConverter implements IDebitConverter {
 
 	public function ConvertToErrorReport($response) {
 
-		$errorReport = new ErrorReport();
+		$errorReport = new MundiPaggService_DataContracts_ErrorReport();
 
 		if (isset($response->Category) == true) {
 
@@ -266,7 +266,7 @@ class DebitConverter implements IDebitConverter {
 
 	public function ConvertToErrorItem($response) {
 
-		$errorItem = new ErrorItem();
+		$errorItem = new MundiPaggService_DataContracts_ErrorItem();
 
 		if (isset($response->ErrorCode) == true) {
 
@@ -293,7 +293,7 @@ class DebitConverter implements IDebitConverter {
 
 	public function ConvertToQueryOrderResponse($response) {
 
-		$queryOrderResponse = new QueryOrderResponse();
+		$queryOrderResponse = new MundiPaggService_DataContracts_QueryOrderResponse();
 
 		if (isset($response->OrderDataCollection) && count($response->OrderDataCollection) > 0) { 
 
@@ -340,7 +340,7 @@ class DebitConverter implements IDebitConverter {
 
 	public function ConvertToOrderData($response) {
 
-		$orderData = new OrderData();
+		$orderData = new MundiPaggService_DataContracts_OrderData();
 
 		if (isset($response->OnlineDebitTransactionDataCollection) && count($response->OnlineDebitTransactionDataCollection) > 0) {
 
@@ -412,7 +412,7 @@ class DebitConverter implements IDebitConverter {
 
 	public function ConvertToOnlineDebitTransactionData($response) {
 
-		$onlineDebitTransactionData = new OnlineDebitTransactionData();
+		$onlineDebitTransactionData = new MundiPaggService_DataContracts_Debit_OnlineDebitTransactionData();
 
 		if (isset($response->OnlineDebitTransactionKey)) {
 

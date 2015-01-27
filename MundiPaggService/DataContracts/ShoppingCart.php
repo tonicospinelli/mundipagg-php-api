@@ -1,10 +1,10 @@
 <?php
 
 /*@global Shopping Cart */
-class ShoppingCart {
+class MundiPaggService_DataContracts_ShoppingCart {
 	/*@var [integer] Freight Cost In Cents */
 	public $FreightCostInCents;
-	/*@var [ShoppingCartItem] Shopping Cart Item Collection */
+	/*@var [MundiPaggService_DataContracts_ShoppingCartItem] Shopping Cart Item Collection */
 	public $ShoppingCartItemCollection;
 
 	function __construct() {

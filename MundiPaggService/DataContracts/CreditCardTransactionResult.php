@@ -1,6 +1,6 @@
 <?php
 
-class CreditCardTransactionResult {
+class MundiPaggService_DataContracts_CreditCardTransactionResult {
 	/*@var [string] Message*/
 	public $AcquirerMessage;
 	/*@var [string] Return Code*/
@@ -15,9 +15,9 @@ class CreditCardTransactionResult {
 	public $CapturedAmountInCents; 
 	/*@var [string] CreditCard Number*/
 	public $CreditCardNumber;
-	/*@var [CreditCardOperationEnum] CreditCard Operation */
+	/*@var [MundiPaggService_DataContracts_CreditCardOperationEnum] CreditCard Operation */
 	public $CreditCardOperationEnum; 
-	/*@var [CreditCardTransactionStatusEnum] CreditCard Transaction Status*/
+	/*@var [MundiPaggService_DataContracts_CreditCardTransactionStatusEnum] CreditCard Transaction Status*/
 	public $CreditCardTransactionStatusEnum;
 	/*@var [String] Custom Status*/
 	public $CustomStatus;

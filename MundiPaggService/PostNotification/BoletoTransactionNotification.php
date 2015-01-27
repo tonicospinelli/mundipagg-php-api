@@ -1,5 +1,5 @@
 <?php
-class BoletoTransactionNotification {
+class MundiPaggService_PostNotification_BoletoTransactionNotification {
 	/*@var [long] Amount in Cents */
 	public $AmountInCents;
 	/*@var [long] Amount paid in Cents */

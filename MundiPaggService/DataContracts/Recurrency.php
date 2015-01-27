@@ -1,9 +1,9 @@
 <?php
 
-class Recurrency {
+class MundiPaggService_DataContracts_Recurrency {
 	/*@var [DateTime] Date to start billing */
 	public $DateToStartBilling; 
-	/*@var [FrequencyEnum] Frequency */
+	/*@var [MundiPaggService_DataContracts_FrequencyEnum] Frequency */
 	public $FrequencyEnum; 
 	/*@var [integer] Interval*/
 	public $Interval; 

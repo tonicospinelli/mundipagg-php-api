@@ -10,7 +10,7 @@
 	* to configuration variables :)
 	*/
 
-	define( "MP_DOCUMENT_ROOT" , $_SERVER["DOCUMENT_ROOT"] );
+	define( "MP_DOCUMENT_ROOT" , dirname(__FILE__) );
 
 	define( "MP_SDK", constant("MP_DOCUMENT_ROOT") . "/MundiPaggService" );
 

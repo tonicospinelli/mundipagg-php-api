@@ -9,7 +9,7 @@ function GetNotificationXml($xmlStatusNotification) {
 function ParseXmlToStatusNotification($xml) {
 	if (is_null($xml)) { return null; }
 	
-	$statusNotification = new StatusNotification();
+	$statusNotification = new MundiPaggService_PostNotification_StatusNotification();
 	
 	$statusNotification->AmountInCents = $xml->AmountInCents;
 	if (isset($xml->AmountPaidInCents)) { $statusNotification->AmountPaidInCents = $xml->AmountPaidInCents; }
@@ -20,7 +20,7 @@ function ParseXmlToStatusNotification($xml) {
 	if (isset($xml->BoletoTransaction)) {
 		$boletoTrans = null;
 		if (!is_null($xml->BoletoTransaction)) {
-			$boletoTrans = new BoletoTransactionNotification();
+			$boletoTrans = new MundiPaggService_PostNotification_BoletoTransactionNotification();
 			
 			$boletoTrans->AmountInCents = $xml->AmountInCents;
 			$boletoTrans->AmountPaidInCents = $xml->AmountPaidInCents;
@@ -39,7 +39,7 @@ function ParseXmlToStatusNotification($xml) {
 	if (isset($xml->CreditCardTransaction)) {
 		$ccTrans = null;
 		if (!is_null($xml->CreditCardTransaction)) {
-			$ccTrans = new CreditCardTransactionNotification();
+			$ccTrans = new MundiPaggService_PostNotification_CreditCardTransactionNotification();
 			
 			$ccTrans->Acquirer = $xml->Acquirer;
 			$ccTrans->AmountInCents = $xml->AmountInCents;
