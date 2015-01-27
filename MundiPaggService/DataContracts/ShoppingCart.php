@@ -1,5 +1,4 @@
 <?php
-include_once "ShoppingCartItem.php";
 
 /*@global Shopping Cart */
 class ShoppingCart {

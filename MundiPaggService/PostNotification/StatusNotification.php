@@ -1,9 +1,4 @@
 <?php
-//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
-include_once constant("MP_DATA_CONTRACTS") . "Enum.php";
-include_once "CreditCardTransactionNotification.php";
-include_once "BoletoTransactionNotification.php";
-include_once "OnlineDebitTransactionNotification.php";
 
 final class StatusNotification {
 	/*@var [long] Amount In Cents */

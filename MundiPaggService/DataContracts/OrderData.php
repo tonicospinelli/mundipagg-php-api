@@ -1,7 +1,4 @@
 <?php
-include_once "Enum.php";
-include_once "CreditCardTransactionData.php";
-include_once "BoletoTransactionData.php";
 
 
 class OrderData {

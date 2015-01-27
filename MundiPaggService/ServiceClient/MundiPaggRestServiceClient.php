@@ -1,8 +1,4 @@
 <?php
-throw new Exception("This client is not implemented yet!<br>Use MundiPaggSoapServiceClient.<br>See the documentation for more details.");
-
-//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
-include_once constant("MP_CONVERTERS") . "RestConverter.php"; // Also includes IRestConverter.php
 
 /**
 * @author: Matheus
@@ -24,6 +20,7 @@ class MundiPaggRestServiceClient {
 	* @param bool $traceSoapXml Indicates if the program must trace the Xml request and response.
 	*/
 	public function __construct(string $wsdlUri = NULL, IRestConverter $converter = NULL, $traceSoapXml = false) {
+        throw new Exception("This client is not implemented yet!<br>Use MundiPaggSoapServiceClient.<br>See the documentation for more details.");
 		// global $ENABLE_WSDL_CACHE; // Configuration Property
 		
 		$this->showXmlData = $traceSoapXml;

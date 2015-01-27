@@ -1,9 +1,4 @@
 <?php
-include_once "Enum.php";
-include_once "CreditCardTransactionResult.php";
-include_once "BoletoTransactionResult.php";
-include_once "MundiPaggSuggestion.php";
-include_once "ErrorReport.php";
 
 
 class CreateOrderResponse {

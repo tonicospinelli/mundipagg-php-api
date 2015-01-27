@@ -1,5 +1,4 @@
 <?php
-include_once "Enum.php";
 
 class CreditCardData {
 	/*@var [CreditCardEnum] CreditCard Brand*/

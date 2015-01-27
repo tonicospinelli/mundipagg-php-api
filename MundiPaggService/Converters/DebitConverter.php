@@ -1,6 +1,5 @@
 <?php
 
-include_once "IDebitConverter.php";
 
 class DebitConverter implements IDebitConverter {
 

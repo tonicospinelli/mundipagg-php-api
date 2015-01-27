@@ -1,5 +1,4 @@
 <?php
-include_once "Enum.php";
 
 class Recurrency {
 	/*@var [DateTime] Date to start billing */

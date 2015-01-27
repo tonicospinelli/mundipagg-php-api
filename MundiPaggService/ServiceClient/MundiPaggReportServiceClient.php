@@ -1,8 +1,4 @@
 <?php
-// include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
-include_once "IMundiPaggReportServiceClient.php";
-include_once constant("MP_CONVERTERS") . "DebitConverter.php"; // Also includes IDebitConverter.php
-include_once constant("MP_HELPERS") . "BasicHttpClient.php"; // Also includes IHttpClient.php
 
 /**
 * @author: Matheus

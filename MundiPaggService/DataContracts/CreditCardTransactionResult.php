@@ -1,5 +1,4 @@
 <?php
-include_once "Enum.php";
 
 class CreditCardTransactionResult {
 	/*@var [string] Message*/

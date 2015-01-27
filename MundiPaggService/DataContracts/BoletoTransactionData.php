@@ -1,5 +1,4 @@
 <?php
-include_once "Enum.php";
 
 class BoletoTransactionData {
 	/*@var [long] Transaction amount in cents */

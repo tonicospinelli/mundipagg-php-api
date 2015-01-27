@@ -1,5 +1,4 @@
 <?php
-include_once "IRestConverter.php";
 
 /** Converters Interface
 *
@@ -50,7 +49,7 @@ class RestConverter implements IRestConverter {
 			}
 		}
 		
-		$request["createOrderRequest"] = $order; // Adiciona o pedido na requisição
+		$request["createOrderRequest"] = $order; // add order into request
 
 		return $request;
 	}
@@ -298,11 +297,11 @@ class RestConverter implements IRestConverter {
 		// Copia os objetos BuyerAddress
 		if (!is_null($buyerRequest->BuyerAddressCollection)) {
 			if (count($buyerRequest->BuyerAddressCollection) > 0) {
-				$newAddrCollection = array(); // Coleção com os endereços do comprador
+				$newAddrCollection = array(); // buyer address collection
 
 				$counter = 0;
 				foreach($buyerRequest->BuyerAddressCollection as $buyAddress) {
-					$newBuyAddress = array(); // Endereço do comprador
+					$newBuyAddress = array(); // buyer address
 					$newBuyAddress["AddressTypeEnum"] = $buyAddress->AddressTypeEnum;
 					$newBuyAddress["City"] = $buyAddress->City;
 					$newBuyAddress["Complement"] = $buyAddress->Complement;

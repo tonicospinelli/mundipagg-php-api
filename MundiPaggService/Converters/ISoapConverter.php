@@ -1,16 +1,4 @@
 <?php
-//include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
-include_once constant("MP_DATA_CONTRACTS") . "Enum.php";
-include_once constant("MP_DATA_CONTRACTS") . "CreateOrderRequest.php";
-include_once constant("MP_DATA_CONTRACTS") . "CreateOrderResponse.php";
-include_once constant("MP_DATA_CONTRACTS") . "ManageOrderRequest.php";
-include_once constant("MP_DATA_CONTRACTS") . "ManageOrderResponse.php";
-include_once constant("MP_DATA_CONTRACTS") . "RetryOrderRequest.php";
-include_once constant("MP_DATA_CONTRACTS") . "RetryOrderResponse.php";
-include_once constant("MP_DATA_CONTRACTS") . "QueryOrderRequest.php";
-include_once constant("MP_DATA_CONTRACTS") . "QueryOrderResponse.php";
-include_once constant("MP_DATA_CONTRACTS") . "GetInstantBuyDataRequest.php";
-include_once constant("MP_DATA_CONTRACTS") . "GetInstantBuyDataResponse.php";
 
 /** Converters Interface
 */

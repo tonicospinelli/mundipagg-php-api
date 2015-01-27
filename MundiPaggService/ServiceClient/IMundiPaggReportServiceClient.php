@@ -1,5 +1,4 @@
 <?php
-// include_once constant("MP_DOCUMENT_ROOT") . "/MundiPaggServiceConfiguration.php";
 
 /**
 * @author: Matheus

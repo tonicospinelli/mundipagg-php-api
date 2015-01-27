@@ -1,7 +1,4 @@
 <?php
-include_once "Enum.php";
-include_once "ErrorReport.php";
-include_once "ErrorItem.php";
 
 class OnlineDebitResult {
 

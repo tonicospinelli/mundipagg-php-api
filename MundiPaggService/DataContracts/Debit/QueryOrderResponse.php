@@ -1,6 +1,5 @@
 <?php
 
-include_once "OrderData.php";
 
 class QueryOrderResponse {
 

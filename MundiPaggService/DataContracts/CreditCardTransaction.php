@@ -1,6 +1,4 @@
 <?php
-include_once "Recurrency.php";
-include_once "Enum.php";
 
 class CreditCardTransaction {
 	/*@var [Long] Transaction amount in cents*/

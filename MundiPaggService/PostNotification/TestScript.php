@@ -1,5 +1,4 @@
 <?php
-//include_once constant("MP_POST_NOTIFICATION") . "StatusNotification.php";
 
 $_POST[$STATUS_NOTIF_POST] = GetXml();
 // $_POST[$STATUS_NOTIF_POST] = GetCreditCardXml();
@@ -11,7 +10,7 @@ $xmlString = $_POST[$STATUS_NOTIF_POST];
 // Converte o Xml para um objeto do tipo StatusNotification
 $statusNotification = StatusNotification::ParseFromXml($xmlString);
 
-// Exibe o conteúdo
+// dump content
 var_dump($statusNotification);
 
 
@@ -53,7 +52,7 @@ function GetXml() {
     <PreviousCreditCardTransactionStatus>AuthorizedPendingCapture</PreviousCreditCardTransactionStatus>
     <CreditCardTransactionStatus>Captured</CreditCardTransactionStatus>
   </CreditCardTransaction>
-  <!--O nó OnlineDebitTransaction só é enviado caso uma transação de débito esteja sendo notificada-->
+  <!--O nÃ³ OnlineDebitTransaction sÃ³ Ã© enviado caso uma transaÃ§Ã£o de dÃ©bito esteja sendo notificada-->
   <OnlineDebitTransaction>
     <AmountInCents>100</AmountInCents>
     <AmountPaidInCents>0</AmountPaidInCents>
@@ -63,7 +62,7 @@ function GetXml() {
     <PreviousOnlineDebitTransactionStatus>OpenedPendingPayment</PreviousOnlineDebitTransactionStatus>
     <OnlineDebitTransactionStatus>NotPaid</OnlineDebitTransactionStatus>
   </OnlineDebitTransaction>
-  <!--O nó OnlineDebitTransaction só é enviado caso uma transação de débito esteja sendo notificada-->  
+  <!--O nÃ³ OnlineDebitTransaction sÃ³ Ã© enviado caso uma transaÃ§Ã£o de dÃ©bito esteja sendo notificada-->
   <MerchantKey>B1B1092C-8681-40C2-A734-500F22683D9B</MerchantKey>
   <OrderKey>18471F05-9F6D-4497-9C24-D60D5BBB6BBE</OrderKey>
   <OrderReference>64a85875</OrderReference>

@@ -1,6 +1,4 @@
 <?php
-include_once "IHttpClient.php";
-include_once "HttpResponse.php";
 
 class BasicHttpClient implements IHttpClient {
 

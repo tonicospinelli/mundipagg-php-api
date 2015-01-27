@@ -1,10 +1,5 @@
 <?php
 
-include_once "Enum.php";
-include_once "OrderRequest.php";
-include_once "BuyerRequest.php";
-include_once "PhoneRequest.php";
-include_once "BuyerAddressRequest.php";
 
 class OnlineDebitRequest {
 

@@ -1,5 +1,4 @@
 <?php
-include_once "Enum.php";
 
 class CreditCardTransactionData {
 	/*@var [string] Authorization Code*/

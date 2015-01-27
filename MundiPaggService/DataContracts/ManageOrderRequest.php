@@ -1,6 +1,4 @@
 <?php
-include_once "Enum.php";
-include_once "ManageCreditCardTransactionRequest.php";
 
 class ManageOrderRequest {
 	/*@var [ManageCreditCardTransactionRequest] CreditCard Transaction Collection */

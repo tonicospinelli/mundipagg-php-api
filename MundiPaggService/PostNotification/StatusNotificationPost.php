@@ -1,5 +1,4 @@
 <?php
-include_once "StatusNotification.php";
 
 const NOTIF_POST_NAME = "xmlStatusNotification";
 function GetNotificationXml($xmlStatusNotification) {

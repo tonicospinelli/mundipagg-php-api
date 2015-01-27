@@ -1,5 +1,4 @@
 <?php
-include_once "CreditCardData.php";
 
 class GetInstantBuyDataResponse {
 	/*@var [integer] CreditCard Data Count*/

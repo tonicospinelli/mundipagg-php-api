@@ -1,6 +1,4 @@
 <?php
-include_once "Enum.php";
-include_once "CreditCardTransactionResult.php";
 
 class RetryOrderResponse {
 	/*@var [long] MundiPagg Time In Milliseconds*/
